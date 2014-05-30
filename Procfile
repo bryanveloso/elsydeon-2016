@@ -1,1 +1,1 @@
-web: bin/hubot -a irc -n ElsydeonBot
+web: bin/hubot -a irc -n Elsydeon
