@@ -1,1 +1,1 @@
-web: bin/hubot -a irc -n Elsydeon
+web: bin/hubot -a irc --name Elsydeon --alias '!'
