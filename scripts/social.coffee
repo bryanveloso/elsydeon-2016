@@ -14,6 +14,8 @@ module.exports = (robot) ->
     msg.send "https://facebook.com/bryanveloso"
 
   robot.respond /tweet$/i, (msg) ->
+    message = "Are you not entertained? If you are then tweet this out:"
+
     # Get the game I'm currently playing.
     robot.http("https://api.twitch.tv/kraken/channels/avalonstar")
       .get() (err, res, body) ->
@@ -21,6 +23,18 @@ module.exports = (robot) ->
         message = "Watching @bryanveloso play #{streamer.game} on http://avalonstar.tv! Come join me and lurk, chat, or just say hi!"
         message = encodeURIComponent(message)
         url = "https://twitter.com/intent/tweet?text=#{message}&source=clicktotweet"
+
+        # Has this URL been shortened before?
+        msg.http("https://api-ssl.bitly.com/v3/link/lookup")
+          .query
+            access_token: process.env.HUBOT_BITLY_ACCESS_TOKEN
+            longUrl: url
+            format: "json"
+          .get() (err, res, body) ->
+            response = JSON.parse body
+            if response.data.link_lookup.aggregate_link:
+              msg.send "#{message} #{response.data.link_lookup.aggregate_link}"
+              return
 
         # After we have our composed URL, send it to bit.ly.
         msg.http("https://api-ssl.bitly.com/v3/shorten")
@@ -31,4 +45,4 @@ module.exports = (robot) ->
           .get() (err, res, body) ->
             response = JSON.parse body
             response = if response.status_code is 200 then response.data.url else response.status_txt
-            msg.send "Are you not entertained? If you are then tweet this out: #{response}."
+            msg.send "#{message} #{response}."
