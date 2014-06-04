@@ -6,4 +6,4 @@
 
 module.exports = (robot) ->
   robot.respond /schedule$/i, (msg) ->
-    msg.send "Schedule: 6PM-11PM (most Mondays, Wednesdays, Fridays) / 1PM (variable on Weekends). Follow Bryan (https://twitter.com/bryanveloso) for exact times!"
+    msg.send "6PM-11PM (most Mondays, Wednesdays, Fridays) / 1PM (variable on Weekends). Follow Bryan (https://twitter.com/bryanveloso) for exact times!"
