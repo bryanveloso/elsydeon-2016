@@ -15,7 +15,7 @@ module.exports = (robot) ->
           msg.send "Sorry #{msg.message.user.name}, #{streamer} doesn't seem to exist."
           return
 
-        message = "Everybody give #{streamer.display_name} a follow at #{streamer.url}!"
+        message = "We've been raided by #{streamer.display_name}! Give them a follow at #{streamer.url}!"
         if streamer.game
           message = "#{message} They've been playing: #{streamer.game}."
         msg.send message
