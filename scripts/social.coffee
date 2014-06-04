@@ -18,7 +18,7 @@ module.exports = (robot) ->
     robot.http("https://api.twitch.tv/kraken/channels/avalonstar")
       .get() (err, res, body) ->
         streamer = JSON.parse(body)
-        message = "Watching @bryanveloso play #{streamer.game} on http://avalonstar.tv! Come lurk, chat, or just say hi!"
+        message = "Watching @bryanveloso play #{streamer.game} on http://avalonstar.tv! Come join me and lurk, chat, or just say hi!"
         message = encodeURIComponent(message)
         url = "https://twitter.com/intent/tweet?text=#{message}&source=clicktotweet"
 
