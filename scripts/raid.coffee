@@ -2,6 +2,7 @@
 #   Functionality around raids.
 #
 # Commands:
+#   hubot raid <username> - Posts raiding instructions for a specific user.
 #   hubot raider <username> - Searches Twitch for <username> and returns a follow message plus last game played.
 
 module.exports = (robot) ->
@@ -17,7 +18,7 @@ module.exports = (robot) ->
 
         instructions = [
           "Alright everybody, hold on to your butts, it's time to raid #{streamer.display_name}! Here are the instructions:",
-          "1. The signal: gibeOops/",
+          "1. The signal: gibeOops/ (don't spoil it)",
           "2. The target: #{streamer.url} (they're currently playing #{streamer.game})",
           "3. The battlecry: THE RAIDS OF AVALON <3 (or any emoticon of your choosing)"
           ]
