@@ -32,8 +32,8 @@ module.exports = (robot) ->
             format: "json"
           .get() (err, res, body) ->
             response = JSON.parse body
-            if response.data.link_lookup.aggregate_link:
-              msg.send "#{message} #{response.data.link_lookup.aggregate_link}"
+            if response.data.link_lookup.aggregate_link
+              msg.send "#{message} #{response.data.link_lookup.aggregate_link}."
               return
 
         # After we have our composed URL, send it to bit.ly.
