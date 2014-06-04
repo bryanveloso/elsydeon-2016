@@ -20,9 +20,9 @@ module.exports = (robot) ->
     robot.http("https://api.twitch.tv/kraken/channels/avalonstar")
       .get() (err, res, body) ->
         streamer = JSON.parse(body)
-        message = "Watching @bryanveloso play #{streamer.game} on http://avalonstar.tv! Come join me and lurk, chat, or just say hi!"
-        message = encodeURIComponent(message)
-        url = "https://twitter.com/intent/tweet?text=#{message}&source=clicktotweet"
+        tweet = "Watching @bryanveloso play #{streamer.game} on http://avalonstar.tv! Come join me and lurk, chat, or just say hi!"
+        tweet = encodeURIComponent(tweet)
+        url = "https://twitter.com/intent/tweet?text=#{tweet}&source=clicktotweet"
 
         # Has this URL been shortened before?
         msg.http("https://api-ssl.bitly.com/v3/link/lookup")
