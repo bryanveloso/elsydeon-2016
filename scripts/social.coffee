@@ -30,4 +30,5 @@ module.exports = (robot) ->
             format: "json"
           .get() (err, res, body) ->
             response = JSON.parse body
-            msg.send if response.status_code is 200 then response.data.url else response.status_txt
+            response = if response.status_code is 200 then response.data.url else response.status_txt
+            msg.send "Are you not entertained? If so, tweet this out: #{response}."
