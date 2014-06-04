@@ -12,7 +12,7 @@ module.exports = (robot) ->
         streamer = JSON.parse(body)
 
         if streamer.status == 404
-          msg.send "Sorry #{msg.message.user.name}, #{streamer} doesn't seem to exist."
+          msg.send "Sorry #{msg.message.user.name}, #{query} doesn't seem to exist."
           return
 
         message = "We've been raided by #{streamer.display_name}! Give them a follow at #{streamer.url}!"
