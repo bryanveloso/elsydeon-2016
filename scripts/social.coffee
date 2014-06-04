@@ -10,6 +10,5 @@ module.exports = (robot) ->
   robot.respond /twitter$/i, (msg) ->
     msg.send "https://twitter.com/bryanveloso"
 
-module.exports = (robot) ->
   robot.respond /facebook$/i, (msg) ->
     msg.send "https://facebook.com/bryanveloso"
