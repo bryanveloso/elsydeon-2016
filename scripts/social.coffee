@@ -23,12 +23,11 @@ module.exports = (robot) ->
         url = "https://twitter.com/intent/tweet?text=#{message}&source=clicktotweet"
 
         # After we have our composed URL, send it to bit.ly.
-        msg
-          .http("https://api-ssl.bitly.com/v3/shorten")
+        msg.http("https://api-ssl.bitly.com/v3/shorten")
           .query
             access_token: process.env.HUBOT_BITLY_ACCESS_TOKEN
             longUrl: url
             format: "json"
           .get() (err, res, body) ->
-            reponse = JSON.parse body
+            response = JSON.parse body
             msg.send if response.status_code is 200 then response.data.url else response.status_txt
