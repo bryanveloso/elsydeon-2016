@@ -14,7 +14,7 @@ module.exports = (robot) ->
     msg.send "https://facebook.com/bryanveloso"
 
   robot.respond /tweet$/i, (msg) ->
-    message = "Are you not entertained? If you are then tweet this out:"
+    message = "Are you not entertained? If you are, then help us promote the channel:"
 
     # Get the game I'm currently playing.
     robot.http("https://api.twitch.tv/kraken/channels/avalonstar")
