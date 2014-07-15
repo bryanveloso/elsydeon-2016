@@ -49,5 +49,5 @@ module.exports = (robot) ->
             msg.send "#{message} #{response}."
 
   # Hidden command. gibeOops.
-  robot.respond /(DU+)/i, (msg) ->
-    msg.send "gibeDu DU DU DU gibeDu"
+  # robot.respond /(DU+)/i, (msg) ->
+  #   msg.send "gibeDu DU DU DU gibeDu"
