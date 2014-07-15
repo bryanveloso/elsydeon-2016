@@ -2,24 +2,28 @@
 #   Functionality around logging to the Avalonstar(tv) API.
 
 module.exports = (robot) ->
+  # General message listening.
   robot.hear /(.*)$/i, (msg) ->
     # console.log msg.match
     # console.log msg.envelope
 
+  # Listening for special users (e.g., turbo, staff, subscribers)
+  # Messages can be prefixed by a username (most likely the bot's name).
   robot.hear /.*?\s?SPECIALUSER (.*) (.*)/, (msg) ->
     if msg.envelope.user.name is 'jtv'
-      console.log msg.match
-      console.log "YOU ARE TEH SPECHIAL."
+      console.log "username: " + msg.match[1]
+      console.log "status: " + msg.match[2]
 
+  # Listening for emoticon sets.
+  # Expected value is a list of integers.
   robot.hear /EMOTESET (.*) (.*)/, (msg) ->
-    console.log msg.match
-    console.log "WE'VE GOT DEM EMOTES."
+    if msg.envelope.user.name is 'jtv'
+      console.log "username: " + msg.match[1]
+      console.log "emotes: " + msg.match[2]
 
+  # Listening for a user's color.
+  # Expected value is a hex code.
   robot.hear /USERCOLOR (.*) (.*)/, (msg) ->
-    console.log msg.match
-    console.log "I'VE GOT YO COLOR."
-
-# [x] Robot should hear EMOTESET.
-# Robot should hear regular messages.
-# [x] Robot should hear USERCOLOR.
-# [x] ROBOT should hear SPECIALUSER.
+    if msg.envelope.user.name is 'jtv'
+      console.log "username: " + msg.match[1]
+      console.log "color: " + msg.match[2]
