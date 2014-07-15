@@ -2,12 +2,13 @@
 #   Functionality around logging to the Avalonstar(tv) API.
 
 module.exports = (robot) ->
-  robot.hear /.*$/i, (msg) ->
+  # .*?\s?SPECIALUSER (.*)\s(.*)
+  robot.hear /(.*)$/i, (msg) ->
     console.log msg.match
     console.log msg.envelope
 
-  robot.hear /DU DU DU$/i, (msg) ->
-    msg.send "DUDUDUDUDUD"
+  robot.hear /(DU+)/i, (msg) ->
+    msg.send "gibeDu DU DU DU gibeDu"
 
 # Robot should hear EMOTESET.
 # Robot should hear regular messages.
