@@ -4,8 +4,9 @@
 module.exports = (robot) ->
   # General message listening.
   robot.hear /(.*)$/i, (msg) ->
-    # console.log msg.match
-    # console.log msg.envelope
+    if msg.envelope.user.name not 'jtv'
+      console.log "message: " + msg.envelope.message.text
+      console.log "chatter: " + msg.envelope.user.name
 
   # Listening for special users (e.g., turbo, staff, subscribers)
   # Messages can be prefixed by a username (most likely the bot's name).
@@ -13,6 +14,7 @@ module.exports = (robot) ->
     if msg.envelope.user.name is 'jtv'
       console.log "username: " + msg.match[1]
       console.log "status: " + msg.match[2]
+      console.log "role: " + msg.envelope.user.roles
 
   # Listening for emoticon sets.
   # Expected value is a list of integers.
