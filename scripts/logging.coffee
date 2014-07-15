@@ -7,10 +7,12 @@ module.exports = (robot) ->
     console.log msg.match
     console.log msg.envelope
 
-  robot.hear /(DU+)/i, (msg) ->
-    msg.send "gibeDu DU DU DU gibeDu"
+
 
 # Robot should hear EMOTESET.
 # Robot should hear regular messages.
 # Robot should hear USERCOLOR.
 # ROBOT should hear SPECIALUSER.
+
+  # robot.hear /(DU+)/i, (msg) ->
+  #   msg.send "gibeDu DU DU DU gibeDu"
