@@ -5,12 +5,10 @@ module.exports = (robot) ->
   # General message listening.
   robot.hear /(.*)$/i, (msg) ->
     if msg.envelope.user.name isnt 'jtv'
-      # Specify our data directory.
       data = JSON.stringify({
         from: msg.envelope.user.name,
         message: msg.envelope.message.text
       })
-
       robot.http("http://api.avalonstar.tv/messages")
         .post(data) (err, res, body) ->
           if err
@@ -26,6 +24,18 @@ module.exports = (robot) ->
   # Note: Roles such as moderator do not appear in this method.
   robot.hear /.*?\s?SPECIALUSER ([a-zA-Z0-9_]*) ([a-z]*)/, (msg) ->
     if msg.envelope.user.name is 'jtv'
+      data = JSON.stringify({
+        handle: msg.match[1],
+        isStaff: if msg.match[2] is 'staff' then true else false,
+        isTurbo: if msg.match[2] is 'turbo' then true else false,
+      })
+      robot.http("http://api.avalonstar.tv/viewers")
+        .post(data) (err, res, body) ->
+          if err
+            console.log "Shit happened."
+            return
+          console.log "Response: #{body}"
+
       console.log "username: " + msg.match[1]
       console.log "status: " + msg.match[2]
 
