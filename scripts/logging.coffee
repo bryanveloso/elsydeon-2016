@@ -4,8 +4,9 @@
 module.exports = (robot) ->
   # General message listening.
   robot.hear /(.*)$/i, (msg) ->
-    console.log "message: " + msg.envelope.message.text
-    console.log "chatter: " + msg.envelope.user.name
+    if msg.envelope.user.name isnt 'jtv'
+      console.log "message: " + msg.envelope.message.text
+      console.log "chatter: " + msg.envelope.user.name
 
   # Listening for special users (e.g., turbo, staff, subscribers)
   # Messages can be prefixed by a username (most likely the bot's name).
