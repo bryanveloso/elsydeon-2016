@@ -7,6 +7,9 @@
 #   hubot tweet - Reply with click-to-tweet link
 
 module.exports = (robot) ->
+  robot.respond /(DU+)/i, (msg) ->
+    msg.send "gibeDu DU DU DU gibeDu"
+
   robot.respond /twitter$/i, (msg) ->
     msg.send "https://twitter.com/bryanveloso"
 
