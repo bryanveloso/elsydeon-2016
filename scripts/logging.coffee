@@ -5,8 +5,21 @@ module.exports = (robot) ->
   # General message listening.
   robot.hear /(.*)$/i, (msg) ->
     if msg.envelope.user.name isnt 'jtv'
-      console.log "from: " + msg.envelope.user.name
-      console.log "message: " + msg.envelope.message.text
+      # Specify our data directory.
+      data = JSON.stringify({
+        from: msg.envelope.user.name,
+        message: msg.envelope.message.text
+      })
+
+      robot.http("http://api.avalonstar.tv/messages")
+        .post(data) (err, res, body) ->
+          if err
+            console.log "Shit happened."
+            return
+          console.log "Response: #{body}"
+
+      # console.log "from: " + msg.envelope.user.name
+      # console.log "message: " + msg.envelope.message.text
 
   # Listening for special users (e.g., turbo, staff, subscribers)
   # Messages can be prefixed by a username (most likely the bot's name).
