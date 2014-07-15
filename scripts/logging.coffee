@@ -11,8 +11,15 @@ module.exports = (robot) ->
       console.log msg.match
       console.log "YOU ARE TEH SPECHIAL."
 
+  robot.hear /EMOTESET (.*) (.*)/, (msg) ->
+    console.log msg.match
+    console.log "WE'VE GOT DEM EMOTES."
 
-# Robot should hear EMOTESET.
+  robot.hear /USERCOLOR (.*) (.*)/, (msg) ->
+    console.log msg.match
+    console.log "I'VE GOT YO COLOR."
+
+# [x] Robot should hear EMOTESET.
 # Robot should hear regular messages.
-# Robot should hear USERCOLOR.
-# ROBOT should hear SPECIALUSER.
+# [x] Robot should hear USERCOLOR.
+# [x] ROBOT should hear SPECIALUSER.
