@@ -2,6 +2,9 @@
 #   Functionality around logging to the Avalonstar(tv) API.
 
 module.exports = (robot) ->
+  robot.respond /users$/i, (msg) ->
+    msg.send robot.brain.data.users.toString()
+
   # Fired when any user enters the room.
   robot.enter (response) ->
     console.log response
