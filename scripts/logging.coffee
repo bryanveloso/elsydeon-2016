@@ -20,12 +20,12 @@ module.exports = (robot) ->
         from: msg.envelope.user.name,
         message: msg.envelope.message.text
       })
-      robot.http("http://api.avalonstar.tv/messages")
-        .post(data) (err, res, body) ->
-          if err
-            console.log "Shit happened."
-            return
-          console.log "Response: #{body}"
+      # robot.http("http://api.avalonstar.tv/messages")
+      #   .post(data) (err, res, body) ->
+      #     if err
+      #       console.log "Shit happened."
+      #       return
+      #     console.log "Response: #{body}"
 
       console.log msg.envelope
       # console.log "from: " + msg.envelope.user.name
@@ -41,15 +41,15 @@ module.exports = (robot) ->
         isStaff: if msg.match[2] is 'staff' then true else false,
         isTurbo: if msg.match[2] is 'turbo' then true else false,
       })
-      robot.http("http://api.avalonstar.tv/viewers")
-        .post(data) (err, res, body) ->
-          if err
-            console.log "Shit happened."
-            return
-          console.log "Response: #{body}"
+      # robot.http("http://api.avalonstar.tv/viewers")
+      #   .post(data) (err, res, body) ->
+      #     if err
+      #       console.log "Shit happened."
+      #       return
+      #     console.log "Response: #{body}"
 
-      # console.log "username: " + msg.match[1]
-      # console.log "status: " + msg.match[2]
+      console.log "username: " + msg.match[1]
+      console.log "status: " + msg.match[2]
 
   # Listening for emoticon sets.
   # Expected value is a list of integers.
