@@ -10,7 +10,7 @@ module.exports = (robot) ->
     # TODO: Run .mods and process the results.
 
   robot.respond /population$/i, (msg) ->
-    count = robot.brain.users.length
+    count = Object.keys(robot.brain.data.users).length
     msg.send "#{count} people have visited Avalonstar."
 
   robot.respond /schedule$/i, (msg) ->
