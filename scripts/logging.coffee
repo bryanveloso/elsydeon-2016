@@ -5,12 +5,12 @@ module.exports = (robot) ->
   # Fired when any user enters the room.
   robot.enter (response) ->
     console.log "user entered... "
-    console.log response
+    console.log response.envelope
 
   # Fired when any user leaves the room.
   robot.leave (response) ->
     console.log "user exited... "
-    console.log response
+    console.log response.envelope
 
   # General message listening.
   robot.hear /(.*)$/i, (msg) ->
@@ -26,9 +26,8 @@ module.exports = (robot) ->
       #       return
       #     console.log "Response: #{body}"
 
-      console.log msg.envelope
-      # console.log "from: " + msg.envelope.user.name
-      # console.log "message: " + msg.envelope.message.text
+      console.log "from: " + msg.envelope.user.name
+      console.log "message: " + msg.envelope.message.text
 
   # Listening for special users (e.g., turbo, staff, subscribers)
   # Messages can be prefixed by a username (most likely the bot's name).
