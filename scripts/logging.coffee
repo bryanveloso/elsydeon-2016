@@ -10,7 +10,7 @@ module.exports = (robot) ->
   # General message listening.
   robot.hear /(.*)$/i, (msg) ->
     if msg.envelope.user.name isnt 'jtv'
-      userdata = robot.brain.userForName(response.envelope.user.name)
+      userdata = robot.brain.userForName(msg.envelope.user.name)
       pk = userdata['pk']
       console.log "This user's pk is: #{pk}"
 
@@ -26,7 +26,7 @@ module.exports = (robot) ->
                 console.log "Shit happened."
                 return
               console.log "Response: #{body}"
-              msg.send "Added #{response.envelope.user.name}."
+              msg.send "Added #{msg.envelope.user.name}."
 
       # Send that data off to the API.
       # data = JSON.stringify({
