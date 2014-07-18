@@ -11,7 +11,7 @@ module.exports = (robot) ->
     # TODO: Run .mods and process the results.
 
   robot.respond /prefill$/i, (msg) ->
-    pk = 1
+    pk = 0 # Shell user is first.
     for user of robot.brain.data.users
       robot.brain.data['users'][user]['pk'] = pk
       pk++
