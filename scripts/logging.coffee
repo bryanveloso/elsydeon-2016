@@ -11,19 +11,19 @@ module.exports = (robot) ->
     # Check if a user exists.
     robot.http('http://api.avalonstar.tv/v1/viewers/#{pk}')
       .get() (err, res, body) ->
-        unless res.statusCode is 404
+        if res.statusCode is 404
+          # Did we get a 404? Time to create the user.
+          data = JSON.stringify({ id: pk, username: userdata['name'] })
+          robot.http('http://api.avalonstar.tv/v1/viewers')
+            .post(data) (err, res, body) ->
+              if err
+                console.log "Shit happened."
+                return
+              console.log "Response: #{body}"
+              msg.send "Added #{response.envelope.user.name}."
+        else
           console.log "#{response.envelope.user.name} already exists in the API."
           return
-
-        # Did we get a 404? Time to create the user.
-        data = JSON.stringify({ id: pk, username: userdata['name'] })
-        robot.http('http://api.avalonstar.tv/v1/viewers')
-          .post(data) (err, res, body) ->
-            if err
-              console.log "Shit happened."
-              return
-            console.log "Response: #{body}"
-            msg.send "Added #{response.envelope.user.name}."
 
   # General message listening.
   robot.hear /(.*)$/i, (msg) ->
