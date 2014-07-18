@@ -13,7 +13,8 @@ module.exports = (robot) ->
   robot.respond /backfill$/i, (msg) ->
     pk = 0 # Shell user is first.
     for user of robot.brain.data.users
-      robot.brain.data['users'][user]['pk'] = pk
+      robot.brain.data['viewers'][user]['name'] = user.name
+      robot.brain.data['viewers'][user]['pk'] = pk
       pk++
     robot.brain.save()
 
