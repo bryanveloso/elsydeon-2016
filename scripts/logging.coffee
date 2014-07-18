@@ -26,7 +26,6 @@ module.exports = (robot) ->
                 console.log "Shit happened."
                 return
               console.log "Response: #{body}"
-              msg.send "Added #{msg.envelope.user.name}."
 
       # Send that data off to the API.
       # data = JSON.stringify({
