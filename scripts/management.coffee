@@ -5,7 +5,8 @@
 #  hubot <> -
 
 module.exports = (robot) ->
-  robot.respond /remove user (*.)$/i, (msg) ->
+  robot.respond /remove user (.*)$/i, (msg) ->
+    console.log msg
     username = msg.match[1]
     if robot.auth.hasRole(msg.envelope.user, 'admin')
       delete robot.brain.data['users'][username]
