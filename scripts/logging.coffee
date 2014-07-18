@@ -26,6 +26,7 @@ module.exports = (robot) ->
       #       return
       #     console.log "Response: #{body}"
 
+      console.log msg.envelope
       console.log "from: " + msg.envelope.user.name
       console.log "message: " + msg.envelope.message.text
 
