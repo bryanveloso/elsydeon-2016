@@ -4,19 +4,19 @@
 module.exports = (robot) ->
   # Fired when any user enters the room.
   robot.enter (response) ->
+    console.log "A new user has entered the room!"
     userdata = robot.brain.data['users'][response.envelope.user.name]
     pk = userdata['pk']
 
-    data = JSON.stringify({ id: pk, username: userdata['name'] })
-
     # Check if a user exists.
-    robot.http('http://api.avalonstar.tv/v1/#{pk}')
+    robot.http('http://api.avalonstar.tv/v1/viewers/#{pk}')
       .get() (err, res, body) ->
         unless res.statusCode is 404
           console.log "#{response.envelope.user.name} already exists in the API."
           return
 
         # Did we get a 404? Time to create the user.
+        data = JSON.stringify({ id: pk, username: userdata['name'] })
         robot.http('http://api.avalonstar.tv/v1/viewers')
           .post(data) (err, res, body) ->
             if err
