@@ -15,8 +15,12 @@ module.exports = (robot) ->
   # General message listening.
   robot.hear /(.*)$/i, (msg) ->
     if msg.envelope.user.name isnt 'jtv'
+      user = msg.envelope.user.name
+      userdata = robot.brain.data['users'][user]
+
+      # Send that data off to the API.
       data = JSON.stringify({
-        from: msg.envelope.user.name,
+        from: userdata['pk'],
         message: msg.envelope.message.text
       })
       # robot.http("http://api.avalonstar.tv/messages")
@@ -26,7 +30,7 @@ module.exports = (robot) ->
       #       return
       #     console.log "Response: #{body}"
 
-      console.log msg
+
       console.log "from: " + msg.envelope.user.name
       console.log "message: " + msg.envelope.message.text
 
