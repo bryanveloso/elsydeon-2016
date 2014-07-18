@@ -7,7 +7,12 @@
 
 module.exports = (robot) ->
   robot.enter (msg) ->
-    robot.adapter.command 'twitchclient', '1'
+    # Use TWITCHCLIENT 3 (need to figure out how to read joins/parts).
+    robot.adapter.command 'twitchclient', '3'
+
+    # Turn off the bot's auto-save so our work doesn't get smashed.
+    robot.brain.setAutoSave = false
+
     # TODO: Run .mods and process the results.
 
   robot.respond /backfill$/i, (msg) ->
@@ -18,7 +23,7 @@ module.exports = (robot) ->
       robot.brain.data['viewers'][user]['name'] = user
       robot.brain.data['viewers'][user]['pk'] = pk
       pk++
-      robot.brain.save()
+    robot.brain.save()
 
   robot.respond /apifill$/i, (msg) ->
     for user of robot.brain.data.users
