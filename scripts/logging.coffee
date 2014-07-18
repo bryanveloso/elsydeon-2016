@@ -5,7 +5,7 @@ module.exports = (robot) ->
   # Fired when any user enters the room.
   robot.enter (response) ->
     console.log "A new user has entered the room!"
-    userdata = robot.brain.data['users'][response.envelope.user.name]
+    userdata = robot.brain.userForName(response.envelope.user.name)
     pk = userdata['pk']
 
     # Check if a user exists.
