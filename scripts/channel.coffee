@@ -2,6 +2,7 @@
 #   Tell the chatters about the channel!
 #
 # Commands:
+#  hubot population - Responds with the total number of unique usernames.
 #  hubot schedule - Tell the viewers about your schedule.
 
 module.exports = (robot) ->
