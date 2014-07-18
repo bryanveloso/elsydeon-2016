@@ -7,6 +7,7 @@ module.exports = (robot) ->
     console.log "A new user has entered the room!"
     userdata = robot.brain.userForName(response.envelope.user.name)
     pk = userdata['pk']
+    console.log "This user's pk is: #{pk}"
 
     # Check if a user exists.
     robot.http('http://api.avalonstar.tv/v1/viewers/#{pk}')
