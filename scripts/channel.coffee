@@ -16,6 +16,20 @@ module.exports = (robot) ->
   #     robot.brain.data['users'][user]['pk'] = pk
   #     pk++
 
+  robot.respond /prefill ruby$/i, (msg) ->
+    for user of robot.brain.data.users
+      if user['room'] is '#avalonstar'
+        data = JSON.stringify({
+          id: user['pk'],
+          username: user['name']
+        })
+        robot.http('http://api.avalonstar.tv/v1/viewers')
+          .post(data) (err, res, body) ->
+            if err
+              console.log "Shit happened."
+              return
+            console.log "Response: #{body}"
+
   # robot.respond /undo$/i, (msg) ->
   #   for user of robot.brain.data.users
   #     delete robot.brain.data['users'][user]['pk']
