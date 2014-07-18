@@ -7,7 +7,7 @@
 
 module.exports = (robot) ->
   robot.enter (msg) ->
-    robot.adapter.command 'twitchclient', '3'
+    robot.adapter.command 'twitchclient', '1'
     # TODO: Run .mods and process the results.
 
   robot.respond /backfill$/i, (msg) ->
