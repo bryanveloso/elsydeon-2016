@@ -26,3 +26,11 @@ module.exports = (robot) ->
 
   robot.respond /schedule$/i, (msg) ->
     msg.send "Follow Bryan (https://twitter.com/bryanveloso) for exact times!"
+
+  # User management commands.
+  # Fired when any user enters the room.
+  robot.enter (response) ->
+    data = robot.brain.data
+    user = response.envelope.user.name
+    unless data['users'][user]['pk']?
+     data['users'][user]['pk'] = Object.keys(data.users).length + 1
