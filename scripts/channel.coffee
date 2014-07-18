@@ -10,13 +10,13 @@ module.exports = (robot) ->
     robot.adapter.command 'twitchclient', '3'
     # TODO: Run .mods and process the results.
 
-  robot.respond /prefill$/i, (msg) ->
+  robot.respond /backfill$/i, (msg) ->
     pk = 0 # Shell user is first.
     for user of robot.brain.data.users
       robot.brain.data['users'][user]['pk'] = pk
       pk++
 
-  robot.respond /prefill ruby$/i, (msg) ->
+  robot.respond /apifill$/i, (msg) ->
     for user of robot.brain.data.users
       userdata = robot.brain.data['users'][user]
       data = JSON.stringify({
