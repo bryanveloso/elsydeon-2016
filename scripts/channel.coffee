@@ -29,6 +29,7 @@ module.exports = (robot) ->
               console.log "Shit happened."
               return
             console.log "Response: #{body}"
+        msg.send "Added #{user}."
 
   # robot.respond /undo$/i, (msg) ->
   #   for user of robot.brain.data.users
