@@ -13,8 +13,8 @@ module.exports = (robot) ->
     output = Util.inspect(robot.brain.data, false, 4)
 
     # Only I should be able to run this.
-    if robot.auth.hasRole(msg.envelope.user, 'admin')
-      msg.send output
+    # if robot.auth.hasRole(msg.envelope.user, 'admin')
+    msg.send output
 
   robot.respond /show users$/i, (msg) ->
     response = ""
@@ -25,5 +25,5 @@ module.exports = (robot) ->
       response += "\n"
 
     # Only I should be able to run this.
-    if robot.auth.hasRole(msg.envelope.user, 'admin')
-      msg.send response
+    # if robot.auth.hasRole(msg.envelope.user, 'admin')
+    msg.send response
