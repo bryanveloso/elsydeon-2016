@@ -18,7 +18,7 @@ module.exports = (robot) ->
       robot.brain.data['viewers'][user]['name'] = user
       robot.brain.data['viewers'][user]['pk'] = pk
       pk++
-    robot.brain.save()
+      robot.brain.save()
 
   robot.respond /apifill$/i, (msg) ->
     for user of robot.brain.data.users
@@ -46,17 +46,17 @@ module.exports = (robot) ->
   robot.respond /schedule$/i, (msg) ->
     msg.send "Follow Bryan (https://twitter.com/bryanveloso) for exact times!"
 
-  # User management commands.
-  # Fired when any user enters the room.
-  robot.enter (response) ->
-    data = robot.brain.data
-    user = response.envelope.user.name
+  # # User management commands.
+  # # Fired when any user enters the room.
+  # robot.enter (response) ->
+  #   data = robot.brain.data
+  #   user = response.envelope.user.name
 
-    console.log "User entered!"
-    unless data['users'][user]['pk']?
-     data['users'][user]['pk'] = Object.keys(data.users).length + 1
+  #   console.log "User entered!"
+  #   unless data['users'][user]['pk']?
+  #    data['users'][user]['pk'] = Object.keys(data.users).length + 1
 
-  # Fired when any user leaves the room.
-  robot.leave (response) ->
-    console.log "User exited!"
-    console.log response.envelope
+  # # Fired when any user leaves the room.
+  # robot.leave (response) ->
+  #   console.log "User exited!"
+  #   console.log response.envelope
