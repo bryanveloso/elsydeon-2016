@@ -4,13 +4,7 @@
 module.exports = (robot) ->
   # Fired when any user enters the room.
   robot.enter (response) ->
-    console.log "user entered... "
-    console.log response.envelope
-
-  # Fired when any user leaves the room.
-  robot.leave (response) ->
-    console.log "user exited... "
-    console.log response.envelope
+    # TODO: Create a user if they don't already exist.
 
   # General message listening.
   robot.hear /(.*)$/i, (msg) ->
@@ -29,7 +23,6 @@ module.exports = (robot) ->
       #       console.log "Shit happened."
       #       return
       #     console.log "Response: #{body}"
-
 
       console.log "from: " + msg.envelope.user.name
       console.log "message: " + msg.envelope.message.text

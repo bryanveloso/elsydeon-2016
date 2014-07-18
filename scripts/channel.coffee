@@ -46,5 +46,12 @@ module.exports = (robot) ->
   robot.enter (response) ->
     data = robot.brain.data
     user = response.envelope.user.name
+
+    console.log "User entered!"
     unless data['users'][user]['pk']?
      data['users'][user]['pk'] = Object.keys(data.users).length + 1
+
+  # Fired when any user leaves the room.
+  robot.leave (response) ->
+    console.log "User exited!"
+    console.log response.envelope
