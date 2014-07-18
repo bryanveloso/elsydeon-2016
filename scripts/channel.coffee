@@ -18,10 +18,11 @@ module.exports = (robot) ->
 
   robot.respond /prefill ruby$/i, (msg) ->
     for user of robot.brain.data.users
-      if user['room'] is '#avalonstar'
+      if robot.brain.data['users'][user]['room'] is '#avalonstar'
+        userdata = robot.brain.data['users'][user]
         data = JSON.stringify({
-          id: user['pk'],
-          username: user['name']
+          id: userdata['pk'],
+          username: userdata['name']
         })
         robot.http('http://api.avalonstar.tv/v1/viewers')
           .post(data) (err, res, body) ->
@@ -29,7 +30,7 @@ module.exports = (robot) ->
               console.log "Shit happened."
               return
             console.log "Response: #{body}"
-        msg.send "Added #{user}."
+        msg.send "Added " + userdata['name'] + " ."
 
   # robot.respond /undo$/i, (msg) ->
   #   for user of robot.brain.data.users
