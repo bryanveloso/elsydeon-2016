@@ -15,6 +15,7 @@ module.exports = (robot) ->
     for user of robot.brain.data.users
       robot.brain.data['users'][user]['pk'] = pk
       pk++
+    robot.brain.save()
 
   robot.respond /apifill$/i, (msg) ->
     for user of robot.brain.data.users
