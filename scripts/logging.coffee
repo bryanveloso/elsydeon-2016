@@ -4,6 +4,7 @@
 module.exports = (robot) ->
   # Fired when any user enters the room.
   robot.enter (response) ->
+    console.log response.envelope
     console.log "A new user has entered the room!"
     userdata = robot.brain.userForName(response.envelope.user.name)
     pk = userdata['pk']
