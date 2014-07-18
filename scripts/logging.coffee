@@ -15,17 +15,17 @@ module.exports = (robot) ->
       console.log "This user's pk is: #{pk}"
 
       # Check if a user exists.
-      robot.http('http://api.avalonstar.tv/v1/viewers/#{pk}')
-        .get() (err, res, body) ->
-          console.log res.statusCode
-          # Did we not get a 200? Time to create the user.
-          data = JSON.stringify({ id: pk, username: userdata['name'] })
-          robot.http('http://api.avalonstar.tv/v1/viewers')
-            .post(data) (err, res, body) ->
-              if err
-                console.log "Shit happened."
-                return
-              console.log "Response: #{body}"
+      # robot.http('http://api.avalonstar.tv/v1/viewers/#{pk}')
+      #   .get() (err, res, body) ->
+      #     console.log res.statusCode
+      #     # Did we not get a 200? Time to create the user.
+      #     data = JSON.stringify({ id: pk, username: userdata['name'] })
+      #     robot.http('http://api.avalonstar.tv/v1/viewers')
+      #       .post(data) (err, res, body) ->
+      #         if err
+      #           console.log "Shit happened."
+      #           return
+      #         console.log "Response: #{body}"
 
       # Send that data off to the API.
       # data = JSON.stringify({
