@@ -10,9 +10,6 @@ module.exports = (robot) ->
     # Use TWITCHCLIENT 3 (need to figure out how to read joins/parts).
     robot.adapter.command 'twitchclient', '3'
 
-    # Turn off the bot's auto-save so our work doesn't get smashed.
-    robot.brain.setAutoSave = false
-
     # TODO: Run .mods and process the results.
 
   robot.respond /backfill$/i, (msg) ->
