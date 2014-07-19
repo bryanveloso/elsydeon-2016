@@ -29,4 +29,4 @@ module.exports = (robot) ->
 
   robot.respond /undo$/i, (msg) ->
     for user of robot.brain.data.users
-      delete robot.brain.data['users'][user]['pk']
+      delete robot.brain.data['viewers']
