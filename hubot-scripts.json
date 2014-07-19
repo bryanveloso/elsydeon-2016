@@ -1,5 +1,4 @@
 [
     "redis-brain.coffee",
-    "pg-brain.coffee",
-    "shipit.coffee"
+    "pg-brain.coffee"
 ]
