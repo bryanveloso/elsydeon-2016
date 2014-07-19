@@ -21,3 +21,9 @@ module.exports = (robot) ->
 
   robot.respond /schedule$/i, (msg) ->
     msg.send "Follow Bryan (https://twitter.com/bryanveloso) for exact times!"
+
+  # TODO: Create a command that monitors the API for when the channel goes live.
+  # <https://api.twitch.tv/kraken/streams/avalonstar>
+
+  # TODO: Create a command that monitors the API for when the channel signs off.
+  # <https://api.twitch.tv/kraken/streams/avalonstar>

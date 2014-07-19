@@ -16,9 +16,6 @@ module.exports = (robot) ->
       #     data = JSON.stringify({ id: pk, username: userdata['name'] })
       #     robot.http('http://api.avalonstar.tv/v1/viewers')
       #       .post(data) (err, res, body) ->
-      #         if err
-      #           console.log "Shit happened."
-      #           return
       #         console.log "Response: #{body}"
 
       # Send that data off to the API.
@@ -28,9 +25,6 @@ module.exports = (robot) ->
       # })
       # robot.http("http://api.avalonstar.tv/messages")
       #   .post(data) (err, res, body) ->
-      #     if err
-      #       console.log "Shit happened."
-      #       return
       #     console.log "Response: #{body}"
 
   # Listening for special users (e.g., turbo, staff, subscribers)
