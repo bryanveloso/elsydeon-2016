@@ -1,4 +1,3 @@
 [
-    "redis-brain.coffee",
-    "pg-brain.coffee"
+    "redis-brain.coffee"
 ]
