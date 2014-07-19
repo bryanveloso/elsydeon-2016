@@ -5,9 +5,8 @@ module.exports = (robot) ->
   # General message listening.
   robot.hear /(.*)$/i, (msg) ->
     if msg.envelope.user.name isnt 'jtv'
-      userdata = robot.brain.userForName(msg.envelope.user.name)
-      pk = userdata['pk']
-      console.log "This user's pk is: #{pk}"
+      viewer = robot.brain.viewers[msg.envelope.user.name]
+      console.log "#{msg.envelope.user.name} (#{viewer.pk}): #{msg.envelope.message.text}"
 
       # Check if a user exists.
       # robot.http('http://api.avalonstar.tv/v1/viewers/#{pk}')
@@ -33,9 +32,6 @@ module.exports = (robot) ->
       #       console.log "Shit happened."
       #       return
       #     console.log "Response: #{body}"
-
-      console.log "from: " + msg.envelope.user.name
-      console.log "message: " + msg.envelope.message.text
 
   # Listening for special users (e.g., turbo, staff, subscribers)
   # Messages can be prefixed by a username (most likely the bot's name).
