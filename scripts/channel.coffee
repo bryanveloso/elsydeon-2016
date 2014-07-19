@@ -10,6 +10,7 @@ module.exports = (robot) ->
     # TODO: Run .mods and process the results.
     # Use TWITCHCLIENT 3 (need to figure out how to read joins/parts).
     robot.adapter.command 'twitchclient', '3'
+    delete robot.brain.data.viewers['[object Object]']
 
   robot.respond /population$/i, (msg) ->
     count = Object.keys(robot.brain.data.users).length
