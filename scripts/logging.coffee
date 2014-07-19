@@ -38,53 +38,27 @@ module.exports = (robot) ->
   # Note: Roles such as moderator do not appear in this method.
   robot.hear /.*?\s?SPECIALUSER ([a-zA-Z0-9_]*) ([a-z]*)/, (msg) ->
     if msg.envelope.user.name is 'jtv'
-      data = JSON.stringify({
-        handle: msg.match[1],
-        isStaff: if msg.match[2] is 'staff' then true else false,
-        isTurbo: if msg.match[2] is 'turbo' then true else false,
-      })
-      # robot.http("http://api.avalonstar.tv/viewers")
-      #   .post(data) (err, res, body) ->
-      #     if err
-      #       console.log "Shit happened."
-      #       return
-      #     console.log "Response: #{body}"
+      viewer = robot.brain.viewers[msg.match[1]]
+      userdata = robot.brain.data['viewers'][viewer]
+      userdata['roles'] = [] if userdata['roles']?
+      userdata['roles'].push msg.match[2]
 
-      console.log "username: " + msg.match[1]
-      console.log "status: " + msg.match[2]
+      console.log "#{msg.match[1]} is a #{msg.match[2]}"
 
   # Listening for emoticon sets.
   # Expected value is a list of integers.
   robot.hear /EMOTESET ([a-zA-Z0-9_]*) (.*)/, (msg) ->
     if msg.envelope.user.name is 'jtv'
-      data = JSON.stringify({
-        handle: msg.match[1],
-        emotes: msg.match[2]
-      })
-      # robot.http("http://api.avalonstar.tv/viewers")
-      #   .post(data) (err, res, body) ->
-      #     if err
-      #       console.log "Shit happened."
-      #       return
-      #     console.log "Response: #{body}"
+      viewer = robot.brain.viewers[msg.match[1]]
+      robot.brain.data['viewers'][viewer]['emotes'] = msg.match[2]
 
-      console.log "username: " + msg.match[1]
-      console.log "emotes: " + msg.match[2]
+      console.log "#{msg.match[1]} has these emotes: #{msg.match[2]}"
 
   # Listening for a user's color.
   # Expected value is a hex code.
   robot.hear /USERCOLOR ([a-zA-Z0-9_]*) (#[A-Z0-9]{6})/, (msg) ->
     if msg.envelope.user.name is 'jtv'
-      data = JSON.stringify({
-        handle: msg.match[1],
-        color: msg.match[2]
-      })
-      # robot.http("http://api.avalonstar.tv/viewers")
-      #   .post(data) (err, res, body) ->
-      #     if err
-      #       console.log "Shit happened."
-      #       return
-      #     console.log "Response: #{body}"
+      viewer = robot.brain.viewers[msg.match[1]]
+      robot.brain.data['viewers'][viewer]['color'] = msg.match[2]
 
-      console.log "username: " + msg.match[1]
-      console.log "color: " + msg.match[2]
+      console.log "#{msg.match[1]} has uses this color: #{msg.match[2]}"
