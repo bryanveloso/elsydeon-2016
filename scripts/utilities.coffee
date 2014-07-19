@@ -15,15 +15,15 @@ module.exports = (robot) ->
   robot.respond /apifill$/i, (msg) ->
     # Grab the username and password for the API from environment variables.
     # Combine both so they can be included in a authorization header.
-    user = process.env.API_USERNAME
-    pass = process.env.API_PASSWORD
-    auth = 'Basic ' + new Buffer(user + ':' pass).toString('base64')
+    api_user = process.env.API_USERNAME
+    api_pass = process.env.API_PASSWORD
+    api_auth = 'Basic ' + new Buffer(api_user + ':' + api_pass).toString('base64')
 
     for viewers of robot.brain.data.viewers
       userdata = robot.brain.data.viewers[viewer]
       data = JSON.stringify({ id: userdata['pk'], username: userdata['name'] })
       robot.http('http://api.avalonstar.tv/v1/viewers')
-        .headers(Authorization: auth, Accept: 'application/json')
+        .headers(Authorization: api_auth, Accept: 'application/json')
         .post(data) (err, res, body) ->
           if err
             console.log "Shit happened."
