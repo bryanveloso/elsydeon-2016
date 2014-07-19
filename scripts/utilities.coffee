@@ -25,11 +25,8 @@ module.exports = (robot) ->
       robot.http('http://api.avalonstar.tv/v1/viewers')
         .headers(Authorization: api_auth, Accept: 'application/json')
         .post(data) (err, res, body) ->
-          if err
-            console.log "Shit happened."
-            return
           console.log "Response: #{body}"
-      msg.send "Added " + userdata['name'] + " ."
+          msg.send "Added " + userdata['name'] + " ."
 
   robot.respond /undo$/i, (msg) ->
     for user of robot.brain.data.users
