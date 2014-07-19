@@ -1,3 +1,6 @@
+# Description:
+#   Utilities that kinda sorta make my job easier.
+
 module.exports = (robot) ->
   robot.respond /backfill$/i, (msg) ->
     pk = 0 # Shell user is first.
