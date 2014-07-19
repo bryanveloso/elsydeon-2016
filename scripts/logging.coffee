@@ -2,11 +2,6 @@
 #   Functionality around logging to the Avalonstar(tv) API.
 
 module.exports = (robot) ->
-  # Fired when any user enters the room.
-  robot.enter (response) ->
-    console.log response.envelope
-    console.log "----- A new user has entered the room! -----"
-
   # General message listening.
   robot.hear /(.*)$/i, (msg) ->
     if msg.envelope.user.name isnt 'jtv'
