@@ -11,8 +11,9 @@ module.exports = (robot) ->
     # Use TWITCHCLIENT 3 (need to figure out how to read joins/parts).
     robot.adapter.command 'twitchclient', '3'
 
-    console.log robot.brain.data.viewers
-    console.log Object.keys(robot.brain.data.viewers).sort().reverse()[0];
+  robot.respond /last$/i, (msg) ->
+    msg.send robot.brain.data.viewers
+    msg.send Object.keys(robot.brain.data.viewers).sort().reverse()[0];
 
   robot.respond /population$/i, (msg) ->
     count = Object.keys(robot.brain.data.users).length
