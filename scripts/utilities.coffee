@@ -19,8 +19,8 @@ module.exports = (robot) ->
     api_pass = process.env.API_PASSWORD
     api_auth = 'Basic ' + new Buffer(api_user + ':' + api_pass).toString('base64')
 
-    for viewers of robot.brain.data.viewers
-      userdata = robot.brain.data.viewers[viewer]
+    for user of robot.brain.data.users
+      userdata = robot.brain.data['viewers'][user]
       data = JSON.stringify({ id: userdata['pk'], username: userdata['name'] })
       robot.http('http://api.avalonstar.tv/v1/viewers')
         .headers(Authorization: api_auth, Accept: 'application/json')
