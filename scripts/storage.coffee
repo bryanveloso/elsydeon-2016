@@ -11,9 +11,6 @@ Util = require "util"
 module.exports = (robot) ->
   robot.respond /show storage$/i, (msg) ->
     output = Util.inspect(robot.brain.data, false, 4)
-
-    # Only I should be able to run this.
-    # if robot.auth.hasRole(msg.envelope.user, 'admin')
     msg.send output
 
   robot.respond /show users$/i, (msg) ->
@@ -24,6 +21,5 @@ module.exports = (robot) ->
       response += " <#{user.email_address}>" if user.email_address
       response += "\n"
 
-    # Only I should be able to run this.
-    # if robot.auth.hasRole(msg.envelope.user, 'admin')
     msg.send response
+
