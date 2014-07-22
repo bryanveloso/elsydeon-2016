@@ -33,7 +33,7 @@ module.exports = (robot) ->
   robot.hear /.*?\s?SPECIALUSER ([a-zA-Z0-9_]*) ([a-z]*)/, (msg) ->
     if msg.envelope.user.name is 'jtv'
       viewer = robot.brain.userForName msg.match[1]
-      userdata = robot.brain.data['viewers'][viewer]
+      userdata = robot.brain.data['viewers'][viewer.name]
       userdata['roles'] = [] if userdata['roles']?
       userdata['roles'].push msg.match[2]
 
@@ -44,7 +44,7 @@ module.exports = (robot) ->
   robot.hear /EMOTESET ([a-zA-Z0-9_]*) (.*)/, (msg) ->
     if msg.envelope.user.name is 'jtv'
       viewer = robot.brain.userForName msg.match[1]
-      robot.brain.data['viewers'][viewer]['emotes'] = msg.match[2]
+      robot.brain.data['viewers'][viewer.name]['emotes'] = msg.match[2]
 
       console.log msg.match[1] + " has these emotes: " + msg.match[2]
 
@@ -53,6 +53,6 @@ module.exports = (robot) ->
   robot.hear /USERCOLOR ([a-zA-Z0-9_]*) (#[A-Z0-9]{6})/, (msg) ->
     if msg.envelope.user.name is 'jtv'
       viewer = robot.brain.userForName msg.match[1]
-      robot.brain.data['viewers'][viewer]['color'] = msg.match[2]
+      robot.brain.data['viewers'][viewer.name]['color'] = msg.match[2]
 
       console.log msg.match[1] + " has uses this color: " + msg.match[2]
