@@ -5,7 +5,8 @@ module.exports = (robot) ->
   # General message listening.
   robot.hear /(.*)$/i, (msg) ->
     if msg.envelope.user.name isnt 'jtv'
-      viewer = robot.brain.viewers[msg.envelope.user.name]
+      viewer = robot.brain.userForName msg.envelope.user.name
+      console.log viewer
       console.log "#{msg.envelope.user.name} (#{viewer.pk}): #{msg.envelope.message.text}"
 
       # Check if a user exists.
@@ -32,7 +33,7 @@ module.exports = (robot) ->
   # Note: Roles such as moderator do not appear in this method.
   robot.hear /.*?\s?SPECIALUSER ([a-zA-Z0-9_]*) ([a-z]*)/, (msg) ->
     if msg.envelope.user.name is 'jtv'
-      viewer = robot.brain.userFromId(msg.match[1])
+      viewer = robot.brain.userForName msg.match[1]
       userdata = robot.brain.data['viewers'][viewer]
       userdata['roles'] = [] if userdata['roles']?
       userdata['roles'].push msg.match[2]
@@ -43,7 +44,7 @@ module.exports = (robot) ->
   # Expected value is a list of integers.
   robot.hear /EMOTESET ([a-zA-Z0-9_]*) (.*)/, (msg) ->
     if msg.envelope.user.name is 'jtv'
-      viewer = robot.brain.userFromId(msg.match[1])
+      viewer = robot.brain.userForName msg.match[1]
       robot.brain.data['viewers'][viewer]['emotes'] = msg.match[2]
 
       console.log "#{msg.match[1]} has these emotes: #{msg.match[2]}"
@@ -52,7 +53,7 @@ module.exports = (robot) ->
   # Expected value is a hex code.
   robot.hear /USERCOLOR ([a-zA-Z0-9_]*) (#[A-Z0-9]{6})/, (msg) ->
     if msg.envelope.user.name is 'jtv'
-      viewer = robot.brain.userFromId(msg.match[1])
+      viewer = robot.brain.userForName msg.match[1]
       robot.brain.data['viewers'][viewer]['color'] = msg.match[2]
 
       console.log "#{msg.match[1]} has uses this color: #{msg.match[2]}"
