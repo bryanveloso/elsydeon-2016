@@ -29,7 +29,6 @@
 #   alexwilliamsca, tombell
 
 module.exports = (robot) ->
-
   unless process.env.HUBOT_AUTH_ADMIN?
     robot.logger.warning 'The HUBOT_AUTH_ADMIN environment variable not set'
 

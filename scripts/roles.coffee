@@ -11,7 +11,6 @@
 #   hubot holman is not an ego surfer
 
 module.exports = (robot) ->
-
   if process.env.HUBOT_AUTH_ADMIN?
     robot.logger.warning 'The HUBOT_AUTH_ADMIN environment variable is set not going to load roles.coffee, you should delete it'
     return
