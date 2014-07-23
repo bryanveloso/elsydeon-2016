@@ -15,10 +15,6 @@ module.exports = (robot) ->
     # This is to prevent unnecessary reloading of old data. :(
     robot.brain.resetSaveInterval 30
 
-  robot.respond /last$/i, (msg) ->
-    msg.send robot.brain.data.viewers
-    msg.send Object.keys(robot.brain.data.viewers).sort().reverse()[0]
-
   robot.respond /population$/i, (msg) ->
     count = Object.keys(robot.brain.data.users).length
     msg.send "#{count} people have visited Avalonstar."
