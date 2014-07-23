@@ -49,6 +49,7 @@ module.exports = (robot) ->
     if msg.envelope.user.name is 'jtv'
       viewer = robot.brain.userForName msg.match[1]
       robot.brain.data['viewers'][viewer.name]['emotes'] = msg.match[2]
+      robot.brain.save()
 
       console.log msg.match[1] + " has these emotes: " + msg.match[2]
 
@@ -58,5 +59,6 @@ module.exports = (robot) ->
     if msg.envelope.user.name is 'jtv'
       viewer = robot.brain.userForName msg.match[1]
       robot.brain.data['viewers'][viewer.name]['color'] = msg.match[2]
+      robot.brain.save()
 
       console.log msg.match[1] + " has uses this color: " + msg.match[2]
