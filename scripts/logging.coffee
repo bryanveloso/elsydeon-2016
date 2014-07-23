@@ -8,6 +8,7 @@ module.exports = (robot) ->
       viewer = robot.brain.userForName msg.envelope.user.name
       userdata = robot.brain.data['viewers'][viewer.name]
       console.log msg.envelope.user.name + " (" + userdata.pk + "): " + msg.envelope.message.text
+      console.log userdata
 
       # Check if a user exists.
       # robot.http('http://api.avalonstar.tv/v1/viewers/#{pk}')
@@ -33,12 +34,9 @@ module.exports = (robot) ->
   # Note: Roles such as moderator do not appear in this method.
   robot.hear /.*?\s?SPECIALUSER ([a-zA-Z0-9_]*) ([a-z]*)/, (msg) ->
     if msg.envelope.user.name is 'jtv'
-      console.log msg.match
       viewer = robot.brain.userForName msg.match[1]
-      console.log viewer
       userdata = robot.brain.data['viewers'][viewer.name]
-      console.log userdata
-      userdata['roles'] = [] if userdata['roles']?
+      userdata['roles'] ?= []
       userdata['roles'].push msg.match[2]
 
       console.log msg.match[1] + " is a " + msg.match[2] + " user."
