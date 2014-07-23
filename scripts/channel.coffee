@@ -32,6 +32,14 @@ module.exports = (robot) ->
       robot.brain.data.save()
       msg.send "Greetings #{username} and welcome to Avalonstar!"
 
+  robot.respond /reset roles$/i, (msg) ->
+    if robot.auth.hasRole(msg.envelope.user,'admin')
+      for viewer in robot.brain.data.viewers
+        delete viewer['roles']
+      msg.send "Viewer roles have been manually reset."
+      return
+    msg.send "I'm sorry #{msg.envelope.user.name}. You're not Bryan, so you can't run this."
+
   # TODO: Create a command that monitors the API for when the channel goes live.
   # <https://api.twitch.tv/kraken/streams/avalonstar>
 
