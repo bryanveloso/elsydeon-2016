@@ -33,12 +33,15 @@ module.exports = (robot) ->
   # Note: Roles such as moderator do not appear in this method.
   robot.hear /.*?\s?SPECIALUSER ([a-zA-Z0-9_]*) ([a-z]*)/, (msg) ->
     if msg.envelope.user.name is 'jtv'
+      console.log msg.match
       viewer = robot.brain.userForName msg.match[1]
+      console.log viewer
       userdata = robot.brain.data['viewers'][viewer.name]
+      console.log userdata
       userdata['roles'] = [] if userdata['roles']?
       userdata['roles'].push msg.match[2]
 
-      console.log msg.match[1] + " is a " + msg.match[2]
+      console.log msg.match[1] + " is a " + msg.match[2] + " user."
 
   # Listening for emoticon sets.
   # Expected value is a list of integers.
