@@ -22,6 +22,17 @@ module.exports = (robot) ->
   robot.respond /schedule$/i, (msg) ->
     msg.send "Follow Bryan (https://twitter.com/bryanveloso) for exact times!"
 
+  # Listen to every message. If we have a new user, add them to the list.
+  robot.hear /(.*)$/i, (msg) ->
+    username = msg.envelope.user.name
+    if user isnt 'jtv' and not robot.brain.data.viewers[username]
+      robot.brain.data.viewers[username] = {
+        'name': username
+        'pk': Object.keys(@robot.brain.data.users).length - 1  # Zero indexed.
+      }
+      robot.brain.data.save()
+      msg.send "Greetings #{username} and welcome to Avalonstar!"
+
   # TODO: Create a command that monitors the API for when the channel goes live.
   # <https://api.twitch.tv/kraken/streams/avalonstar>
 
