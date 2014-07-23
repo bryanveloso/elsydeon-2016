@@ -37,7 +37,10 @@ module.exports = (robot) ->
       viewer = robot.brain.userForName msg.match[1]
       userdata = robot.brain.data['viewers'][viewer.name]
       userdata['roles'] ?= []
-      userdata['roles'].push msg.match[2]
+
+      if msg.match[2] not in userdata['roles']
+        userdata['roles'].push msg.match[2]
+      robot.brain.save()
 
       console.log msg.match[1] + " is a " + msg.match[2] + " user."
 
