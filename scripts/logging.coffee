@@ -1,7 +1,7 @@
 # Description:
 #   Functionality around logging to the Avalonstar(tv) API.
 
-Pusher = require "node-pusher"
+Pusher = require "pusher"
 
 pusher = new Pusher
   appId: process.env['PUSHER_APP_ID']
