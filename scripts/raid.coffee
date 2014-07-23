@@ -6,7 +6,7 @@
 #   hubot raider <username> - Searches Twitch for <username> and returns a follow message plus last game played.
 
 module.exports = (robot) ->
-  robot.respond /raid (.*)/i, (msg) ->
+  robot.respond /raid ([a-zA-Z0-9_]*)/i, (msg) ->
     query = msg.match[1]
     robot.http("https://api.twitch.tv/kraken/channels/#{query}")
       .get() (err, res, body) ->
@@ -25,7 +25,7 @@ module.exports = (robot) ->
         for instruction in instructions
           msg.send instruction
 
-  robot.respond /raider (.*)/i, (msg) ->
+  robot.respond /raider ([a-zA-Z0-9_]*)/i, (msg) ->
     query = msg.match[1]
     robot.http("https://api.twitch.tv/kraken/channels/#{query}")
       .get() (err, res, body) ->
