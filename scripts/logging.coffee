@@ -6,7 +6,8 @@ module.exports = (robot) ->
   robot.hear /(.*)$/i, (msg) ->
     if msg.envelope.user.name isnt 'jtv'
       viewer = robot.brain.userForName msg.envelope.user.name
-      console.log msg.envelope.user.name + " (" + viewer.pk + "): " + msg.envelope.message.text
+      userdata = robot.brain.data['viewers'][viewer.name]
+      console.log msg.envelope.user.name + " (" + userdata.pk + "): " + msg.envelope.message.text
 
       # Check if a user exists.
       # robot.http('http://api.avalonstar.tv/v1/viewers/#{pk}')
