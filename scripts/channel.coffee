@@ -28,7 +28,7 @@ module.exports = (robot) ->
     if user isnt 'jtv' and not robot.brain.data.viewers[username]
       robot.brain.data.viewers[username] =
         'name': username
-        'pk': Object.keys(@robot.brain.data.users).length - 1  # Zero indexed.
+        'pk': Object.keys(robot.brain.data.users).length - 1  # Zero indexed.
       robot.brain.data.save()
       msg.send "Greetings #{username} and welcome to Avalonstar!"
 
