@@ -1,6 +1,13 @@
 # Description:
 #   Functionality around logging to the Avalonstar(tv) API.
 
+Pusher = require "node-pusher"
+
+pusher = new Pusher
+  appId: process.env['PUSHER_APP_ID']
+  key: process.env['PUSHER_API_KEY']
+  secret: process.env['PUSHER_SECRET']
+
 module.exports = (robot) ->
   # General message listening.
   robot.hear /(.*)$/i, (msg) ->
