@@ -21,6 +21,7 @@ module.exports = (robot) ->
 
       # Compose a dictionary to send to Pusher.
       json =
+        'timestamp': new Date();
         'username': msg.envelope.user.name
         'message': msg.envelope.message.text
         'roles': roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
