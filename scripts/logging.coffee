@@ -9,6 +9,9 @@ pusher = new Pusher
   secret: process.env['PUSHER_SECRET']
 
 module.exports = (robot) ->
+  robot.hear /(.*)$/i, (msg) ->
+    console.log msg.envelope
+
   # General message listening.
   robot.hear /(.*)$/i, (msg) ->
     if msg.envelope.user.name isnt 'jtv'
