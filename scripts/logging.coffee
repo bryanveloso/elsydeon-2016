@@ -15,6 +15,10 @@ module.exports = (robot) ->
       viewer = robot.brain.userForName msg.envelope.user.name
       userdata = robot.brain.data.viewers[viewer.name]
 
+      console.log "viewer: " + viewer
+      console.log "viewer roles: " + viewer[roles]
+      console.log "userdata roles: " + userdata[roles]
+
       # Compose a dictionary to send to Pusher.
       json =
         'username': msg.envelope.user.name
