@@ -15,11 +15,17 @@ module.exports = (robot) ->
       viewer = robot.brain.userForName msg.envelope.user.name
       userdata = robot.brain.data.viewers[viewer.name]
 
+      # Combine a user's roles (for moderators and myself only).
+      if robot.brain.data.users[viewer.name][roles]?
+        roles = userdata[roles].concat robot.brain.data.users[viewer.name][roles]
+      else
+        roles = userdata[roles]
+
       # Compose a dictionary to send to Pusher.
       json =
         'username': msg.envelope.user.name
         'message': msg.envelope.message.text
-        'roles': userdata[roles].concat robot.brain.data.users[viewer.name][roles]
+        'roles': roles
       pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
         console.log request
         console.log response
