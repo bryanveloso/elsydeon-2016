@@ -13,7 +13,17 @@ module.exports = (robot) ->
   robot.hear /(.*)$/i, (msg) ->
     if msg.envelope.user.name isnt 'jtv'
       viewer = robot.brain.userForName msg.envelope.user.name
-      userdata = robot.brain.data['viewers'][viewer.name]
+      userdata = robot.brain.data.viewers[viewer.name]
+
+      # Compose a dictionary to send to Pusher.
+      json =
+        'username': msg.envelope.user.name
+        'message': msg.envelope.message.text
+        'roles': userdata[roles].concat robot.brain.data.users[viewer.name][roles]
+      pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
+        console.log request
+        console.log response
+        console.log error
 
       # For debugging purposes.
       robot.logger.debug msg.envelope.user.name + " (" + userdata.pk + "): " + msg.envelope.message.text
