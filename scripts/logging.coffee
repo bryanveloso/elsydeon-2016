@@ -26,8 +26,8 @@ module.exports = (robot) ->
         console.log error
 
       # For debugging purposes.
-      robot.logger.debug msg.envelope.user.name + " (" + userdata.pk + "): " + msg.envelope.message.text
-      robot.logger.debug userdata
+      console.log msg.envelope.user.name + " (" + userdata.pk + "): " + msg.envelope.message.text
+      console.log userdata
 
       # Check if a user exists.
       # robot.http('http://api.avalonstar.tv/v1/viewers/#{pk}')
@@ -62,7 +62,7 @@ module.exports = (robot) ->
       robot.brain.save()
 
       # For debugging purposes.
-      robot.logger.debug msg.match[1] + " is a " + msg.match[2] + " user."
+      console.log msg.match[1] + " is a " + msg.match[2] + " user."
 
   # Listening for emoticon sets.
   # Expected value is a list of integers.
@@ -73,7 +73,7 @@ module.exports = (robot) ->
       robot.brain.save()
 
       # For debugging purposes.
-      robot.logger.debug msg.match[1] + " has these emotes: " + msg.match[2]
+      console.log msg.match[1] + " has these emotes: " + msg.match[2]
 
   # Listening for a user's color.
   # Expected value is a hex code.
@@ -84,4 +84,4 @@ module.exports = (robot) ->
       robot.brain.save()
 
       # For debugging purposes.
-      robot.logger.debug msg.match[1] + " has uses this color: " + msg.match[2]
+      console.log msg.match[1] + " has uses this color: " + msg.match[2]
