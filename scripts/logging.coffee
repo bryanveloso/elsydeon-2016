@@ -16,14 +16,14 @@ module.exports = (robot) ->
       userdata = robot.brain.data.viewers[viewer.name]
 
       console.log "viewer: " + viewer
-      console.log "viewer roles: " + viewer[roles]
-      console.log "userdata roles: " + userdata[roles]
+      console.log "viewer roles: " + viewer.roles
+      console.log "userdata roles: " + userdata.roles
 
       # Compose a dictionary to send to Pusher.
       json =
         'username': msg.envelope.user.name
         'message': msg.envelope.message.text
-        'roles': roles = if viewer[roles]? then userdata[roles].concat viewer[roles] else userdata[roles]
+        'roles': roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
       pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
         if error
           console.log "Pusher ran into an error: #{error}"
