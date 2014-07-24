@@ -14,8 +14,10 @@ module.exports = (robot) ->
     if msg.envelope.user.name isnt 'jtv'
       viewer = robot.brain.userForName msg.envelope.user.name
       userdata = robot.brain.data['viewers'][viewer.name]
-      console.log msg.envelope.user.name + " (" + userdata.pk + "): " + msg.envelope.message.text
-      console.log userdata
+
+      # For debugging purposes.
+      robot.logger.debug msg.envelope.user.name + " (" + userdata.pk + "): " + msg.envelope.message.text
+      robot.logger.debug userdata
 
       # Check if a user exists.
       # robot.http('http://api.avalonstar.tv/v1/viewers/#{pk}')
@@ -49,7 +51,8 @@ module.exports = (robot) ->
         userdata['roles'].push msg.match[2]
       robot.brain.save()
 
-      console.log msg.match[1] + " is a " + msg.match[2] + " user."
+      # For debugging purposes.
+      robot.logger.debug msg.match[1] + " is a " + msg.match[2] + " user."
 
   # Listening for emoticon sets.
   # Expected value is a list of integers.
@@ -59,7 +62,8 @@ module.exports = (robot) ->
       robot.brain.data['viewers'][viewer.name]['emotes'] = msg.match[2]
       robot.brain.save()
 
-      console.log msg.match[1] + " has these emotes: " + msg.match[2]
+      # For debugging purposes.
+      robot.logger.debug msg.match[1] + " has these emotes: " + msg.match[2]
 
   # Listening for a user's color.
   # Expected value is a hex code.
@@ -69,4 +73,5 @@ module.exports = (robot) ->
       robot.brain.data['viewers'][viewer.name]['color'] = msg.match[2]
       robot.brain.save()
 
-      console.log msg.match[1] + " has uses this color: " + msg.match[2]
+      # For debugging purposes.
+      robot.logger.debug msg.match[1] + " has uses this color: " + msg.match[2]
