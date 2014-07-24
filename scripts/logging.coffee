@@ -27,7 +27,6 @@ module.exports = (robot) ->
 
       # For debugging purposes.
       console.log msg.envelope.user.name + " (" + userdata.pk + "): " + msg.envelope.message.text
-      console.log userdata
 
       # Check if a user exists.
       # robot.http('http://api.avalonstar.tv/v1/viewers/#{pk}')
