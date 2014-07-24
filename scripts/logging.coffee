@@ -10,6 +10,7 @@ pusher = new Pusher
 
 module.exports = (robot) ->
   robot.hear /(.*)$/i, (msg) ->
+    console.log msg.match
     console.log msg.envelope
 
   # General message listening.
