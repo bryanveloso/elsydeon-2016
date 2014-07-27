@@ -10,8 +10,9 @@ pusher = new Pusher
 
 module.exports = (robot) ->
   robot.hear /(.*)$/i, (msg) ->
-    if msg.message.emote?
+    robot.adapter.bot.addListener 'action', (from, to, message) ->
       console.log "It's an emote!"
+      logger.debug " * From #{from} to #{to}: #{message}"
 
   # General message listening.
   robot.hear /(.*)$/i, (msg) ->
