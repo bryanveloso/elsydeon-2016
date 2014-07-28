@@ -12,6 +12,7 @@ module.exports = (robot) ->
   # Listen for general messages.
   robot.adapter.bot.addListener 'message', (from, to, message) ->
     unless from is 'jtv'
+      console.log "This is a message!"
       viewer = robot.brain.userForName from
       userdata = robot.brain.data.viewers from
 
@@ -30,6 +31,7 @@ module.exports = (robot) ->
   # If the user emotes, set json.emote to true.
   robot.adapter.bot.addListener 'action', (from, to, message) ->
     unless from is 'jtv'
+      console.log "This is an emote!"
       viewer = robot.brain.userForName from
       userdata = robot.brain.data.viewers from
 
