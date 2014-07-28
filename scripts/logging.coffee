@@ -17,7 +17,6 @@ module.exports = (robot) ->
 
       # Compose a dictionary to send to Pusher.
       json =
-        'emote': false
         'message': msg.envelope.message.text
         'roles': roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
         'timestamp': new Date()
@@ -25,7 +24,9 @@ module.exports = (robot) ->
 
       # If the user emotes, set json.emote to true.
       robot.adapter.bot.addListener 'action', (from, to, message) ->
+        console.log "This is an emote!"
         json.emote = true
+        console.log json
 
       # Send the dictionary to Pusher.
       pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
