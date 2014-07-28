@@ -9,6 +9,17 @@ pusher = new Pusher
   secret: process.env['PUSHER_SECRET']
 
 module.exports = (robot) ->
+  # Listen for general messages.
+  robot.adapter.bot.addListener 'message', (from, to, message) ->
+    console.log from
+    console.log to
+    console.log message
+
+  # If the user emotes, set json.emote to true.
+  robot.adapter.bot.addListener 'action', (from, to, message) ->
+    console.log "This is an emote!"
+    console.log json
+
   # General message listening.
   robot.hear /(.*)$/i, (msg) ->
     if msg.envelope.user.name isnt 'jtv'
@@ -16,18 +27,6 @@ module.exports = (robot) ->
       userdata = robot.brain.data.viewers[viewer.name]
 
       json = {}
-
-      # Listen for general messages.
-      robot.adapter.bot.addListener 'message', (from, to, message) ->
-        console.log from
-        console.log to
-        console.log message
-
-      # If the user emotes, set json.emote to true.
-      robot.adapter.bot.addListener 'action', (from, to, message) ->
-        console.log "This is an emote!"
-        json.emote = true
-        console.log json
 
       # Compose a dictionary to send to Pusher.
       json.message = msg.envelope.message.text
