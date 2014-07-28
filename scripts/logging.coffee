@@ -17,6 +17,12 @@ module.exports = (robot) ->
 
       json = {}
 
+      # Listen for general messages.
+      robot.adapter.bot.addListener 'message', (from, to, message) ->
+        console.log from
+        console.log to
+        console.log message
+
       # If the user emotes, set json.emote to true.
       robot.adapter.bot.addListener 'action', (from, to, message) ->
         console.log "This is an emote!"
