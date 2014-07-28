@@ -15,18 +15,19 @@ module.exports = (robot) ->
       viewer = robot.brain.userForName msg.envelope.user.name
       userdata = robot.brain.data.viewers[viewer.name]
 
-      # Compose a dictionary to send to Pusher.
-      json =
-        'message': msg.envelope.message.text
-        'roles': roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
-        'timestamp': new Date()
-        'username': msg.envelope.user.name
+      json = {}
 
       # If the user emotes, set json.emote to true.
       robot.adapter.bot.addListener 'action', (from, to, message) ->
         console.log "This is an emote!"
         json.emote = true
         console.log json
+
+      # Compose a dictionary to send to Pusher.
+      json.message = msg.envelope.message.text
+      json.roles = roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
+      json.timestamp = new Date()
+      json.username = msg.envelope.user.name
 
       # Send the dictionary to Pusher.
       pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
