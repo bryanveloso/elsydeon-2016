@@ -17,11 +17,11 @@ module.exports = (robot) ->
 
       # Compose a dictionary to send to Pusher.
       json =
+        'emote': false
+        'message': msg.envelope.message.text
+        'roles': roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
         'timestamp': new Date()
         'username': msg.envelope.user.name
-        'message': msg.envelope.message.text
-        'emote': false
-        'roles': roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
 
       # If the user emotes, set json.emote to true.
       robot.adapter.bot.addListener 'action', (from, to, message) ->
