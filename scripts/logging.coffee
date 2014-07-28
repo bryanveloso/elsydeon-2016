@@ -9,43 +9,44 @@ pusher = new Pusher
   secret: process.env['PUSHER_SECRET']
 
 module.exports = (robot) ->
-  # Listen for general messages.
-  robot.adapter.bot.addListener 'message', (from, to, message) ->
-    unless from is 'jtv'
-      console.log "This is a message!"
-      viewer = robot.brain.userForName from
-      userdata = robot.brain.data.viewers from
+  robot.hear /(.*)$/i, (msg) ->
+    # Listen for general messages.
+    robot.adapter.bot.addListener 'message', (from, to, message) ->
+      unless from is 'jtv'
+        console.log "This is a message!"
+        viewer = robot.brain.userForName from
+        userdata = robot.brain.data.viewers from
 
-      json =
-        'emote': false
-        'message': message
-        'roles': roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
-        'timestamp': new Date()
-        'username': from
+        json =
+          'emote': false
+          'message': message
+          'roles': roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
+          'timestamp': new Date()
+          'username': from
 
-      # Send the dictionary to Pusher.
-      pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
-        if error
-          console.log "Pusher ran into an error: #{error}"
+        # Send the dictionary to Pusher.
+        pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
+          if error
+            console.log "Pusher ran into an error: #{error}"
 
-  # If the user emotes, set json.emote to true.
-  robot.adapter.bot.addListener 'action', (from, to, message) ->
-    unless from is 'jtv'
-      console.log "This is an emote!"
-      viewer = robot.brain.userForName from
-      userdata = robot.brain.data.viewers from
+    # If the user emotes, set json.emote to true.
+    robot.adapter.bot.addListener 'action', (from, to, message) ->
+      unless from is 'jtv'
+        console.log "This is an emote!"
+        viewer = robot.brain.userForName from
+        userdata = robot.brain.data.viewers from
 
-      json =
-        'emote': true
-        'message': message
-        'roles': roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
-        'timestamp': new Date()
-        'username': from
+        json =
+          'emote': true
+          'message': message
+          'roles': roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
+          'timestamp': new Date()
+          'username': from
 
-      # Send the dictionary to Pusher.
-      pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
-        if error
-          console.log "Pusher ran into an error: #{error}"
+        # Send the dictionary to Pusher.
+        pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
+          if error
+            console.log "Pusher ran into an error: #{error}"
 
   # General message listening.
   # robot.hear /(.*)$/i, (msg) ->
