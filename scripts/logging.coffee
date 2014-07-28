@@ -9,11 +9,6 @@ pusher = new Pusher
   secret: process.env['PUSHER_SECRET']
 
 module.exports = (robot) ->
-  robot.hear /(.*)$/i, (msg) ->
-    robot.adapter.bot.addListener 'action', (from, to, message) ->
-      console.log "It's an emote!"
-      logger.debug " * From #{from} to #{to}: #{message}"
-
   # General message listening.
   robot.hear /(.*)$/i, (msg) ->
     if msg.envelope.user.name isnt 'jtv'
@@ -25,7 +20,14 @@ module.exports = (robot) ->
         'timestamp': new Date()
         'username': msg.envelope.user.name
         'message': msg.envelope.message.text
+        'emote': false
         'roles': roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
+
+      # If the user emotes, set json.emote to true.
+      robot.adapter.bot.addListener 'action', (from, to, message) ->
+        json.emote = true
+
+      # Send the dictionary to Pusher.
       pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
         if error
           console.log "Pusher ran into an error: #{error}"
