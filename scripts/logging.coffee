@@ -8,8 +8,14 @@ pusher = new Pusher
   key: process.env['PUSHER_API_KEY']
   secret: process.env['PUSHER_SECRET']
 
-pushMessage = (json, emote) ->
-  json.emote = emote
+pushMessage = (message, viewer, userdata, is_emote) ->
+  json =
+    'emote': is_emote
+    'message': message
+    'roles': roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
+    'timestamp': new Date()
+    'username': viewer.name
+
   pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
     if error
       console.log "Pusher ran into an error: #{error}"
@@ -21,36 +27,17 @@ module.exports = (robot) ->
       viewer = robot.brain.userForName from
       userdata = robot.brain.data.viewers[from]
 
-      json =
-        'emote': true
-        'message': message
-        'roles': roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
-        'timestamp': new Date()
-        'username': from
+      # Send the dictionary to Pusher.
+      pushMessage message, viewer, userdata, true
+
+  # Listen for general messages.
+  robot.adapter.bot.addListener 'message', (from, to, message) ->
+    unless from is 'jtv'
+      viewer = robot.brain.userForName from
+      userdata = robot.brain.data.viewers[from]
 
       # Send the dictionary to Pusher.
-      pushMessage json, true
-
-
-  robot.hear /(.*)$/i, (msg) ->
-    # Listen for general messages.
-    # robot.adapter.bot.addListener 'message', (from, to, message) ->
-    #   unless from is 'jtv'
-    #     console.log "This is a message!"
-    #     viewer = robot.brain.userForName from
-    #     userdata = robot.brain.data.viewers from
-
-    #     json =
-    #       'emote': false
-    #       'message': message
-    #       'roles': roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
-    #       'timestamp': new Date()
-    #       'username': from
-
-    #     # Send the dictionary to Pusher.
-    #     pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
-    #       if error
-    #         console.log "Pusher ran into an error: #{error}"
+      pushMessage message, viewer, userdata, false
 
   # General message listening.
   # robot.hear /(.*)$/i, (msg) ->
