@@ -12,11 +12,8 @@ module.exports = (robot) ->
   # If the user emotes, set json.emote to true.
   robot.adapter.bot.addListener 'action', (from, to, message) ->
     unless from is 'jtv'
-      console.log "This is an emote!"
       viewer = robot.brain.userForName from
-      console.log "viewer: " + viewer
       userdata = robot.brain.data.viewers[from]
-      console.log "userdata: " + userdata
 
       json =
         'emote': true
@@ -25,11 +22,8 @@ module.exports = (robot) ->
         'timestamp': new Date()
         'username': from
 
-      console.log "json: " + json
-
       # Send the dictionary to Pusher.
       pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
-        console.log "response: " + reponse
         if error
           console.log "Pusher ran into an error: #{error}"
 
