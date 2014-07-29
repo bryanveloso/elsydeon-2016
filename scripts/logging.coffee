@@ -8,6 +8,12 @@ pusher = new Pusher
   key: process.env['PUSHER_API_KEY']
   secret: process.env['PUSHER_SECRET']
 
+pushMessage = (json, emote) ->
+  json.emote = emote
+  pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
+    if error
+      console.log "Pusher ran into an error: #{error}"
+
 module.exports = (robot) ->
   # If the user emotes, set json.emote to true.
   robot.adapter.bot.addListener 'action', (from, to, message) ->
@@ -23,9 +29,8 @@ module.exports = (robot) ->
         'username': from
 
       # Send the dictionary to Pusher.
-      pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
-        if error
-          console.log "Pusher ran into an error: #{error}"
+      pushMessage json, true
+
 
   robot.hear /(.*)$/i, (msg) ->
     # Listen for general messages.
