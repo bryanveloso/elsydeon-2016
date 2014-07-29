@@ -15,7 +15,7 @@ module.exports = (robot) ->
       console.log "This is an emote!"
       viewer = robot.brain.userForName from
       console.log "viewer: " + viewer
-      userdata = robot.brain.data.viewers from
+      userdata = robot.brain.data.viewers[from]
       console.log "userdata: " + userdata
 
       json =
