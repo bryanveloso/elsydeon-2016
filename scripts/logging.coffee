@@ -39,28 +39,6 @@ module.exports = (robot) ->
       # Send the dictionary to Pusher.
       pushMessage message, viewer, userdata, false
 
-  # General message listening.
-  # robot.hear /(.*)$/i, (msg) ->
-  #   if msg.envelope.user.name isnt 'jtv'
-  #     viewer = robot.brain.userForName msg.envelope.user.name
-  #     userdata = robot.brain.data.viewers[viewer.name]
-
-  #     json = {}
-
-  #     # Compose a dictionary to send to Pusher.
-  #     json.message = msg.envelope.message.text
-  #     json.roles = roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
-  #     json.timestamp = new Date()
-  #     json.username = msg.envelope.user.name
-
-  #     # Send the dictionary to Pusher.
-  #     pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
-  #       if error
-  #         console.log "Pusher ran into an error: #{error}"
-
-  #     # For debugging purposes.
-  #     console.log msg.envelope.user.name + " (" + userdata.pk + "): " + msg.envelope.message.text
-
       # Check if a user exists.
       # robot.http('http://api.avalonstar.tv/v1/viewers/#{pk}')
       #   .get() (err, res, body) ->
