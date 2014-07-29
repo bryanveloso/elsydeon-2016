@@ -29,7 +29,7 @@ module.exports = (robot) ->
       console.log robot.name, Date.now(), string
 
   response_orig =
-    send: robot.Response.protoype.send
+    send: robot.Response.prototype.send
     reply: robot.Response.prototype.reply
 
   robot.Response.prototype.send = (strings...) ->
