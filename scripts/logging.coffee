@@ -24,6 +24,25 @@ module.exports = (robot) ->
   robot.adapter.bot.addListener 'raw', (message) ->
     console.log message
 
+  # Override send methods in the Response prototype sp that we can log Hubot's
+  # own replies. This is kind of evil, but there doesn't appear to be
+  # a better way. From: <https://github.com/jenrzzz/hubot-logger/>
+  log_response = (strings...) ->
+    for string in strings
+      console.log robot.name, Date.now(), string
+
+  response_orig =
+    send: robot.Response.prototype.send
+    reply: robot.Response.prototype.reply
+
+  robot.Response.prototype.send = (strings...) ->
+    log_response strings...
+    # response_orig.send.call @, strings...
+
+  robot.Response.prototype.reply = (strings...) ->
+    log_response strings...
+    # response_orig.reply.call @, strings...
+
   # If the user emotes, set json.emote to true.
   robot.adapter.bot.addListener 'action', (from, to, message) ->
     unless from is 'jtv'
