@@ -41,23 +41,23 @@ module.exports = (robot) ->
     log_response strings...
     response_orig.reply.call @, strings...
 
-  # If the user emotes, set json.emote to true.
-  robot.adapter.bot.addListener 'action', (from, to, message) ->
-    unless from is 'jtv'
-      viewer = robot.brain.userForName from
-      userdata = robot.brain.data.viewers[from]
+  # # If the user emotes, set json.emote to true.
+  # robot.adapter.bot.addListener 'action', (from, to, message) ->
+  #   unless from is 'jtv'
+  #     viewer = robot.brain.userForName from
+  #     userdata = robot.brain.data.viewers[from]
 
-      # Send the dictionary to Pusher.
-      pushMessage message, viewer, userdata, true
+  #     # Send the dictionary to Pusher.
+  #     pushMessage message, viewer, userdata, true
 
-  # Listen for general messages.
-  robot.adapter.bot.addListener 'message', (from, to, message) ->
-    unless from is 'jtv'
-      viewer = robot.brain.userForName from
-      userdata = robot.brain.data.viewers[from]
+  # # Listen for general messages.
+  # robot.adapter.bot.addListener 'message', (from, to, message) ->
+  #   unless from is 'jtv'
+  #     viewer = robot.brain.userForName from
+  #     userdata = robot.brain.data.viewers[from]
 
-      # Send the dictionary to Pusher.
-      pushMessage message, viewer, userdata, false
+  #     # Send the dictionary to Pusher.
+  #     pushMessage message, viewer, userdata, false
 
       # Check if a user exists.
       # robot.http('http://api.avalonstar.tv/v1/viewers/#{pk}')
