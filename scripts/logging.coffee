@@ -27,7 +27,7 @@ module.exports = (robot) ->
   log_response = (strings...) ->
     for string in strings
       console.log robot.name, Date.now(), string
-      pushMessage string, robot.brain.userForName robot.name, robot.brain.data.viewers[robot.name], false
+      pushMessage string, robot.brain.userForName(robot.name), robot.brain.data.viewers[robot.name], false
 
   response_orig =
     send: robot.Response.prototype.send
