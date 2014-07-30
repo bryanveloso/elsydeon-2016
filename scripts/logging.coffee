@@ -18,7 +18,7 @@ pushMessage = (message, viewer, userdata, is_emote) ->
 
   pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
     if error
-      console.log "Pusher ran into an error: #{error}"
+      robot.logger.debug "Pusher ran into an error: #{error}"
 
 module.exports = (robot) ->
   # Override send methods in the Response prototype sp that we can log Hubot's
@@ -26,7 +26,6 @@ module.exports = (robot) ->
   # a better way. From: <https://github.com/jenrzzz/hubot-logger/>
   log_response = (strings...) ->
     for string in strings
-      console.log robot.name, Date.now(), string
       pushMessage string, robot.brain.userForName(robot.name), robot.brain.data.viewers[robot.name], false
 
   response_orig =
@@ -41,23 +40,23 @@ module.exports = (robot) ->
     log_response strings...
     response_orig.reply.call @, strings...
 
-  # # If the user emotes, set json.emote to true.
-  # robot.adapter.bot.addListener 'action', (from, to, message) ->
-  #   unless from is 'jtv'
-  #     viewer = robot.brain.userForName from
-  #     userdata = robot.brain.data.viewers[from]
+  # If the user emotes, set json.emote to true.
+  robot.adapter.bot.addListener 'action', (from, to, message) ->
+    unless from is 'jtv'
+      viewer = robot.brain.userForName from
+      userdata = robot.brain.data.viewers[from]
 
-  #     # Send the dictionary to Pusher.
-  #     pushMessage message, viewer, userdata, true
+      # Send the dictionary to Pusher.
+      pushMessage message, viewer, userdata, true
 
-  # # Listen for general messages.
-  # robot.adapter.bot.addListener 'message', (from, to, message) ->
-  #   unless from is 'jtv'
-  #     viewer = robot.brain.userForName from
-  #     userdata = robot.brain.data.viewers[from]
+  # Listen for general messages.
+  robot.adapter.bot.addListener 'message', (from, to, message) ->
+    unless from is 'jtv'
+      viewer = robot.brain.userForName from
+      userdata = robot.brain.data.viewers[from]
 
-  #     # Send the dictionary to Pusher.
-  #     pushMessage message, viewer, userdata, false
+      # Send the dictionary to Pusher.
+      pushMessage message, viewer, userdata, false
 
       # Check if a user exists.
       # robot.http('http://api.avalonstar.tv/v1/viewers/#{pk}')
@@ -92,7 +91,7 @@ module.exports = (robot) ->
       robot.brain.save()
 
       # For debugging purposes.
-      console.log msg.match[1] + " is a " + msg.match[2] + " user."
+      robot.logger.debug msg.match[1] + " is a " + msg.match[2] + " user."
 
   # Listening for emoticon sets.
   # Expected value is a list of integers.
@@ -103,7 +102,7 @@ module.exports = (robot) ->
       robot.brain.save()
 
       # For debugging purposes.
-      console.log msg.match[1] + " has these emotes: " + msg.match[2]
+      robot.logger.debug msg.match[1] + " has these emotes: " + msg.match[2]
 
   # Listening for a user's color.
   # Expected value is a hex code.
@@ -114,4 +113,4 @@ module.exports = (robot) ->
       robot.brain.save()
 
       # For debugging purposes.
-      console.log msg.match[1] + " has uses this color: " + msg.match[2]
+      robot.logger.debug msg.match[1] + " has uses this color: " + msg.match[2]
