@@ -21,15 +21,13 @@ pushMessage = (message, viewer, userdata, is_emote) ->
       console.log "Pusher ran into an error: #{error}"
 
 module.exports = (robot) ->
-  robot.adapter.bot.addListener 'raw', (message) ->
-    console.log message
-
   # Override send methods in the Response prototype sp that we can log Hubot's
   # own replies. This is kind of evil, but there doesn't appear to be
   # a better way. From: <https://github.com/jenrzzz/hubot-logger/>
   log_response = (strings...) ->
     for string in strings
       console.log robot.name, Date.now(), string
+      pushMessage string, robot.brain.userForName robot.name, robot.brain.data.viewers[robot.name], false
 
   response_orig =
     send: robot.Response.prototype.send
