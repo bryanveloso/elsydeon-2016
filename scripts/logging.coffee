@@ -21,25 +21,6 @@ pushMessage = (message, viewer, userdata, is_emote) ->
       robot.logger.debug "Pusher ran into an error: #{error}"
 
 module.exports = (robot) ->
-  # Override send methods in the Response prototype sp that we can log Hubot's
-  # own replies. This is kind of evil, but there doesn't appear to be
-  # a better way. From: <https://github.com/jenrzzz/hubot-logger/>
-  log_response = (strings...) ->
-    for string in strings
-      pushMessage string, robot.brain.userForName(robot.name), robot.brain.data.viewers[robot.name], false
-
-  response_orig =
-    send: robot.Response.prototype.send
-    reply: robot.Response.prototype.reply
-
-  robot.Response.prototype.send = (strings...) ->
-    response_orig.send.call @, strings...
-    log_response strings...
-
-  robot.Response.prototype.reply = (strings...) ->
-    response_orig.reply.call @, strings...
-    log_response strings...
-
   # If the user emotes, set json.emote to true.
   robot.adapter.bot.addListener 'action', (from, to, message) ->
     unless from is 'jtv'
@@ -108,3 +89,22 @@ module.exports = (robot) ->
 
       # For debugging purposes.
       robot.logger.debug msg.match[1] + " has uses this color: " + msg.match[2]
+
+  # Override send methods in the Response prototype sp that we can log Hubot's
+  # own replies. This is kind of evil, but there doesn't appear to be
+  # a better way. From: <https://github.com/jenrzzz/hubot-logger/>
+  log_response = (strings...) ->
+    for string in strings
+      pushMessage string, robot.brain.userForName(robot.name), robot.brain.data.viewers[robot.name], false
+
+  response_orig =
+    send: robot.Response.prototype.send
+    reply: robot.Response.prototype.reply
+
+  robot.Response.prototype.send = (strings...) ->
+    response_orig.send.call @, strings...
+    log_response strings...
+
+  robot.Response.prototype.reply = (strings...) ->
+    response_orig.reply.call @, strings...
+    log_response strings...
