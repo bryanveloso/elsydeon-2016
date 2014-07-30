@@ -22,7 +22,7 @@ pushMessage = (message, viewer, userdata, is_emote) ->
 
 module.exports = (robot) ->
   robot.adapter.on 'send', (msg, response) ->
-    console.log "-----" + msg, response + "------"
+    console.log "Sent a message: #{msg}."
 
   # If the user emotes, set json.emote to true.
   robot.adapter.bot.addListener 'action', (from, to, message) ->
