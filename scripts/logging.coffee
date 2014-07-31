@@ -10,12 +10,15 @@ pusher = new Pusher
 
 pushMessage = (message, viewer, userdata, is_emote) ->
   json =
-    'color': color = if viewer.color? then viewer.color else null
     'emote': is_emote
     'message': message
     'roles': roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
     'timestamp': new Date()
     'username': viewer.name
+
+  # Add the viewer color... later?
+  if viewer.color?
+    json['color'] = viewer.color
 
   pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
     if error
