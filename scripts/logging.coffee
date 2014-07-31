@@ -10,7 +10,7 @@ pusher = new Pusher
 
 pushMessage = (message, viewer, userdata, is_emote) ->
   json =
-    'color': color = if viewer.color? then viewer.color else null
+    'color': viewer.color
     'emote': is_emote
     'message': message
     'roles': roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles

@@ -11,9 +11,9 @@ module.exports = (robot) ->
     # Use TWITCHCLIENT 3 (need to figure out how to read joins/parts).
     robot.adapter.command 'twitchclient', '3'
 
-    # Reset Hubot's autosave interval to 60s instead of 5.
+    # Reset Hubot's autosave interval to 30s instead of 5.
     # This is to prevent unnecessary reloading of old data. :(
-    robot.brain.resetSaveInterval 60
+    robot.brain.resetSaveInterval 30
 
   robot.respond /population$/i, (msg) ->
     count = Object.keys(robot.brain.data.users).length
@@ -23,13 +23,14 @@ module.exports = (robot) ->
     msg.send "Follow Bryan (https://twitter.com/bryanveloso) for exact times!"
 
   # Listen to every message. If we have a new user, add them to the list.
-  robot.adapter.bot.addListener 'message', (from, to, message) ->
-    if user isnt 'jtv' and robot.brain.data.viewers[from]?
-      robot.brain.data.viewers[from] =
-        'name': from
+  robot.hear /(.*)$/i, (msg) ->
+    username = msg.envelope.user.name
+    if user isnt 'jtv' and not robot.brain.data.viewers[username]
+      robot.brain.data.viewers[username] =
+        'name': username
         'pk': Object.keys(robot.brain.data.users).length - 1  # Zero indexed.
       robot.brain.data.save()
-      msg.send "Greetings #{from} and welcome to Avalonstar!"
+      msg.send "Greetings #{username} and welcome to Avalonstar!"
 
   robot.respond /reset roles$/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user,'admin')
