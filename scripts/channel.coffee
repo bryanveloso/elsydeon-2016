@@ -23,14 +23,14 @@ module.exports = (robot) ->
     msg.send "Follow Bryan (https://twitter.com/bryanveloso) for exact times!"
 
   # Listen to every message. If we have a new user, add them to the list.
-  robot.hear /(.*)$/i, (msg) ->
-    username = msg.envelope.user.name
-    if user isnt 'jtv' and not robot.brain.data.viewers[username]
-      robot.brain.data.viewers[username] =
-        'name': username
-        'pk': Object.keys(robot.brain.data.users).length - 1  # Zero indexed.
-      robot.brain.data.save()
-      msg.send "Greetings #{username} and welcome to Avalonstar!"
+  if robot.adapterName.indexOf('irc') > -1
+    robot.adapter.bot.addListener 'message', (from, to, message) ->
+      if user isnt 'jtv' and robot.brain.data.viewers[from]?
+        robot.brain.data.viewers[from] =
+          'name': from
+          'pk': Object.keys(robot.brain.data.users).length - 1  # Zero indexed.
+        robot.brain.data.save()
+        msg.send "Greetings #{from} and welcome to Avalonstar!"
 
   robot.respond /reset roles$/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user,'admin')
