@@ -23,15 +23,16 @@ module.exports = (robot) ->
     msg.send "Follow Bryan (https://twitter.com/bryanveloso) for exact times!"
 
   # Listen to joins. If we have a new user, add them to the list.
-  bot.addListener 'join', (channel, who) ->
-    if user isnt 'jtv' and not robot.brain.data.viewers[who]
-      robot.brain.data.viewers[who] =
-        'name': who
-        'pk': Object.keys(robot.brain.data.users).length - 1  # Zero indexed.
-      robot.brain.data.save()
+  if robot.adapter.bot?
+    robot.adapter.bot.addListener 'join', (channel, who) ->
+      if user isnt 'jtv' and not robot.brain.data.viewers[who]
+        robot.brain.data.viewers[who] =
+          'name': who
+          'pk': Object.keys(robot.brain.data.users).length - 1  # Zero indexed.
+        robot.brain.data.save()
 
-      # For debugging purposes.
-      robot.logger.debug "We have new blood: #{who}."
+        # For debugging purposes.
+        robot.logger.debug "We have new blood: #{who}."
 
   robot.respond /reset roles$/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user,'admin')
