@@ -23,14 +23,13 @@ module.exports = (robot) ->
     msg.send "Follow Bryan (https://twitter.com/bryanveloso) for exact times!"
 
   # Listen to every message. If we have a new user, add them to the list.
-  if robot.adapter.bot?
-    robot.adapter.bot.addListener 'message', (from, to, message) ->
-      if user isnt 'jtv' and robot.brain.data.viewers[from]?
-        robot.brain.data.viewers[from] =
-          'name': from
-          'pk': Object.keys(robot.brain.data.users).length - 1  # Zero indexed.
-        robot.brain.data.save()
-        msg.send "Greetings #{from} and welcome to Avalonstar!"
+  robot.adapter.bot.addListener 'message', (from, to, message) ->
+    if user isnt 'jtv' and robot.brain.data.viewers[from]?
+      robot.brain.data.viewers[from] =
+        'name': from
+        'pk': Object.keys(robot.brain.data.users).length - 1  # Zero indexed.
+      robot.brain.data.save()
+      msg.send "Greetings #{from} and welcome to Avalonstar!"
 
   robot.respond /reset roles$/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user,'admin')

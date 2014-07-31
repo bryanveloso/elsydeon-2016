@@ -22,19 +22,17 @@ pushMessage = (message, viewer, userdata, is_emote) ->
       robot.logger.debug "Pusher ran into an error: #{error}"
 
 module.exports = (robot) ->
-  # Only add the following listeners if we're using any IRC adapter.
-  if robot.adapter.bot?
-    # If the user emotes, set json.emote to true.
-    robot.adapter.bot.addListener 'action', (from, to, message) ->
-      unless from is 'jtv'
-        # Send the dictionary to Pusher.
-        pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], true
+  # If the user emotes, set json.emote to true.
+  robot.adapter.bot.addListener 'action', (from, to, message) ->
+    unless from is 'jtv'
+      # Send the dictionary to Pusher.
+      pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], true
 
-    # Listen for general messages.
-    robot.adapter.bot.addListener 'message', (from, to, message) ->
-      unless from is 'jtv'
-        # Send the dictionary to Pusher.
-        pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], false
+  # Listen for general messages.
+  robot.adapter.bot.addListener 'message', (from, to, message) ->
+    unless from is 'jtv'
+      # Send the dictionary to Pusher.
+      pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], false
 
       # Check if a user exists.
       # robot.http('http://api.avalonstar.tv/v1/viewers/#{pk}')
