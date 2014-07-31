@@ -22,15 +22,16 @@ module.exports = (robot) ->
   robot.respond /schedule$/i, (msg) ->
     msg.send "Follow Bryan (https://twitter.com/bryanveloso) for exact times!"
 
-  # Listen to every message. If we have a new user, add them to the list.
-  robot.hear /(.*)$/i, (msg) ->
-    username = msg.envelope.user.name
-    if user isnt 'jtv' and not robot.brain.data.viewers[username]
-      robot.brain.data.viewers[username] =
-        'name': username
+  # Listen to joins. If we have a new user, add them to the list.
+  bot.addListener 'join', (channel, who) ->
+    if user isnt 'jtv' and not robot.brain.data.viewers[who]
+      robot.brain.data.viewers[who] =
+        'name': who
         'pk': Object.keys(robot.brain.data.users).length - 1  # Zero indexed.
       robot.brain.data.save()
-      msg.send "Greetings #{username} and welcome to Avalonstar!"
+
+      # For debugging purposes.
+      robot.logger.debug "We have new blood: #{who}."
 
   robot.respond /reset roles$/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user,'admin')
