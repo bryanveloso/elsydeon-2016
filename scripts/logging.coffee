@@ -9,8 +9,9 @@ pusher = new Pusher
   secret: process.env['PUSHER_SECRET']
 
 pushMessage = (message, viewer, userdata, is_emote) ->
+  console.log viewer
+
   json =
-    'color': color = if viewer.color? then viewer.color else null
     'emote': is_emote
     'message': message
     'roles': roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
