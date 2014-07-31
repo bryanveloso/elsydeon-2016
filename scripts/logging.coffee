@@ -23,7 +23,7 @@ pushMessage = (message, viewer, userdata, is_emote) ->
 
 module.exports = (robot) ->
   # Only add the following listeners if we're using any IRC adapter.
-  if robot.adapterName.indexOf('irc') > -1
+  if robot.adapter.bot?
     # If the user emotes, set json.emote to true.
     robot.adapter.bot.addListener 'action', (from, to, message) ->
       unless from is 'jtv'

@@ -23,7 +23,7 @@ module.exports = (robot) ->
     msg.send "Follow Bryan (https://twitter.com/bryanveloso) for exact times!"
 
   # Listen to every message. If we have a new user, add them to the list.
-  if robot.adapterName.indexOf('irc') > -1
+  if robot.adapter.bot?
     robot.adapter.bot.addListener 'message', (from, to, message) ->
       if user isnt 'jtv' and robot.brain.data.viewers[from]?
         robot.brain.data.viewers[from] =
