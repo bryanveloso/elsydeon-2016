@@ -8,14 +8,14 @@ pusher = new Pusher
   key: process.env['PUSHER_API_KEY']
   secret: process.env['PUSHER_SECRET']
 
-pushMessage = (message, viewer, userdata, is_emote) ->
+pushMessage = (message, ircdata, twitchdata, is_emote) ->
   json =
-    'color': userdata.color
+    'color': twitchdata.color
     'emote': is_emote
     'message': message
-    'roles': roles = if viewer.roles? then userdata.roles.concat viewer.roles else userdata.roles
+    # 'roles': roles = if ircdata.roles? then twitchdata.roles.concat ircdata.roles else twitchdata.roles
     'timestamp': new Date()
-    'username': viewer.name
+    'username': ircdata.name
 
   pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
     if error
@@ -98,8 +98,8 @@ module.exports = (robot) ->
   log_response = (strings...) ->
     for string in strings
       setTimeout ( ->
-        console.log "elsy's data: #{robot.brain.userForName(robot.name)}"
-        console.log "elsy's data: #{robot.brain.data.viewers[robot.name]}"
+        console.log "elsy's data: #{robot.brain.userForName(robot.name).name}"
+        console.log "elsy's data: #{robot.brain.data.viewers[robot.name].name}"
         pushMessage string, robot.brain.userForName(robot.name), robot.brain.data.viewers[robot.name], false
       ), 250  # Wait 250ms before sending Elsydeon's message. This is a hack until we figure out why we need this.
 
@@ -109,10 +109,10 @@ module.exports = (robot) ->
 
   robot.Response.prototype.send = (strings...) ->
     response_orig.send.call @, strings...
-    log_response strings...
     robot.logger.debug strings...
+    log_response strings...
 
   robot.Response.prototype.reply = (strings...) ->
     response_orig.reply.call @, strings...
-    log_response strings...
     robot.logger.debug strings...
+    log_response strings...
