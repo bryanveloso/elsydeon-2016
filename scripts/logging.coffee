@@ -9,11 +9,14 @@ pusher = new Pusher
   secret: process.env['PUSHER_SECRET']
 
 pushMessage = (message, ircdata, twitchdata, is_emote) ->
+  ircroles = ircdata.roles or []
+  twitchroles = twitchdata.roles or []
+
   json =
     'color': twitchdata.color
     'emote': is_emote
     'message': message
-    # 'roles': roles = if ircdata.roles? then twitchdata.roles.concat ircdata.roles else twitchdata.roles
+    'roles': twitchdata.roles.concat ircdata.roles
     'timestamp': new Date()
     'username': ircdata.name
 
