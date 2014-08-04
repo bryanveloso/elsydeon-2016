@@ -11,7 +11,7 @@ pusher = new Pusher
 pushMessage = (message, ircdata, twitchdata, is_emote) ->
   ircroles = ircdata.roles or []
   twitchroles = twitchdata.roles or []
-  emotes = twitchdata.emotes.substring(1).slice(0, -1).split(',') or []
+  emotes = twitchdata.emotes or []
 
   json =
     'color': twitchdata.color
@@ -80,11 +80,14 @@ module.exports = (robot) ->
   robot.hear /EMOTESET ([a-zA-Z0-9_]*) (.*)/, (msg) ->
     if msg.envelope.user.name is 'jtv'
       viewer = robot.brain.userForName msg.match[1]
-      robot.brain.data['viewers'][viewer.name]['emotes'] = msg.match[2]
+
+      # Store EMOTESET as an actual list?
+      emotes = msg.match[2].substring(1).slice(0, -1).split(',')
+      robot.brain.data['viewers'][viewer.name]['emotes'] = emotes
       robot.brain.save()
 
       # For debugging purposes.
-      robot.logger.debug msg.match[1] + " has these emotes: " + msg.match[2]
+      robot.logger.debug msg.match[1] + " has these emotes: " + emotes
 
   # Listening for a user's color.
   # Expected value is a hex code.
