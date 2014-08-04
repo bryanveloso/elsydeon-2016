@@ -14,7 +14,7 @@ pushMessage = (message, ircdata, twitchdata, is_emote) ->
 
   json =
     'color': twitchdata.color
-    'emotes': twitchdata.emotes.substring(1).slice(0, -1).split ','
+    'emotes': twitchdata.emotes?.substring(1).slice(0, -1).split ','
     'is_emote': is_emote
     'message': message
     'roles': twitchroles.concat ircroles
