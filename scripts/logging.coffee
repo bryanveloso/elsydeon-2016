@@ -14,7 +14,8 @@ pushMessage = (message, ircdata, twitchdata, is_emote) ->
 
   json =
     'color': twitchdata.color
-    'emote': is_emote
+    'emotes': twitchdata.emotes
+    'is_emote': is_emote
     'message': message
     'roles': twitchroles.concat ircroles
     'timestamp': new Date()
