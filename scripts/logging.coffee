@@ -106,8 +106,6 @@ module.exports = (robot) ->
   log_response = (strings...) ->
     for string in strings
       setTimeout ( ->
-        console.log "elsy's data: #{robot.brain.userForName(robot.name).name}"
-        console.log "elsy's data: #{robot.brain.data.viewers[robot.name].name}"
         pushMessage string, robot.brain.userForName(robot.name), robot.brain.data.viewers[robot.name], false
       ), 250  # Wait 250ms before sending Elsydeon's message. This is a hack until we figure out why we need this.
 
