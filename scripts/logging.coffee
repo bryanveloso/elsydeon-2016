@@ -12,9 +12,14 @@ pushMessage = (message, ircdata, twitchdata, is_emote) ->
   ircroles = ircdata.roles or []
   twitchroles = twitchdata.roles or []
 
+  # Prepare emotes.
+  emotes = twitchdata.emotes.slice(0, 1).slice(0, -1)
+  emotes = emotes.split ","
+  console.log emotes
+
   json =
     'color': twitchdata.color
-    'emotes': twitchdata.emotes
+    'emotes': emotes
     'is_emote': is_emote
     'message': message
     'roles': twitchroles.concat ircroles
