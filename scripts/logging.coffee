@@ -11,10 +11,11 @@ pusher = new Pusher
 pushMessage = (message, ircdata, twitchdata, is_emote) ->
   ircroles = ircdata.roles or []
   twitchroles = twitchdata.roles or []
+  emotes = twitchdata.emotes.substring(1).slice(0, -1).split(',') or []
 
   json =
     'color': twitchdata.color
-    'emotes': twitchdata.emotes?.substring(1).slice(0, -1).split ','
+    'emotes': emotes
     'is_emote': is_emote
     'message': message
     'roles': twitchroles.concat ircroles
