@@ -18,9 +18,9 @@ module.exports = (robot) ->
 
         instructions = [
           "Alright everybody, hold on to your butts, it's time to raid #{streamer.display_name}! Here are the instructions:",
-          "1. The signal: gibeOops/ (don't spoil it)",
-          "2. The target: #{streamer.url} (they're currently playing #{streamer.game})",
-          "3. The battlecry: THE RAIDS OF AVALON <3 (or any emoticon of your choosing)"
+          "The signal: gibeOops/ (don't spoil it)",
+          "The target: #{streamer.url} (they're currently playing #{streamer.game})",
+          "The battlecry: THE RAIDS OF AVALON <3 (or any emoticon of your choosing)"
           ]
         for instruction in instructions
           msg.send instruction
