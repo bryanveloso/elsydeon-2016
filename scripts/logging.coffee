@@ -11,7 +11,7 @@ pusher = new Pusher
 createViewer = (username) ->
   console.log "Trying to create a viewer object for #{username}."
 
-  if robot.brain.data.viewers[username]?
+  if username of robot.brain.data.viewers
     console.log "Really trying to create viewer object now."
     robot.brain.data.viewers[username] =
       'name': username
