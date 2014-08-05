@@ -8,6 +8,17 @@ pusher = new Pusher
   key: process.env['PUSHER_API_KEY']
   secret: process.env['PUSHER_SECRET']
 
+createViewer = (username) ->
+  if robot.brain.data.viewers[username]?
+    pk = Object.keys(robot.brain.data.viewers).length + 1
+    robot.brain.data.viewers[username] =
+      'name': username
+      'pk': pk
+    robot.brain.save()
+
+    # For debugging purposes.
+    robot.logger.debug "Viewer object (pk:#{pk}) created for #{username}."
+
 pushMessage = (message, ircdata, twitchdata, is_emote) ->
   ircroles = ircdata.roles or []
   twitchroles = twitchdata.roles or []
@@ -31,12 +42,18 @@ module.exports = (robot) ->
     # If the user emotes, set json.emote to true.
     robot.adapter.bot.addListener 'action', (from, to, message) ->
       unless from is 'jtv'
+        # Create a viewer object.
+        createViewer from
+
         # Send the dictionary to Pusher.
         pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], true
 
     # Listen for general messages.
     robot.adapter.bot.addListener 'message', (from, to, message) ->
       unless from is 'jtv'
+        # Create a viewer object.
+        createViewer from
+
         # Send the dictionary to Pusher.
         pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], false
 
@@ -65,11 +82,11 @@ module.exports = (robot) ->
   robot.hear /.*?\s?SPECIALUSER ([a-zA-Z0-9_]*) ([a-z]*)/, (msg) ->
     if msg.envelope.user.name is 'jtv'
       viewer = robot.brain.userForName msg.match[1]
-      userdata = robot.brain.data['viewers'][viewer.name]
+      userdata = robot.brain.data.viewers[viewer.name]
       userdata['roles'] ?= []
 
-      if msg.match[2] not in userdata['roles']
-        userdata['roles'].push msg.match[2]
+      if msg.match[2] not in userdata.roles
+        userdata.roles.push msg.match[2]
       robot.brain.save()
 
       # For debugging purposes.
@@ -83,7 +100,7 @@ module.exports = (robot) ->
 
       # Store EMOTESET as an actual list?
       emotes = msg.match[2].substring(1).slice(0, -1).split(',')
-      robot.brain.data['viewers'][viewer.name]['emotes'] = emotes
+      robot.brain.data.viewers[viewer.name]['emotes'] = emotes
       robot.brain.save()
 
       # For debugging purposes.
@@ -94,7 +111,7 @@ module.exports = (robot) ->
   robot.hear /USERCOLOR ([a-zA-Z0-9_]*) (#[A-Z0-9]{6})/, (msg) ->
     if msg.envelope.user.name is 'jtv'
       viewer = robot.brain.userForName msg.match[1]
-      robot.brain.data['viewers'][viewer.name]['color'] = msg.match[2]
+      robot.brain.data.viewers[viewer.name]['color'] = msg.match[2]
       robot.brain.save()
 
       # For debugging purposes.
