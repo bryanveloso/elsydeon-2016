@@ -10,14 +10,14 @@ pusher = new Pusher
 
 createViewer = (username) ->
   if robot.brain.data.viewers[username]?
-    pk = Object.keys(robot.brain.data.viewers).length + 1
     robot.brain.data.viewers[username] =
       'name': username
-      'pk': pk
+      'pk': Object.keys(robot.brain.data.viewers).length + 1
     robot.brain.save()
 
     # For debugging purposes.
     robot.logger.debug "Viewer object (pk:#{pk}) created for #{username}."
+    robot.logger.debug "We have new blood: #{username}."
 
 pushMessage = (message, ircdata, twitchdata, is_emote) ->
   ircroles = ircdata.roles or []
