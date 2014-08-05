@@ -9,7 +9,10 @@ pusher = new Pusher
   secret: process.env['PUSHER_SECRET']
 
 createViewer = (username) ->
+  console.log "Trying to create a viewer object for #{username}."
+
   if robot.brain.data.viewers[username]?
+    console.log "Really trying to create viewer object now."
     robot.brain.data.viewers[username] =
       'name': username
       'pk': Object.keys(robot.brain.data.viewers).length + 1
