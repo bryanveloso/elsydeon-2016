@@ -9,6 +9,7 @@ pusher = new Pusher
   secret: process.env['PUSHER_SECRET']
 
 createViewer = (username) ->
+  robot.brain.data.viewers ?= {}
   if robot.brain.data.viewers[username]?
     robot.brain.data.viewers[username] =
       'name': username
