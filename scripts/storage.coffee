@@ -11,7 +11,8 @@ Util = require "util"
 module.exports = (robot) ->
   robot.respond /show storage$/i, (msg) ->
     output = Util.inspect(robot.brain.data, false, 4)
-    msg.send output
+    if robot.auth.hasRole(msg.envelope.user,'admin')
+      msg.send output
 
   robot.respond /show users$/i, (msg) ->
     response = ""
@@ -21,5 +22,11 @@ module.exports = (robot) ->
       response += " <#{user.email_address}>" if user.email_address
       response += "\n"
 
-    msg.send response
+    if robot.auth.hasRole(msg.envelope.user,'admin')
+      msg.send response
+
+  robot.respond /show user ([a-zA-Z0-9_]*)$/i, (msg) ->
+    viewer = robot.brain.userForName msg.match[1]
+    if robot.auth.hasRole(msg.envelope.user,'admin')
+      msg.send robot.brain.data.viewers[viewer.name]
 
