@@ -12,15 +12,14 @@ module.exports = (robot) ->
   createViewer = (username) ->
     console.log "Trying to create a viewer object for #{username}."
 
-    if robot.brain.data.viewers[username]?
-      robot.brain.data.viewers[username] =
-        'name': username
-        'pk': Object.keys(robot.brain.data.viewers).length + 1
-      robot.brain.save()
+    robot.brain.data.viewers[username] =
+      'name': username
+      'pk': Object.keys(robot.brain.data.viewers).length + 1
+    robot.brain.save()
 
-      # For debugging purposes.
-      robot.logger.debug "Viewer object (pk:#{pk}) created for #{username}."
-      robot.logger.debug "We have new blood: #{username}."
+    # For debugging purposes.
+    console.log "Viewer object (pk:#{pk}) created for #{username}."
+    console.log "We have new blood: #{username}."
 
   pushMessage = (message, ircdata, twitchdata, is_emote) ->
     ircroles = ircdata.roles or []
