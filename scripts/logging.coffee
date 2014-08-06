@@ -14,7 +14,7 @@ module.exports = (robot) ->
     console.log robot.brain.data.viewers[username]
     console.log Object.keys(robot.brain.data.viewers).length + 1
 
-    robot.brain.data.viewers[username] =
+    robot.brain.data['viewers'][username] =
       'name': username
       'pk': Object.keys(robot.brain.data.viewers).length + 1
     robot.brain.save()
