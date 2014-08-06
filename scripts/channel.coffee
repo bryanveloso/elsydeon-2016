@@ -29,7 +29,7 @@ module.exports = (robot) ->
         robot.brain.data.viewers[who] =
           'name': who
           'pk': Object.keys(robot.brain.data.users).length - 1  # Zero indexed.
-        robot.brain.data.save()
+        robot.brain.save()
 
         # For debugging purposes.
         robot.logger.debug "We have new blood: #{who}."
