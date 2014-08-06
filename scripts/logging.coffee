@@ -8,38 +8,38 @@ pusher = new Pusher
   key: process.env['PUSHER_API_KEY']
   secret: process.env['PUSHER_SECRET']
 
-createViewer = (username) ->
-  console.log "Trying to create a viewer object for #{username}."
-  console.log "Really trying to create viewer object now."
-
-  robot.brain.data.viewers[username] =
-    'name': username
-    'pk': Object.keys(robot.brain.data.viewers).length + 1
-  robot.brain.save()
-
-  # For debugging purposes.
-  robot.logger.debug "Viewer object (pk:#{pk}) created for #{username}."
-  robot.logger.debug "We have new blood: #{username}."
-
-pushMessage = (message, ircdata, twitchdata, is_emote) ->
-  ircroles = ircdata.roles or []
-  twitchroles = twitchdata.roles or []
-  emotes = twitchdata.emotes or []
-
-  json =
-    'color': twitchdata.color
-    'emotes': emotes
-    'is_emote': is_emote
-    'message': message
-    'roles': twitchroles.concat ircroles
-    'timestamp': new Date()
-    'username': ircdata.name
-
-  pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
-    if error
-      robot.logger.debug "Pusher ran into an error: #{error}"
-
 module.exports = (robot) ->
+  createViewer = (username) ->
+    console.log "Trying to create a viewer object for #{username}."
+
+    if robot.brain.data.viewers[username]?
+      robot.brain.data.viewers[username] =
+        'name': username
+        'pk': Object.keys(robot.brain.data.viewers).length + 1
+      robot.brain.save()
+
+      # For debugging purposes.
+      robot.logger.debug "Viewer object (pk:#{pk}) created for #{username}."
+      robot.logger.debug "We have new blood: #{username}."
+
+  pushMessage = (message, ircdata, twitchdata, is_emote) ->
+    ircroles = ircdata.roles or []
+    twitchroles = twitchdata.roles or []
+    emotes = twitchdata.emotes or []
+
+    json =
+      'color': twitchdata.color
+      'emotes': emotes
+      'is_emote': is_emote
+      'message': message
+      'roles': twitchroles.concat ircroles
+      'timestamp': new Date()
+      'username': ircdata.name
+
+    pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
+      if error
+        robot.logger.debug "Pusher ran into an error: #{error}"
+
   if robot.adapter.bot?
     # If the user emotes, set json.emote to true.
     robot.adapter.bot.addListener 'action', (from, to, message) ->
