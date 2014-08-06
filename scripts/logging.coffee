@@ -11,6 +11,8 @@ pusher = new Pusher
 module.exports = (robot) ->
   createViewer = (username) ->
     console.log "Trying to create a viewer object for #{username}."
+    console.log robot.brain.data.viewers[username]
+    console.log Object.keys(robot.brain.data.viewers).length + 1
 
     robot.brain.data.viewers[username] =
       'name': username
