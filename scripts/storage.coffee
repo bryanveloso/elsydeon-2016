@@ -28,5 +28,5 @@ module.exports = (robot) ->
   robot.respond /show user ([a-zA-Z0-9_]*)$/i, (msg) ->
     viewer = robot.brain.userForName msg.match[1]
     if robot.auth.hasRole(msg.envelope.user,'admin')
-      msg.send robot.brain.data.viewers[viewer.name]
+      msg.send robot.brain.data.viewers[viewer]
 
