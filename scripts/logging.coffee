@@ -10,18 +10,17 @@ pusher = new Pusher
 
 module.exports = (robot) ->
   createViewer = (username) ->
-    console.log "Trying to create a viewer object for #{username}."
-    console.log robot.brain.data.viewers[username]
-    console.log Object.keys(robot.brain.data.viewers).length + 1
+    robot.logger.debug "Trying to create a viewer object for #{username}."
 
-    robot.brain.data['viewers'][username] =
-      'name': username
-      'pk': Object.keys(robot.brain.data.viewers).length + 1
-    robot.brain.save()
+    pk = Object.keys(robot.brain.data.viewers).length + 1
+    if robot.brain.data['viewers'][username]?
+      robot.brain.data['viewers'][username] =
+        'name': username
+        'pk': pk
+      robot.brain.save()
 
     # For debugging purposes.
-    console.log "Viewer object (pk:#{pk}) created for #{username}."
-    console.log "We have new blood: #{username}."
+    robot.logger.debug "Viewer object (pk:#{pk}) created for #{username}."
 
   pushMessage = (message, ircdata, twitchdata, is_emote) ->
     ircroles = ircdata.roles or []
