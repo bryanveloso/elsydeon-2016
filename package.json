@@ -21,6 +21,7 @@
     "url": "https://github.com/github/hubot.git"
   },
   "dependencies": {
+    "firebase": "^1.0.18",
     "hubot": ">= 2.8.0 < 3.0.0",
     "hubot-irc-avalonstar": "^0.1.5",
     "hubot-scripts": ">= 2.5.0 < 3.0.0",
