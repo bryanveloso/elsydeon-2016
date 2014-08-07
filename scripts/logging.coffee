@@ -26,7 +26,7 @@ pushMessage = (message, ircdata, twitchdata, is_emote) ->
 
   # Firebase. Testing this out.
   messages = firebase.child('messages');
-  messages.set json
+  messages.push json
 
   # Pusher.
   pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
