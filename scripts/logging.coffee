@@ -1,8 +1,10 @@
 # Description:
 #   Functionality around logging to the Avalonstar(tv) API.
 
+Firebase = require 'firebase'
 Pusher = require 'pusher'
 
+firebase = new Firebase 'https://avalonstar.firebaseio.com/'
 pusher = new Pusher
   appId: process.env['PUSHER_APP_ID']
   key: process.env['PUSHER_API_KEY']
@@ -22,6 +24,11 @@ pushMessage = (message, ircdata, twitchdata, is_emote) ->
     'timestamp': new Date()
     'username': ircdata.name
 
+  # Firebase. Testing this out.
+  messages = firebase.child('messages');
+  messages.set json
+
+  # Pusher.
   pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
     if error
       robot.logger.debug "Pusher ran into an error: #{error}"
