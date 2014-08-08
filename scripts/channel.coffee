@@ -28,7 +28,6 @@ module.exports = (robot) ->
       if user isnt 'jtv' and not robot.brain.data.viewers[who]
         robot.brain.data.viewers[who] =
           'name': who
-          'pk': Object.keys(robot.brain.data.users).length - 1  # Zero indexed.
         robot.brain.save()
 
         # For debugging purposes.
