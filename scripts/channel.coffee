@@ -22,6 +22,27 @@ module.exports = (robot) ->
   robot.respond /schedule$/i, (msg) ->
     msg.send "Follow Bryan (https://twitter.com/bryanveloso) for exact times!"
 
+  # Start the specified broadcast.
+  robot.respond /start episode ([0-9]*)$/i, (msg) ->
+    if robot.auth.hasRole(msg.envelope.user,'admin')
+      key = 'currentEpisode'
+      episode = robot.brain.get(key)
+      unless episode?
+        robot.brain.set(key, msg.match[1])
+    msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can specify the current episode."
+
+
+  # End a specific broadcast by deleting the key if:
+  #   1) The 'currentEpisode' key is not null.
+  #   2) The broadcast number entered matches the key's value.
+  robot.respond /end episode ([0-9]*)$/i, (msg) ->
+    if robot.auth.hasRole(msg.envelope.user,'admin')
+      key = 'currentEpisode'
+      episode = robot.brain.get(key)
+      if episode and episode is msg.match[1]
+        robot.brain.remove(key)
+    msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can end the current episode."
+
   # Listen to joins. If we have a new user, add them to the list.
   if robot.adapter.bot?
     robot.adapter.bot.addListener 'join', (channel, who) ->
