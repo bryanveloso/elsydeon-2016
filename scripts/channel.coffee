@@ -29,13 +29,17 @@ module.exports = (robot) ->
       episode = robot.brain.get(key)
       unless episode?
         robot.brain.set(key, msg.match[1])
-        msg.send "Got it Bryan. It's episode #{episode} time!"
+        msg.send "Got it Bryan. It's episode #{msg.match[1]} time!"
+        return
+
     msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can specify the current episode."
 
   robot.respond /current episode$/i, (msg) ->
     episode = robot.brain.get('currentEpisode')
     if episode?
       msg.send "Hey #{msg.envelope.user.name}, you're watching Avalonstar ##{episode}."
+      return
+
     msg.send "Sorry #{msg.envelope.user.name}, this is either not a numbered episode or one hasn't been set."
 
   # End a specific broadcast by deleting the key if:
@@ -47,7 +51,9 @@ module.exports = (robot) ->
       episode = robot.brain.get(key)
       if episode and episode is msg.match[1]
         robot.brain.remove(key)
-        msg.send "Episode #{episode} has ended. Hope you had a good cast! Remember to look for the highlights! gibeHype"
+        msg.send "Episode #{msg.match[1]} has ended. Hope you had a good cast! Remember to look for the highlights! gibeHype"
+        return
+
     msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can end the current episode."
 
   # Listen to joins. If we have a new user, add them to the list.
