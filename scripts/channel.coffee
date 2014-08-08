@@ -51,7 +51,7 @@ module.exports = (robot) ->
       episode = robot.brain.get(key)
       if episode and episode is msg.match[1]
         robot.brain.remove(key)
-        msg.send "Episode #{msg.match[1]} has ended. Hope you had a good cast! Remember to look for the highlights! gibeHype"
+        msg.send "Episode #{msg.match[1]} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
         return
 
     msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can end the current episode."
