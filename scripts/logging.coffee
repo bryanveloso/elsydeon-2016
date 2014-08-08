@@ -107,6 +107,7 @@ module.exports = (robot) ->
     for string in strings
       setTimeout ( ->
         pushMessage string, robot.brain.userForName(robot.name), robot.brain.data.viewers[robot.name], false
+        createUser robot.brain.userForName(robot.name)
       ), 250  # Wait 250ms before sending Elsydeon's message. This is a hack until we figure out why we need this.
 
   response_orig =
