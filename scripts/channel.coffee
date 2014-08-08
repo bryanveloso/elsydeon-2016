@@ -24,7 +24,7 @@ module.exports = (robot) ->
 
   # Start the specified broadcast.
   robot.respond /start episode ([0-9]*)$/i, (msg) ->
-    if robot.auth.hasRole(msg.envelope.user,'admin')
+    if robot.auth.hasRole(msg.envelope.user, 'admin')
       key = 'currentEpisode'
       episode = robot.brain.get(key)
       unless episode?
@@ -46,7 +46,7 @@ module.exports = (robot) ->
   #   1) The 'currentEpisode' key is not null.
   #   2) The broadcast number entered matches the key's value.
   robot.respond /end episode ([0-9]*)$/i, (msg) ->
-    if robot.auth.hasRole(msg.envelope.user,'admin')
+    if robot.auth.hasRole(msg.envelope.user, 'admin')
       key = 'currentEpisode'
       episode = robot.brain.get(key)
       if episode and episode is msg.match[1]
@@ -68,7 +68,7 @@ module.exports = (robot) ->
         robot.logger.debug "We have new blood: #{who}."
 
   robot.respond /reset roles$/i, (msg) ->
-    if robot.auth.hasRole(msg.envelope.user,'admin')
+    if robot.auth.hasRole(msg.envelope.user, 'admin')
       for viewer in robot.brain.data.viewers
         delete viewer['roles']
       msg.send "Viewer roles have been manually reset."

@@ -111,7 +111,7 @@ module.exports = (robot) ->
     adminNames = []
     for admin in admins
       user = robot.brain.userForId(admin)
-      unless robot.auth.hasRole(msg.envelope.user,'admin')
+      unless robot.auth.hasRole(msg.envelope.user, 'admin')
         adminNames.push user.name if user?
 
     if adminNames.length > 0
