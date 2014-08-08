@@ -34,7 +34,9 @@ module.exports = (robot) ->
 
   robot.respond /current episode$/i, (msg) ->
     episode = robot.brain.get(key)
-    msg.send "Hey #{msg.envelope.user.name}, you're watching Avalonstar ##{episode}."
+    if episode?
+      msg.send "Hey #{msg.envelope.user.name}, you're watching Avalonstar ##{episode}."
+    msg.send "Sorry #{msg.envelope.user.name}, this is either not a numbered episode or one hasn't been set."
 
   # End a specific broadcast by deleting the key if:
   #   1) The 'currentEpisode' key is not null.
