@@ -33,7 +33,7 @@ module.exports = (robot) ->
     msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can specify the current episode."
 
   robot.respond /current episode$/i, (msg) ->
-    episode = robot.brain.get(key)
+    episode = robot.brain.get('currentEpisode')
     if episode?
       msg.send "Hey #{msg.envelope.user.name}, you're watching Avalonstar ##{episode}."
     msg.send "Sorry #{msg.envelope.user.name}, this is either not a numbered episode or one hasn't been set."
