@@ -11,7 +11,10 @@ module.exports = (robot) ->
     msg.send "https://twitter.com/bryanveloso"
 
   robot.respond /facebook$/i, (msg) ->
-    msg.send "https://facebook.com/bryanveloso"
+    msg.send "https://facebook.com/avalonstar"
+
+  robot.respond /steam$/i, (msg) ->
+    msg.send "http://steamcommunity.com/groups/avalonstartv"
 
   robot.respond /tweet$/i, (msg) ->
     message = "Are you not entertained? If you are, then help us promote the channel:"
