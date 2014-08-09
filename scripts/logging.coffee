@@ -22,11 +22,13 @@ module.exports = (robot) ->
         viewers.child(username).set json
         robot.logger.debug "We have new blood: #{username}."
       else
+        # Add the current episode number (if available) to the user's list
+        # of viewed broadcasts.
         episode = robot.brain.get('currentEpisode')
         if episode?
           json = {}
-          json[robot.brain.get('currentEpisode')] = true
-          viewers.child(username).child('broadcasts').set json
+          json[episode] = true
+          viewers.child(username).child('episodes').set json
 
   pushMessage = (message, ircdata, twitchdata, is_emote) ->
     ircroles = ircdata.roles or []
