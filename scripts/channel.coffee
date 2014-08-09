@@ -32,6 +32,11 @@ module.exports = (robot) ->
         msg.send "Got it Bryan. It's episode #{msg.match[1]} time!"
         return
 
+      # If there's an active episode, we shouldn't be setting one on top of it.
+      msg.send "Sorry Bryan. Episode #{episode} is the currently active episode. Can't set another one."
+      return
+
+    # You're not me? GTFO. D:
     msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can specify the current episode."
 
   robot.respond /current episode$/i, (msg) ->
@@ -39,7 +44,6 @@ module.exports = (robot) ->
     if episode?
       msg.send "Hey #{msg.envelope.user.name}, you're watching Avalonstar ##{episode}."
       return
-
     msg.send "Sorry #{msg.envelope.user.name}, this is either not a numbered episode or one hasn't been set."
 
   # End a specific broadcast by deleting the key if:
@@ -54,6 +58,11 @@ module.exports = (robot) ->
         msg.send "Episode #{msg.match[1]} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
         return
 
+      # Can't end a broadcast if we've never set one. o_o;
+      msg.send "Sorry Bryan. You can't end a broadcast that's never started. Silly."
+      return
+
+    # Stop trying to be me, seriously. D:
     msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can end the current episode."
 
   # Listen to joins. If we have a new user, add them to the list.
