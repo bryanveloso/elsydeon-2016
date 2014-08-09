@@ -24,7 +24,7 @@ module.exports = (robot) ->
       else
         episode = robot.brain.get('currentEpisode')
         if episode?
-          viewers.child(username).child('broadcasts').push [robot.brain.get('currentEpisode')]
+          viewers.child(username).child('broadcasts').push robot.brain.get('currentEpisode')
 
   pushMessage = (message, ircdata, twitchdata, is_emote) ->
     ircroles = ircdata.roles or []
