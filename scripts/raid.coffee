@@ -53,7 +53,7 @@ module.exports = (robot) ->
           # First, add the raid to our general record.
           json =
             'game': streamer.game
-            'timestamp': new Date().getTime()
+            'timestamp': Firebase.ServerValue.TIMESTAMP
             'username': streamer.name
           raids = firebase.child('raids')
           raids.push json

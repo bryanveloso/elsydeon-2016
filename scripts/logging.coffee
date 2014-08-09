@@ -42,7 +42,7 @@ module.exports = (robot) ->
       'is_emote': is_emote
       'message': message
       'roles': twitchroles.concat ircroles
-      'timestamp': new Date()
+      'timestamp': Firebase.ServerValue.TIMESTAMP
       'username': ircdata.name
 
     # Firebase. Testing this out.
