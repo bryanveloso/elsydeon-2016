@@ -28,6 +28,7 @@ pushMessage = (message, ircdata, twitchdata, is_emote) ->
   json =
     'color': twitchdata.color
     'emotes': emotes
+    'episode': robot.brain.get('currentEpisode')
     'is_emote': is_emote
     'message': message
     'roles': twitchroles.concat ircroles
