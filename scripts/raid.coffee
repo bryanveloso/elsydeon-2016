@@ -30,6 +30,15 @@ module.exports = (robot) ->
             msg.send instruction
           return
 
+          # Let's record this target.
+          json =
+            'game': streamer.game
+            'timestamp': Firebase.ServerValue.TIMESTAMP
+            'username': streamer.name
+          targets = firebase.child('targets')
+          targets.push json
+      return
+
     # You are not me, you can't run this. D:
     msg.send "Woah there #{msg.envelope.user.name}. Only Bryan can choose a raid target."
 
