@@ -5,6 +5,9 @@
 #   hubot raid <username> - Posts raiding instructions for a specific user.
 #   hubot raider <username> - Searches Twitch for <username> and returns a follow message plus last game played.
 
+Firebase = require 'firebase'
+firebase = new Firebase 'https://avalonstar.firebaseio.com/'
+
 module.exports = (robot) ->
   robot.respond /raid ([a-zA-Z0-9_]*)/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user, 'admin')
@@ -45,6 +48,21 @@ module.exports = (robot) ->
           if streamer.game
             message = "#{message} They've been playing: #{streamer.game}."
           msg.send message
+
+          # Let's record this raid.
+          # First, add the raid to our general record.
+          json =
+            'game': streamer.game
+            'timestamp': new Date().getTime()
+            'username': streamer.name
+          raids = firebase.child('raids')
+          raids.push json
+
+          # Secondly, increment the number of times a user has raided.
+          # (This count only counts back to raids since episode 50.)
+          raider = firebase.child("viewers/#{streamer.name}/raids")
+          raider.transaction = (raids) ->
+            return raids + 1
           return
 
     # Do you have a sword? No? Hah.
