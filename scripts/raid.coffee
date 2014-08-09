@@ -59,18 +59,15 @@ module.exports = (robot) ->
           msg.send message
 
           # Let's record this raid.
-          # Add the raid to our general record.
-          timestamp = Firebase.ServerValue.TIMESTAMP
+          # First, add the raid to our general record.
           json =
             'game': streamer.game
-            'timestamp': timestamp
+            'timestamp': Firebase.ServerValue.TIMESTAMP
             'username': streamer.name
-
           raids = firebase.child('raids')
-          raid_reference = raids.push
-          raid_reference.setWithPriority json, timestamp
+          raids.push json
 
-          # Finally, increment the number of times a user has raided.
+          # Secondly, increment the number of times a user has raided.
           # (This count only counts back to raids since episode 50.)
           raider = firebase.child("viewers/#{streamer.name}/raids")
           raider.transaction (raids) ->
