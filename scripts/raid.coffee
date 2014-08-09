@@ -59,28 +59,22 @@ module.exports = (robot) ->
           msg.send message
 
           # Let's record this raid.
-          # First, let's see if we've run this command for this raider in the
-          # past five minutes. This is to prevent multiple mods or myself from
-          # incrementing the raid record.
-          raids = firebase.child('raids')
-          last_raid_timestamp = Firebase.ServerValue.TIMESTAMP - (5 * 60 * 1000)
-          raids.startAt(last_raid_timestamp).on 'child_added', (snapshot) ->
-            raid = snapshot.val()
-            unless raid? and raid.username isnt streamer.name
-              # Secondly, add the raid to our general record.
-              timestamp = Firebase.ServerValue.TIMESTAMP
-              json =
-                'game': streamer.game
-                'timestamp': timestamp
-                'username': streamer.name
-              raid_reference = raids.push
-              raid_reference.setWithPriority json, timestamp
+          # Add the raid to our general record.
+          timestamp = Firebase.ServerValue.TIMESTAMP
+          json =
+            'game': streamer.game
+            'timestamp': timestamp
+            'username': streamer.name
 
-              # Finally, increment the number of times a user has raided.
-              # (This count only counts back to raids since episode 50.)
-              raider = firebase.child("viewers/#{streamer.name}/raids")
-              raider.transaction (raids) ->
-                raids + 1
+          raids = firebase.child('raids')
+          raid_reference = raids.push
+          raid_reference.setWithPriority json, timestamp
+
+          # Finally, increment the number of times a user has raided.
+          # (This count only counts back to raids since episode 50.)
+          raider = firebase.child("viewers/#{streamer.name}/raids")
+          raider.transaction (raids) ->
+            raids + 1
       return
 
     # Do you have a sword? No? Hah.
