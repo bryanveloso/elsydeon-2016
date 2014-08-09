@@ -10,30 +10,6 @@ pusher = new Pusher
   key: process.env['PUSHER_API_KEY']
   secret: process.env['PUSHER_SECRET']
 
-pushMessage = (message, ircdata, twitchdata, is_emote) ->
-  ircroles = ircdata.roles or []
-  twitchroles = twitchdata.roles or []
-  emotes = twitchdata.emotes or []
-
-  json =
-    'color': twitchdata.color
-    'emotes': emotes
-    'episode': robot.brain.get('currentEpisode')
-    'is_emote': is_emote
-    'message': message
-    'roles': twitchroles.concat ircroles
-    'timestamp': new Date()
-    'username': ircdata.name
-
-  # Firebase. Testing this out.
-  messages = firebase.child('messages')
-  messages.push json
-
-  # Pusher.
-  pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
-    if error
-      robot.logger.debug "Pusher ran into an error: #{error}"
-
 module.exports = (robot) ->
   # Utility methods.
   createUser = (username) ->
@@ -46,19 +22,43 @@ module.exports = (robot) ->
         viewers.child(username).set json
         robot.logger.debug "We have new blood: #{username}."
 
+  pushMessage = (message, ircdata, twitchdata, is_emote) ->
+    ircroles = ircdata.roles or []
+    twitchroles = twitchdata.roles or []
+    emotes = twitchdata.emotes or []
+
+    json =
+      'color': twitchdata.color
+      'emotes': emotes
+      'episode': robot.brain.get('currentEpisode')
+      'is_emote': is_emote
+      'message': message
+      'roles': twitchroles.concat ircroles
+      'timestamp': new Date()
+      'username': ircdata.name
+
+    # Firebase. Testing this out.
+    messages = firebase.child('messages')
+    messages.push json
+
+    # Pusher.
+    pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
+      if error
+        robot.logger.debug "Pusher ran into an error: #{error}"
+
   if robot.adapter.bot?
     # If the user emotes, set json.emote to true.
     robot.adapter.bot.addListener 'action', (from, to, message) ->
       unless from is 'jtv'
         # Send the dictionary to Pusher.
-        pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], true
+        @pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], true
         @createUser from
 
     # Listen for general messages.
     robot.adapter.bot.addListener 'message', (from, to, message) ->
       unless from is 'jtv'
         # Send the dictionary to Pusher.
-        pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], false
+        @pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], false
         @createUser from
 
   # Listening for special users (e.g., turbo, staff, subscribers)
@@ -108,8 +108,8 @@ module.exports = (robot) ->
   log_response = (strings...) ->
     for string in strings
       setTimeout ( ->
-        pushMessage string, robot.brain.userForName(robot.name), robot.brain.data.viewers[robot.name], false
-        createUser robot.brain.userForName(robot.name)
+        @pushMessage string, robot.brain.userForName(robot.name), robot.brain.data.viewers[robot.name], false
+        @createUser robot.brain.userForName(robot.name)
       ), 250  # Wait 250ms before sending Elsydeon's message. This is a hack until we figure out why we need this.
 
   response_orig =
