@@ -39,6 +39,7 @@ module.exports = (robot) ->
     # You're not me? GTFO. D:
     msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can specify the current episode."
 
+  # Return the current episode.
   robot.respond /current episode$/i, (msg) ->
     episode = robot.brain.get('currentEpisode')
     if episode?
