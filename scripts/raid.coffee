@@ -62,8 +62,8 @@ module.exports = (robot) ->
           # (This count only counts back to raids since episode 50.)
           raider = firebase.child("viewers/#{streamer.name}/raids")
           raider.transaction = (raids) ->
-            return raids + 1
-          return
+            raids + 1
+      return
 
     # Do you have a sword? No? Hah.
     msg.send "Halt #{msg.envelope.user.name}. Only those with a sword may glorify a raider."
