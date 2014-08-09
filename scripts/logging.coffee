@@ -12,7 +12,7 @@ pusher = new Pusher
 
 module.exports = (robot) ->
   # Utility methods.
-  createUser = (username) ->
+  handleUser = (username) ->
     # Check if we have a user on Firebase. If not, create it.
     viewers = firebase.child('viewers')
     viewers.child(username).once 'value', (snapshot) ->
@@ -21,6 +21,10 @@ module.exports = (robot) ->
           'username': username
         viewers.child(username).set json
         robot.logger.debug "We have new blood: #{username}."
+      else
+        episode = robot.brain.get('currentEpisode')
+        if episode?
+          viewers.child(username).child('broadcasts').set episode: true
 
   pushMessage = (message, ircdata, twitchdata, is_emote) ->
     ircroles = ircdata.roles or []
@@ -52,14 +56,14 @@ module.exports = (robot) ->
       unless from is 'jtv'
         # Send the dictionary to Pusher.
         pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], true
-        createUser from
+        handleUser from
 
     # Listen for general messages.
     robot.adapter.bot.addListener 'message', (from, to, message) ->
       unless from is 'jtv'
         # Send the dictionary to Pusher.
         pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], false
-        createUser from
+        handleUser from
 
   # Listening for special users (e.g., turbo, staff, subscribers)
   # Messages can be prefixed by a username (most likely the bot's name).
@@ -109,7 +113,7 @@ module.exports = (robot) ->
     for string in strings
       setTimeout ( ->
         pushMessage string, robot.brain.userForName(robot.name), robot.brain.data.viewers[robot.name], false
-        createUser robot.brain.userForName(robot.name)
+        handleUser robot.brain.userForName(robot.name)
       ), 250  # Wait 250ms before sending Elsydeon's message. This is a hack until we figure out why we need this.
 
   response_orig =
