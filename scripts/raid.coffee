@@ -64,23 +64,22 @@ module.exports = (robot) ->
           # incrementing the raid record.
           raids = firebase.child('raids')
           last_raid_timestamp = Firebase.ServerValue.TIMESTAMP - (5 * 60 * 1000)
-          last_raid = raids.startAt(last_raid_timestamp).once 'value', (snapshot)
+          raids.startAt(last_raid_timestamp).on 'child_added', (snapshot) ->
+            unless snapshot.val()?
+              # Secondly, add the raid to our general record.
+              timestamp = Firebase.ServerValue.TIMESTAMP
+              json =
+                'game': streamer.game
+                'timestamp': timestamp
+                'username': streamer.name
+              raid_reference = raids.push
+              raid_reference.setWithPriority json, timestamp
 
-          unless last_raid?
-            # Secondly, add the raid to our general record.
-            timestamp = Firebase.ServerValue.TIMESTAMP
-            json =
-              'game': streamer.game
-              'timestamp': timestamp
-              'username': streamer.name
-            raid_reference = raids.push
-            raid_reference.setWithPriority json, timestamp
-
-            # Finally, increment the number of times a user has raided.
-            # (This count only counts back to raids since episode 50.)
-            raider = firebase.child("viewers/#{streamer.name}/raids")
-            raider.transaction (raids) ->
-              raids + 1
+              # Finally, increment the number of times a user has raided.
+              # (This count only counts back to raids since episode 50.)
+              raider = firebase.child("viewers/#{streamer.name}/raids")
+              raider.transaction (raids) ->
+                raids + 1
       return
 
     # Do you have a sword? No? Hah.
