@@ -10,16 +10,6 @@ pusher = new Pusher
   key: process.env['PUSHER_API_KEY']
   secret: process.env['PUSHER_SECRET']
 
-createUser = (username) ->
-  # Check if we have a user on Firebase. If not, create it.
-  viewers = firebase.child('viewers')
-  viewers.child(username).once 'value', (snapshot) ->
-    unless snapshot.val()?
-      json =
-        'username': username
-      viewers.child(username).set json
-      robot.logger.debug "We have new blood: #{username}."
-
 pushMessage = (message, ircdata, twitchdata, is_emote) ->
   ircroles = ircdata.roles or []
   twitchroles = twitchdata.roles or []
@@ -45,20 +35,31 @@ pushMessage = (message, ircdata, twitchdata, is_emote) ->
       robot.logger.debug "Pusher ran into an error: #{error}"
 
 module.exports = (robot) ->
+  # Utility methods.
+  createUser = (username) ->
+    # Check if we have a user on Firebase. If not, create it.
+    viewers = firebase.child('viewers')
+    viewers.child(username).once 'value', (snapshot) ->
+      unless snapshot.val()?
+        json =
+          'username': username
+        viewers.child(username).set json
+        robot.logger.debug "We have new blood: #{username}."
+
   if robot.adapter.bot?
     # If the user emotes, set json.emote to true.
     robot.adapter.bot.addListener 'action', (from, to, message) ->
       unless from is 'jtv'
         # Send the dictionary to Pusher.
         pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], true
-        createUser from
+        @createUser from
 
     # Listen for general messages.
     robot.adapter.bot.addListener 'message', (from, to, message) ->
       unless from is 'jtv'
         # Send the dictionary to Pusher.
         pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], false
-        createUser from
+        @createUser from
 
   # Listening for special users (e.g., turbo, staff, subscribers)
   # Messages can be prefixed by a username (most likely the bot's name).
