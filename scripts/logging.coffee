@@ -51,15 +51,15 @@ module.exports = (robot) ->
     robot.adapter.bot.addListener 'action', (from, to, message) ->
       unless from is 'jtv'
         # Send the dictionary to Pusher.
-        @pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], true
-        @createUser from
+        pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], true
+        createUser from
 
     # Listen for general messages.
     robot.adapter.bot.addListener 'message', (from, to, message) ->
       unless from is 'jtv'
         # Send the dictionary to Pusher.
-        @pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], false
-        @createUser from
+        pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], false
+        createUser from
 
   # Listening for special users (e.g., turbo, staff, subscribers)
   # Messages can be prefixed by a username (most likely the bot's name).
@@ -108,8 +108,8 @@ module.exports = (robot) ->
   log_response = (strings...) ->
     for string in strings
       setTimeout ( ->
-        @pushMessage string, robot.brain.userForName(robot.name), robot.brain.data.viewers[robot.name], false
-        @createUser robot.brain.userForName(robot.name)
+        pushMessage string, robot.brain.userForName(robot.name), robot.brain.data.viewers[robot.name], false
+        createUser robot.brain.userForName(robot.name)
       ), 250  # Wait 250ms before sending Elsydeon's message. This is a hack until we figure out why we need this.
 
   response_orig =
