@@ -65,7 +65,8 @@ module.exports = (robot) ->
           raids = firebase.child('raids')
           last_raid_timestamp = Firebase.ServerValue.TIMESTAMP - (5 * 60 * 1000)
           raids.startAt(last_raid_timestamp).on 'child_added', (snapshot) ->
-            unless snapshot.val()?
+            raid = snapshot.val()
+            unless raid? and raid.name is streamer.name
               # Secondly, add the raid to our general record.
               timestamp = Firebase.ServerValue.TIMESTAMP
               json =
