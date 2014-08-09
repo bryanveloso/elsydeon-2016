@@ -36,7 +36,7 @@ pushMessage = (message, ircdata, twitchdata, is_emote) ->
     'username': ircdata.name
 
   # Firebase. Testing this out.
-  messages = firebase.child('messages');
+  messages = firebase.child('messages')
   messages.push json
 
   # Pusher.
