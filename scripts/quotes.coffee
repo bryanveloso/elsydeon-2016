@@ -75,8 +75,21 @@ module.exports = (robot) ->
           msg.send "This quote already exists [ID: #{quote_index.id}]."
           return
       quote_id = robot.brain.data.quote_database.next_id++
-      robot.brain.data.quote_database.quotes.push {"id": quote_id, "quote": msg.match[1]}
-      msg.send "This message has been added [ID: #{quote_id}]."
+      robot.http("https://api.twitch.tv/kraken/channels/avalonstar")
+        .get() (err, res, body) ->
+          streamer = JSON.parse(body)
+
+          # We mark the quote with the current date. Let's compose the date
+          # and then add it to the game. If we don't have a game, then just
+          # append the date.
+          now = new Date
+          date = "#{now.getMonth() + 1}/#{now.getDate()}/#{now.getFullYear()}"
+          game = if streamer.game then "[#{streamer.game} on #{date}]" else "[#{date}]"
+
+          # Finish off the quote.
+          quote = "#{msg.match[1]} #{game}"
+          robot.brain.data.quote_database.quotes.push {"id": quote_id, "quote": quote}
+          msg.send "This message has been added [ID: #{quote_id}]."
     else
       msg.send "You must supply some text after 'addquote'.  For example: 'addquote This will be added to the DB.'."
 
@@ -101,14 +114,14 @@ module.exports = (robot) ->
   robot.respond /quote\s?(?: (\d+)|\s(.*))?$/i, (msg) ->
     quote_database = robot.brain.data.quote_database
 
-    # Find a random quote
+    # Find a random quote.
     if not msg.match[1] and not msg.match[2]
       random_quote_index = Math.floor(Math.random() * quote_database.quotes.length)
       random_quote = quote_database.quotes[random_quote_index]
       msg.send "#{random_quote.quote} [ID: #{random_quote.id}]"
       return
 
-    # Find quote by ID
+    # Find quote by ID.
     else if msg.match[1]
       for quote_index in robot.brain.data.quote_database.quotes
         if quote_index.id is parseInt(msg.match[1])
@@ -116,7 +129,7 @@ module.exports = (robot) ->
           return
       msg.send "The quote specified could not be found [ID: #{msg.match[1]}]."
 
-    # Find quote by pattern
+    # Find quote by pattern.
     else if msg.match[2]
       quote_found_count = 0
       for quote_index in robot.brain.data.quote_database.quotes
@@ -135,7 +148,7 @@ module.exports = (robot) ->
         msg.send "There were no matching quotes found [Pattern: #{msg.match[2]}]."
 
   robot.respond /quoteall\s?(.*)?$/i, (msg) ->
-    # Find all quotes by a pattern
+    # Find all quotes by a pattern.
     if msg.match[1]
       quote_found = false
       for quote_index in robot.brain.data.quote_database.quotes
