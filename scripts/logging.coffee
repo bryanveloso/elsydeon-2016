@@ -104,10 +104,7 @@ module.exports = (robot) ->
   # a better way. From: <https://github.com/jenrzzz/hubot-logger/>
   log_response = (strings...) ->
     for string in strings
-      setTimeout ( ->
         pushMessage string, robot.brain.userForName(robot.name), robot.brain.data.viewers[robot.name], false
-        handleUser robot.brain.userForName(robot.name)
-      ), 250  # Wait 250ms before sending Elsydeon's message. This is a hack until we figure out why we need this.
 
   response_orig =
     send: robot.Response.prototype.send
