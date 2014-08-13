@@ -24,6 +24,7 @@ module.exports = (robot) ->
           json[episode] = true
           viewers.child(username).child('episodes').set json, (error) ->
             console.log "hanldeUser: #{error}"
+      return
 
   pushMessage = (message, ircdata, twitchdata, is_emote) ->
     ircroles = ircdata.roles or []
@@ -44,6 +45,7 @@ module.exports = (robot) ->
     messages = firebase.child('messages')
     messages.push json, (error) ->
       console.log "pushMessage: #{error}"
+    return
 
   if robot.adapter.bot?
     # If the user emotes, set json.emote to true.
