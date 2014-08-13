@@ -2,13 +2,7 @@
 #   Functionality around logging to the Avalonstar(tv) API.
 
 Firebase = require 'firebase'
-Pusher = require 'pusher'
-
 firebase = new Firebase 'https://avalonstar.firebaseio.com/'
-pusher = new Pusher
-  appId: process.env['PUSHER_APP_ID']
-  key: process.env['PUSHER_API_KEY']
-  secret: process.env['PUSHER_SECRET']
 
 module.exports = (robot) ->
   # Utility methods.
@@ -49,23 +43,18 @@ module.exports = (robot) ->
     messages = firebase.child('messages')
     messages.push json
 
-    # Pusher.
-    pusher.trigger 'chat', 'message', json, null, (error, request, response) ->
-      if error
-        robot.logger.debug "Pusher ran into an error: #{error}"
-
   if robot.adapter.bot?
     # If the user emotes, set json.emote to true.
     robot.adapter.bot.addListener 'action', (from, to, message) ->
       unless from is 'jtv'
-        # Send the dictionary to Pusher.
+        # Send the dictionary to Firebase.
         pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], true
         handleUser from
 
     # Listen for general messages.
     robot.adapter.bot.addListener 'message', (from, to, message) ->
       unless from is 'jtv'
-        # Send the dictionary to Pusher.
+        # Send the dictionary to Firebase.
         pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], false
         handleUser from
 
