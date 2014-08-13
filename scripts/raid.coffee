@@ -28,7 +28,6 @@ module.exports = (robot) ->
             ]
           for instruction in instructions
             msg.send instruction
-          return
 
           # Let's record this target.
           json =
@@ -36,7 +35,10 @@ module.exports = (robot) ->
             'timestamp': Firebase.ServerValue.TIMESTAMP
             'username': streamer.name
           targets = firebase.child('targets')
-          targets.push json
+          targets.push json, (error) ->
+            console.log "raid: #{error}"
+
+      # Let's get outta here.
       return
 
     # You are not me, you can't run this. D:
@@ -65,13 +67,16 @@ module.exports = (robot) ->
             'timestamp': Firebase.ServerValue.TIMESTAMP
             'username': streamer.name
           raids = firebase.child('raids')
-          raids.push json
+          raids.push json, (error) ->
+            console.log "raider: #{error}"
 
           # Secondly, increment the number of times a user has raided.
           # (This count only counts back to raids since episode 50.)
           raider = firebase.child("viewers/#{streamer.name}/raids")
           raider.transaction (raids) ->
             raids + 1
+
+      # Let's get outta here.
       return
 
     # Do you have a sword? No? Hah.
