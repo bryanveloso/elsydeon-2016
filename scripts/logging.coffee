@@ -22,7 +22,8 @@ module.exports = (robot) ->
         if episode?
           json = {}
           json[episode] = true
-          viewers.child(username).child('episodes').set json
+          viewers.child(username).child('episodes').set json, (error) ->
+            console.log "hanldeUser: #{error}"
 
   pushMessage = (message, ircdata, twitchdata, is_emote) ->
     ircroles = ircdata.roles or []
@@ -41,7 +42,8 @@ module.exports = (robot) ->
 
     # Firebase. Testing this out.
     messages = firebase.child('messages')
-    messages.push json
+    messages.push json, (error) ->
+      console.log "pushMessage: #{error}"
 
   if robot.adapter.bot?
     # If the user emotes, set json.emote to true.
