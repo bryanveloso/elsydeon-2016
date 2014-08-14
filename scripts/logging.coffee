@@ -15,16 +15,6 @@ module.exports = (robot) ->
           'username': username
         viewers.child(username).set json
         robot.logger.debug "We have new blood: #{username}."
-      else
-        # Add the current episode number (if available) to the user's list
-        # of viewed broadcasts.
-        episode = robot.brain.get('currentEpisode')
-        if episode?
-          json = {}
-          json[episode] = true
-          viewers.child(username).child('episodes').set json, (error) ->
-            console.log "hanldeUser: #{error}"
-      return
 
   pushMessage = (message, ircdata, twitchdata, is_emote) ->
     ircroles = ircdata.roles or []
@@ -44,7 +34,7 @@ module.exports = (robot) ->
     # Firebase. Testing this out.
     messages = firebase.child('messages')
     messages.push json, (error) ->
-      console.log "pushMessage: #{error}"
+      robot.logger.debug "pushMessage: #{error}"
     return
 
   if robot.adapter.bot?
