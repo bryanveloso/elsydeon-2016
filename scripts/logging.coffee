@@ -43,14 +43,14 @@ module.exports = (robot) ->
       unless from is 'jtv'
         # Send the dictionary to Firebase.
         pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], true
-        handleUser from
+        # handleUser from
 
     # Listen for general messages.
     robot.adapter.bot.addListener 'message', (from, to, message) ->
       unless from is 'jtv'
         # Send the dictionary to Firebase.
         pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], false
-        handleUser from
+        # handleUser from
 
   # Listening for special users (e.g., turbo, staff, subscribers)
   # Messages can be prefixed by a username (most likely the bot's name).
