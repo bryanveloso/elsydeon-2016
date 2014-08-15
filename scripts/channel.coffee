@@ -26,7 +26,7 @@ module.exports = (robot) ->
     msg.send "Follow Bryan (https://twitter.com/bryanveloso) for exact times!"
 
   robot.respond /gems$/i, (msg) ->
-    since = moment('2014-08-13').fromNow()
+    since = moment([2014, 8, 13, 21]).fromNow()
     msg.send "Follow Bryan's amazing teammates on the Hidden Gems (http://twitch.tv/team/gems). Bryan was inducted into the Hidden Gems #{since}."
 
   # Start the specified broadcast.
