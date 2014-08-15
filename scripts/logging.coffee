@@ -7,23 +7,16 @@ firebase = new Firebase 'https://avalonstar.firebaseio.com/'
 module.exports = (robot) ->
   # Utility methods.
   handleUser = (username) ->
-    # Check if we have a user on Firebase. If not, create it.
+    # The intial creation of users is handled by Endymion, who is set to
+    # `TWITCHCLIENT 1` so it can read joins and parts. Therefore we don't have
+    # to get creative in order to add users to Firebase (or Hubot's brain.)
     viewers = firebase.child('viewers')
-    viewers.child(username).once 'value', (snapshot) ->
-      unless snapshot.val()?
-        json =
-          'username': username
-        viewers.child(username).set json
-        robot.logger.debug "We have new blood: #{username}."
-      else
-        # Add the current episode number (if available) to the user's list
-        # of viewed broadcasts.
-        episode = robot.brain.get('currentEpisode')
-        if episode?
-          json = {}
-          json[episode] = true
-          viewers.child(username).child('episodes').set json, (error) ->
-            console.log "hanldeUser: #{error}"
+    episode = robot.brain.get('currentEpisode')
+    if episode?
+      json = {}
+      json[episode] = true
+      viewers.child(username).child('episodes').set json, (error) ->
+        console.log "hanldeUser: #{error}" if !error?
       return
 
   pushMessage = (message, ircdata, twitchdata, is_emote) ->
