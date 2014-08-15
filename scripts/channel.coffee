@@ -3,7 +3,10 @@
 #
 # Commands:
 #  hubot population - Responds with the total number of unique usernames.
+#  hubot gems - Tell people about the lovely team that is the Hidden Gems.
 #  hubot schedule - Tell the viewers about your schedule.
+
+moment = require 'moment'
 
 module.exports = (robot) ->
   robot.enter (msg) ->
