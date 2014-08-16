@@ -22,11 +22,11 @@ module.exports = (robot) ->
   pushMessage = (message, ircdata, twitchdata, is_emote) ->
     console.log message, ircdata, twitchdata, is_emote
     ircroles = ircdata.roles or []
-    twitchroles = twitchdata.roles or []
-    emotes = twitchdata.emotes or []
+    twitchroles = twitchdata?.roles or []
+    emotes = twitchdata?.emotes or []
 
     json =
-      'color': twitchdata.color or '#ffffff'
+      'color': twitchdata?.color or '#ffffff'
       'emotes': emotes
       'episode': robot.brain.get('currentEpisode')
       'is_emote': is_emote
