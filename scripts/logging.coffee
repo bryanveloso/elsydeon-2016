@@ -22,7 +22,7 @@ module.exports = (robot) ->
   pushMessage = (message, ircdata, is_emote) ->
     viewers = firebase.child('viewers')
     viewers.child(ircdata.name).once 'value', (snapshot) ->
-      twitchdata = snapshot.val()?
+      twitchdata = snapshot.val()
       console.log "twitchdata: #{twitchdata}"
 
     ircroles = ircdata.roles or []
