@@ -73,7 +73,7 @@ module.exports = (robot) ->
 
       # Save user list to Firebase.
       viewers = firebase.child('viewers')
-      viewers.child(viewer.name).child('roles').set msg.match[2], (error) ->
+      viewers.child(viewer.name).child('roles').set userdata['roles'], (error) ->
         console.log "handleRoles: #{error}" if !error?
 
       # For debugging purposes.
