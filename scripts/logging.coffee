@@ -35,6 +35,8 @@ module.exports = (robot) ->
       # 'timestamp': Firebase.ServerValue.TIMESTAMP
       'username': ircdata.name
 
+    console.log "IT'S JSON BITCH: #{json}"
+
     # Firebase. Testing this out.
     messages = firebase.child('messages')
     messages.push json, (error) ->
