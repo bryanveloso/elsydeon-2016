@@ -74,7 +74,7 @@ module.exports = (robot) ->
 
       # Save user list to Firebase.
       viewers = firebase.child('viewers')
-      viewers.child(username).child('roles').set roles, (error) ->
+      viewers.child(viewer.name).child('roles').set roles, (error) ->
         console.log "handleRoles: #{error}" if !error?
 
       # For debugging purposes.
@@ -89,7 +89,7 @@ module.exports = (robot) ->
 
       # Save emote list to Firebase.
       viewers = firebase.child('viewers')
-      viewers.child(username).child('emotes').set emotes, (error) ->
+      viewers.child(viewer.name).child('emotes').set emotes, (error) ->
         console.log "handleEmotes: #{error}" if !error?
 
       # Try saving the emote list to the robot's brain.
@@ -108,7 +108,7 @@ module.exports = (robot) ->
 
       # Save user list to Firebase.
       viewers = firebase.child('viewers')
-      viewers.child(username).child('color').set color, (error) ->
+      viewers.child(viewer.name).child('color').set color, (error) ->
         console.log "handleColor: #{error}" if !error?
 
       robot.brain.data['viewers'][viewer.name]['color'] = color
