@@ -20,18 +20,19 @@ module.exports = (robot) ->
       return
 
   pushMessage = (message, ircdata, twitchdata, is_emote) ->
+    console.log message, ircdata, twitchdata, is_emote
     ircroles = ircdata.roles or []
     twitchroles = twitchdata.roles or []
     emotes = twitchdata.emotes or []
 
     json =
-      'color': twitchdata.color
-      'emotes': emotes
-      'episode': robot.brain.get('currentEpisode')
-      'is_emote': is_emote
+      # 'color': twitchdata.color
+      # 'emotes': emotes
+      # 'episode': robot.brain.get('currentEpisode')
+      # 'is_emote': is_emote
       'message': message
-      'roles': twitchroles.concat ircroles
-      'timestamp': Firebase.ServerValue.TIMESTAMP
+      # 'roles': twitchroles.concat ircroles
+      # 'timestamp': Firebase.ServerValue.TIMESTAMP
       'username': ircdata.name
 
     # Firebase. Testing this out.
