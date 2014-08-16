@@ -64,12 +64,10 @@ module.exports = (robot) ->
       viewer = robot.brain.userForName msg.match[1]
       userdata = robot.brain.data['viewers'][viewer.name]
 
-      roles = []
-      roles.push msg.match[2]
-
+      roles = msg.match[2]
       userdata['roles'] ?= []
-      if msg.match[2] not in userdata['roles']
-        userdata['roles'].push msg.match[2]
+      if roles not in userdata['roles']
+        userdata['roles'].push roles
       robot.brain.save()
 
       # Save user list to Firebase.
@@ -78,7 +76,7 @@ module.exports = (robot) ->
         console.log "handleRoles: #{error}" if !error?
 
       # For debugging purposes.
-      robot.logger.debug msg.match[1] + " is a " + msg.match[2] + " user."
+      robot.logger.debug "#{msg.match[1]} is a #{roles} user."
 
   # Listening for emoticon sets.
   # Expected value is a list of integers.
