@@ -61,24 +61,23 @@ module.exports = (robot) ->
   # Listening for special users (e.g., turbo, staff, subscribers)
   # Messages can be prefixed by a username (most likely the bot's name).
   # Note: Roles such as moderator do not appear in this method.
-  robot.hear /.*?\s?SPECIALUSER ([a-zA-Z0-9_]*) ([a-z]*)/, (msg) ->
+robot.hear /.*?\s?SPECIALUSER ([a-zA-Z0-9_]*) ([a-z]*)/, (msg) ->
     if msg.envelope.user.name is 'jtv'
       viewer = robot.brain.userForName msg.match[1]
       userdata = robot.brain.data['viewers'][viewer.name]
-
-      roles = msg.match[2]
       userdata['roles'] ?= []
-      if roles not in userdata['roles']
-        userdata['roles'].push roles
+
+      if msg.match[2] not in userdata['roles']
+        userdata['roles'].push msg.match[2]
       robot.brain.save()
 
       # Save user list to Firebase.
       viewers = firebase.child('viewers')
-      viewers.child(viewer.name).child('roles').set roles, (error) ->
+      viewers.child(viewer.name).child('roles').set msg.match[2], (error) ->
         console.log "handleRoles: #{error}" if !error?
 
       # For debugging purposes.
-      robot.logger.debug "#{msg.match[1]} is a #{roles} user."
+      robot.logger.debug msg.match[1] + " is a " + msg.match[2] + " user."
 
   # Listening for emoticon sets.
   # Expected value is a list of integers.
