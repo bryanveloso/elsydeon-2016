@@ -23,6 +23,7 @@ module.exports = (robot) ->
     viewers = firebase.child('viewers')
     viewers.child(ircdata.name).once 'value', (snapshot) ->
       twitchdata = snapshot.val()?
+      console.log "twitchdata: #{twitchdata}"
 
     ircroles = ircdata.roles or []
     twitchroles = twitchdata?.roles or []
