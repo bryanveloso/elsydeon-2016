@@ -22,28 +22,26 @@ module.exports = (robot) ->
   pushMessage = (message, ircdata, is_emote) ->
     viewers = firebase.child('viewers')
     viewers.child(ircdata.name).once 'value', (snapshot) ->
-      twitchdata = snapshot.val()
-      console.log "twitchdata: #{twitchdata}"
+      twitchdata = snapshot.val() or []
+      ircroles = ircdata.roles or []
+      twitchroles = twitchdata?.roles or []
+      emotes = twitchdata?.emotes or []
 
-    ircroles = ircdata.roles or []
-    twitchroles = twitchdata?.roles or []
-    emotes = twitchdata?.emotes or []
+      json =
+        'color': twitchdata?.color or '#ffffff'
+        'emotes': emotes
+        'episode': robot.brain.get('currentEpisode')
+        'is_emote': is_emote
+        'message': message
+        'roles': twitchroles.concat ircroles
+        'timestamp': Firebase.ServerValue.TIMESTAMP
+        'username': ircdata.name
 
-    json =
-      'color': twitchdata?.color or '#ffffff'
-      'emotes': emotes
-      'episode': robot.brain.get('currentEpisode')
-      'is_emote': is_emote
-      'message': message
-      'roles': twitchroles.concat ircroles
-      'timestamp': Firebase.ServerValue.TIMESTAMP
-      'username': ircdata.name
-
-    # Firebase. Testing this out.
-    messages = firebase.child('messages')
-    messages.push json, (error) ->
-      console.log "pushMessage: #{error}"
-    return
+      # Firebase. Testing this out.
+      messages = firebase.child('messages')
+      messages.push json, (error) ->
+        console.log "pushMessage: #{error}"
+      return
 
   if robot.adapter.bot?
     # If the user emotes, set json.emote to true.
