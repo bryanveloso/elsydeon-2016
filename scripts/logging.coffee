@@ -19,8 +19,11 @@ module.exports = (robot) ->
         console.log "hanldeUser: #{error}" if !error?
       return
 
-  pushMessage = (message, ircdata, twitchdata, is_emote) ->
-    console.log message, ircdata, twitchdata, is_emote
+  pushMessage = (message, ircdata, is_emote) ->
+    viewers = firebase.child('viewers')
+    viewers.child(ircdata.name).once 'value', (snapshot) ->
+      twitchdata = snapshot.val()?
+
     ircroles = ircdata.roles or []
     twitchroles = twitchdata?.roles or []
     emotes = twitchdata?.emotes or []
@@ -46,14 +49,14 @@ module.exports = (robot) ->
     robot.adapter.bot.addListener 'action', (from, to, message) ->
       unless from is 'jtv'
         # Send the dictionary to Firebase.
-        pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], true
+        pushMessage message, robot.brain.userForName(from), true
         handleUser from
 
     # Listen for general messages.
     robot.adapter.bot.addListener 'message', (from, to, message) ->
       unless from is 'jtv'
         # Send the dictionary to Firebase.
-        pushMessage message, robot.brain.userForName(from), robot.brain.data.viewers[from], false
+        pushMessage message, robot.brain.userForName(from), false
         handleUser from
 
   # Listening for special users (e.g., turbo, staff, subscribers)
@@ -121,7 +124,7 @@ module.exports = (robot) ->
   log_response = (strings...) ->
     for string in strings
       setTimeout ( ->
-        pushMessage string, robot.brain.userForName(robot.name), robot.brain.data.viewers[robot.name], false
+        pushMessage string, robot.brain.userForName(robot.name), false
       ), 250  # Wait 250ms before sending Elsydeon's message. This is a hack until we figure out why we need this.
 
   response_orig =
