@@ -63,11 +63,19 @@ module.exports = (robot) ->
     if msg.envelope.user.name is 'jtv'
       viewer = robot.brain.userForName msg.match[1]
       userdata = robot.brain.data['viewers'][viewer.name]
-      userdata['roles'] ?= []
 
+      roles ?= []
+      roles.push msg.match[2]
+
+      userdata['roles'] ?= []
       if msg.match[2] not in userdata['roles']
         userdata['roles'].push msg.match[2]
       robot.brain.save()
+
+      # Save user list to Firebase.
+      viewers = firebase.child('viewers')
+      viewers.child(username).child('roles').set roles, (error) ->
+        console.log "handleRoles: #{error}" if !error?
 
       # For debugging purposes.
       robot.logger.debug msg.match[1] + " is a " + msg.match[2] + " user."
@@ -77,9 +85,14 @@ module.exports = (robot) ->
   robot.hear /EMOTESET ([a-zA-Z0-9_]*) (.*)/, (msg) ->
     if msg.envelope.user.name is 'jtv'
       viewer = robot.brain.userForName msg.match[1]
+      emotes = msg.match[2].substring(1).slice(0, -1).split(',')  # Store EMOTESET as an actual list?
 
-      # Store EMOTESET as an actual list?
-      emotes = msg.match[2].substring(1).slice(0, -1).split(',')
+      # Save emote list to Firebase.
+      viewers = firebase.child('viewers')
+      viewers.child(username).child('emotes').set emotes, (error) ->
+        console.log "handleEmotes: #{error}" if !error?
+
+      # Try saving the emote list to the robot's brain.
       robot.brain.data['viewers'][viewer.name]['emotes'] = emotes
       robot.brain.save()
 
@@ -91,7 +104,14 @@ module.exports = (robot) ->
   robot.hear /USERCOLOR ([a-zA-Z0-9_]*) (#[A-Z0-9]{6})/, (msg) ->
     if msg.envelope.user.name is 'jtv'
       viewer = robot.brain.userForName msg.match[1]
-      robot.brain.data['viewers'][viewer.name]['color'] = msg.match[2]
+      color = msg.match[2]
+
+      # Save user list to Firebase.
+      viewers = firebase.child('viewers')
+      viewers.child(username).child('color').set color, (error) ->
+        console.log "handleColor: #{error}" if !error?
+
+      robot.brain.data['viewers'][viewer.name]['color'] = color
       robot.brain.save()
 
       # For debugging purposes.
