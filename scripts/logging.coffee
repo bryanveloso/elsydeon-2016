@@ -26,16 +26,14 @@ module.exports = (robot) ->
     emotes = twitchdata.emotes or []
 
     json =
-      # 'color': twitchdata.color
-      # 'emotes': emotes
-      # 'episode': robot.brain.get('currentEpisode')
-      # 'is_emote': is_emote
+      'color': twitchdata.color or '#ffffff'
+      'emotes': emotes
+      'episode': robot.brain.get('currentEpisode')
+      'is_emote': is_emote
       'message': message
-      # 'roles': twitchroles.concat ircroles
-      # 'timestamp': Firebase.ServerValue.TIMESTAMP
+      'roles': twitchroles.concat ircroles
+      'timestamp': Firebase.ServerValue.TIMESTAMP
       'username': ircdata.name
-
-    console.log "IT'S JSON BITCH: #{json}"
 
     # Firebase. Testing this out.
     messages = firebase.child('messages')
