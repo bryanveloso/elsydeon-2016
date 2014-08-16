@@ -14,10 +14,6 @@ module.exports = (robot) ->
     # Use TWITCHCLIENT 3 (need to figure out how to read joins/parts).
     robot.adapter.command 'twitchclient', '3'
 
-    # Reset Hubot's autosave interval to 30s instead of 5.
-    # This is to prevent unnecessary reloading of old data. :(
-    robot.brain.resetSaveInterval 30
-
   robot.respond /population$/i, (msg) ->
     count = Object.keys(robot.brain.data.users).length
     msg.send "#{count} people have visited Avalonstar."
