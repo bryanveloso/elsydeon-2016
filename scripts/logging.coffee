@@ -64,7 +64,7 @@ module.exports = (robot) ->
       viewer = robot.brain.userForName msg.match[1]
       userdata = robot.brain.data['viewers'][viewer.name]
 
-      roles ?= []
+      roles = []
       roles.push msg.match[2]
 
       userdata['roles'] ?= []
