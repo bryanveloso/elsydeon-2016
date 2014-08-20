@@ -23,7 +23,7 @@ module.exports = (robot) ->
         viewer = JSON.parse(body)
         json =
           'display_name': viewer.display_name
-        viewers.child(username).set json, (error) ->
+        viewers.child(username).update json, (error) ->
           console.log "pushMessage: #{error}"
 
   pushMessage = (message, ircdata, is_emote) ->
