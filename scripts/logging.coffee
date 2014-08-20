@@ -15,10 +15,7 @@ module.exports = (robot) ->
     if episode?
       json = {}
       json[episode] = true
-      viewers.child(username).child('epsidoes').once 'value', (snapshot) ->
-        console.log snapshot
-
-      viewers.child(username).child('episodes').set json, (error) ->
+      viewers.child(username).child('episodes').update json, (error) ->
         console.log "hanldeUser: #{error}" if !error?
       return
 
