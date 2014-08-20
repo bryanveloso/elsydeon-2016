@@ -17,7 +17,14 @@ module.exports = (robot) ->
       json[episode] = true
       viewers.child(username).child('episodes').update json, (error) ->
         console.log "hanldeUser: #{error}" if !error?
-      return
+
+    robot.http("https://api.twitch.tv/kraken/users/#{username}")
+      .get() (err, res, body) ->
+        viewer = JSON.parse(body)
+        json =
+          'display_name': viewer.display_name
+        viewers.child(username).set json, (error) ->
+          console.log "pushMessage: #{error}"
 
   pushMessage = (message, ircdata, is_emote) ->
     viewers = firebase.child('viewers')
