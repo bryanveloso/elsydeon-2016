@@ -34,11 +34,11 @@ module.exports = (robot) ->
   job.start()
 
   robot.respond /game$/i, (msg) ->
-    msg.send "Bryan's currently playing #{robot.brain.get 'currentGame'}"
+    msg.send "Bryan's currently playing #{robot.brain.get 'currentGame'}."
 
   robot.respond /defeated ([a-zA-Z_ ]*)$/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user, 'admin')
-      boss = match[1]
+      boss = msg.match[1]
       game = robot.brain.get 'currentGame'
       if game?
         # If we have a game, record the boss count.
