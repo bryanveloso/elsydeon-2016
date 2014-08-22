@@ -17,7 +17,6 @@ module.exports = (robot) ->
       .get() (err, res, body) ->
         key = 'currentGame'
         streamer = JSON.parse(body)
-        console.log streamer
         robot.brain.set key, streamer.game
         robot.logger.debug "The current game is: #{robot.brain.get key}"
 
