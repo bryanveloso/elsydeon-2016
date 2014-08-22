@@ -29,7 +29,7 @@ module.exports = (robot) ->
             games.child(streamer.game).set json, (error) ->
               console.log "addGame: #{error}"
         return
-  , null, true, 'America/Los_Angeles')
+  )
   job.start()
 
   robot.respond /defeated ([a-zA-Z_]*)$/i, (msg) ->
