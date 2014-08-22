@@ -33,7 +33,7 @@ module.exports = (robot) ->
   )
   job.start()
 
-  robot.respond /defeated ([a-zA-Z_]*)$/i, (msg) ->
+  robot.respond /defeated ([a-zA-Z_ ]*)$/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user, 'admin')
       boss = match[1]
       game = robot.brain.get 'currentGame'
