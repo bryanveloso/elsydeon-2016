@@ -33,6 +33,9 @@ module.exports = (robot) ->
   )
   job.start()
 
+  robot.respond /game$/i, (msg) ->
+    msg.send "Bryan's currently playing #{robot.brain.get 'currentGame'}"
+
   robot.respond /defeated ([a-zA-Z_ ]*)$/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user, 'admin')
       boss = match[1]
