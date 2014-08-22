@@ -1,5 +1,9 @@
 # Description:
 #   Functionality around specific games.
+#
+# Commands:
+#   hubot defeated <boss> - Records the name of a boss defeated.
+#   hubot deathnote - Show all the bosses defeated for the current game.
 
 CronJob = require('cron').CronJob
 Firebase = require 'firebase'
@@ -53,7 +57,9 @@ module.exports = (robot) ->
     # No duplicates pls.
     msg.send "Sorry #{msg.envelope.user.name}. In the interest of preventing duplicates, only a successful Bryan may run this command."
 
-  robot.respond /show ([a-zA-Z0-9_]*)$/i, (msg) ->
+  robot.respond /deathnote$/i, (msg) ->
     game = robot.brain.get 'currentGame'
-    message = "Bryan's beaten the following bosses in #{game} (in order): "
-    msg.send
+    bosses = firebase.child("games/#{game}/bosses")
+    bosses.once 'value', (snapshot) ->
+      list = snapshopt.val().join(', ')
+      msg.send "Bryan's beaten the following bosses in #{game} (in order): #{list}"
