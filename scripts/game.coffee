@@ -18,7 +18,7 @@ module.exports = (robot) ->
         key = 'currentGame'
         streamer = JSON.parse(body)
         robot.brain.set key, streamer.game
-        if streamer.game is robot.brain.get key
+        unless streamer.game is robot.brain.get key
           robot.logger.debug "The current game is: #{robot.brain.get key}"
 
           # Now add the game to Firebase if it doesn't already exist.
