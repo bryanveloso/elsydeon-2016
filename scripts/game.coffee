@@ -10,28 +10,27 @@ Firebase = require 'firebase'
 firebase = new Firebase 'https://avalonstar.firebaseio.com/'
 
 module.exports = (robot) ->
-  robot.enter (msg) ->
-    # Run a cron job every five seconds to get the game currently being played.
-    # This will be stored in a variable for use in the different commands.
-    job = new CronJob('*/5 * * * * *', ->
-      robot.http("https://api.tiwtch.tv/kraken/channels/avalonstar")
-        .get() (err, res, body) ->
-          key = 'currentGame'
-          streamer = JSON.parse(body)
-          robot.brain.set key, streamer.game
-          robot.logger.debug "The current game is: #{robot.brain.get key}"
+  # Run a cron job every five seconds to get the game currently being played.
+  # This will be stored in a variable for use in the different commands.
+  job = new CronJob('*/5 * * * * *', () ->
+    robot.http("https://api.tiwtch.tv/kraken/channels/avalonstar")
+      .get() (err, res, body) ->
+        key = 'currentGame'
+        streamer = JSON.parse(body)
+        robot.brain.set key, streamer.game
+        robot.logger.debug "The current game is: #{robot.brain.get key}"
 
-          # Now add the game to Firebase if it doesn't already exist.
-          games = firebase.child('games')
-          games.child(streamer.game).once 'value', (snapshot) ->
-            unless snapshot.val()?
-              json =
-                'name': streamer.game
-              games.child(streamer.game).set json, (error) ->
-                console.log "addGame: #{error}"
-          return
-    , null, true, 'America/Los_Angeles')
-    job.start()
+        # Now add the game to Firebase if it doesn't already exist.
+        games = firebase.child('games')
+        games.child(streamer.game).once 'value', (snapshot) ->
+          unless snapshot.val()?
+            json =
+              'name': streamer.game
+            games.child(streamer.game).set json, (error) ->
+              console.log "addGame: #{error}"
+        return
+  , null, true, 'America/Los_Angeles')
+  job.start()
 
   robot.respond /defeated ([a-zA-Z_]*)$/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user, 'admin')
