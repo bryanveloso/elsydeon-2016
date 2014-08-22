@@ -18,16 +18,17 @@ module.exports = (robot) ->
         key = 'currentGame'
         streamer = JSON.parse(body)
         robot.brain.set key, streamer.game
-        robot.logger.debug "The current game is: #{robot.brain.get key}"
+        if streamer.game is robot.brain.get key
+          robot.logger.debug "The current game is: #{robot.brain.get key}"
 
-        # Now add the game to Firebase if it doesn't already exist.
-        games = firebase.child('games')
-        games.child(streamer.game).once 'value', (snapshot) ->
-          unless snapshot.val()?
-            json =
-              'name': streamer.game
-            games.child(streamer.game).set json, (error) ->
-              console.log "addGame: #{error}"
+          # Now add the game to Firebase if it doesn't already exist.
+          games = firebase.child('games')
+          games.child(streamer.game).once 'value', (snapshot) ->
+            unless snapshot.val()?
+              json =
+                'name': streamer.game
+              games.child(streamer.game).set json, (error) ->
+                console.log "addGame: #{error}"
         return
   )
   job.start()
