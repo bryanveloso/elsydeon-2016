@@ -13,11 +13,11 @@ module.exports = (robot) ->
   # Run a cron job every five seconds to get the game currently being played.
   # This will be stored in a variable for use in the different commands.
   job = new CronJob('*/5 * * * * *', () ->
-    console.log "CRON. CRON. CRON."
     robot.http("https://api.tiwtch.tv/kraken/channels/avalonstar")
       .get() (err, res, body) ->
         key = 'currentGame'
         streamer = JSON.parse(body)
+        console.log streamer
         robot.brain.set key, streamer.game
         robot.logger.debug "The current game is: #{robot.brain.get key}"
 
