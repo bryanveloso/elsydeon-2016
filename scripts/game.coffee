@@ -43,9 +43,8 @@ module.exports = (robot) ->
       if game?
         # If we have a game, record the boss count.
         count = firebase.child("games/#{game}/boss_count")
-        count.transaction (count) ->
-          count + 1
-          total = count
+        count.transaction (total) ->
+          total++
 
           # Now that we've incremented the count use that number as the key
           # for the boss that was defeated.
