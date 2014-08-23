@@ -52,7 +52,8 @@ module.exports = (robot) ->
           json[total] = boss
           bosses = firebase.child("games/#{game}/bosses")
           bosses.update json, (error) ->
-            msg.send "#{boss} has been defeated! gibeOops//" if error?
+            console.log "defeated: #{error}"
+          msg.send "#{boss} has been defeated! gibeOops//"
 
       # Let's get outta here.
       return
