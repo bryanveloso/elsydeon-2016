@@ -67,6 +67,6 @@ module.exports = (robot) ->
     bosses = firebase.child("games/#{game}/bosses")
     bosses.once 'value', (snapshot) ->
       console.log "snapshot: #{snapshot.val()}"
-      list = snapshopt.val()
+      list = snapshot.val().join(', ')
       console.log "val: #{list}"
       msg.send "Bryan's beaten the following bosses in #{game} (in order): #{list}"
