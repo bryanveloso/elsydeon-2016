@@ -41,19 +41,20 @@ module.exports = (robot) ->
       boss = msg.match[1]
       game = robot.brain.get 'currentGame'
       if game?
-        # If we have a game, record the boss count.
+        # If we have a game, grab the boss count.
         count = firebase.child("games/#{game}/boss_count")
-        count.transaction (total) ->
-          total++
+        total = count + 1
 
-          # Now that we've incremented the count use that number as the key
-          # for the boss that was defeated.
-          json = {}
-          json[total] = boss
-          bosses = firebase.child("games/#{game}/bosses")
-          bosses.update json, (error) ->
-            console.log "defeated: #{error}"
-          msg.send "#{boss} has been defeated! gibeOops//"
+        # Now that we've incremented the count use that number as the key
+        # for the boss that was defeated.
+        json = {}
+        json[total] = boss
+        bosses = firebase.child("games/#{game}/bosses")
+        bosses.update json, (error) ->
+          console.log "defeated: #{error}"
+        count.set total, (error) ->
+          console.log "bossCount: #{error}"
+        msg.send "#{boss} has been defeated! gibeOops//"
 
       # Let's get outta here.
       return
@@ -66,6 +67,6 @@ module.exports = (robot) ->
     bosses = firebase.child("games/#{game}/bosses")
     bosses.once 'value', (snapshot) ->
       console.log "snapshot: #{snapshot.val()}"
-      list = snapshopt.val().join(', ')
+      list = snapshopt.val()
       console.log "val: #{list}"
       msg.send "Bryan's beaten the following bosses in #{game} (in order): #{list}"
