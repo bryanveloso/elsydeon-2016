@@ -110,10 +110,7 @@ module.exports = (robot) ->
   robot.hear /USERCOLOR ([a-zA-Z0-9_]*) (#[A-Z0-9]{6})/, (msg) ->
     if msg.envelope.user.name is 'jtv'
       viewer = robot.brain.userForName msg.match[1]
-      if msg.match[2] is '#000000'
-        color = '#FFFFFF'
-      else
-        color = msg.match[2]
+      color = msg.match[2]
 
       # Save user list to Firebase.
       viewers = firebase.child('viewers')
