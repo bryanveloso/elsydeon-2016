@@ -31,6 +31,7 @@ module.exports = (robot) ->
 
           # Let's record this target.
           json =
+            'episode': robot.brain.get('currentEpisode')
             'game': streamer.game
             'timestamp': Firebase.ServerValue.TIMESTAMP
             'username': streamer.name
@@ -63,6 +64,7 @@ module.exports = (robot) ->
           # Let's record this raid.
           # First, add the raid to our general record.
           json =
+            'episode': robot.brain.get('currentEpisode')
             'game': streamer.game
             'timestamp': Firebase.ServerValue.TIMESTAMP
             'username': streamer.name
