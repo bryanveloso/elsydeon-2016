@@ -26,6 +26,7 @@
     "hubot": ">=2.9.0",
     "hubot-auth": "^1.1.2",
     "hubot-irc": "^0.2.7",
+    "hubot-redis-brain": "0.0.2",
     "hubot-scripts": ">=2.5.16",
     "moment": "^2.8.3"
   },

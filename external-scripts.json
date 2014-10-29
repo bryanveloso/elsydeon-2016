@@ -1,3 +1,4 @@
 [
-    "hubot-auth"
+    "hubot-auth",
+    "hubot-redis-brain"
 ]
