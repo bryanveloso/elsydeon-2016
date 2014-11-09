@@ -123,6 +123,11 @@ module.exports = (robot) ->
       # For debugging purposes.
       robot.logger.debug msg.match[1] + " has uses this color: " + msg.match[2]
 
+  # Listening to see if a user gets timed out.
+  # Expected value is a username.
+  robot.hear /CLEARCHAT ([a-zA-Z0-9_]*), (msg) ->
+    console.log msg
+
   # Override send methods in the Response prototype sp that we can log Hubot's
   # own replies. This is kind of evil, but there doesn't appear to be
   # a better way. From: <https://github.com/jenrzzz/hubot-logger/>
