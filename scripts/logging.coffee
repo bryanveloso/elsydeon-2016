@@ -125,7 +125,7 @@ module.exports = (robot) ->
 
   # Listening to see if a user gets timed out.
   # Expected value is a username.
-  robot.hear /CLEARCHAT ([a-zA-Z0-9_]*), (msg) ->
+  robot.hear /CLEARCHAT ([a-zA-Z0-9_]*)/, (msg) ->
     console.log msg
 
   # Override send methods in the Response prototype sp that we can log Hubot's
