@@ -9,7 +9,7 @@ Firebase = require 'firebase'
 firebase = new Firebase 'https://avalonstar.firebaseio.com/'
 
 module.exports = (robot) ->
-  robot.respond /raid ([a-zA-Z0-9_]*)/i, (msg) ->
+  robot.respond /raid ([a-zA-Z0-9_]*)( saying)?(.*)/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user, 'admin')
       query = msg.match[1]
       robot.http("https://api.twitch.tv/kraken/channels/#{query}")
@@ -20,11 +20,15 @@ module.exports = (robot) ->
             msg.send "Hey now, can't raid somebody that doesn't exist. Check your spelling."
             return
 
+          message = "THE RAIDS OF AVALON <3 (or any emoticon of your choosing)"
+          if msg.match[2] and msg.match[3]
+            message = msg.match[3]
+
           instructions = [
             "Alright everybody, hold on to your butts, it's time to raid #{streamer.display_name}! Here are the instructions:",
             "The signal: gibeOops/ (don't spoil it)",
             "The target: #{streamer.url} (they're currently playing #{streamer.game})",
-            "The battlecry: THE RAIDS OF AVALON <3 (or any emoticon of your choosing)"
+            "The battlecry: #{message}"
             ]
           for instruction in instructions
             msg.send instruction
