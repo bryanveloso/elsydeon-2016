@@ -45,8 +45,8 @@ module.exports = (robot) ->
         'username': ircdata.name
 
       # Firebase. Testing this out.
-      messages = firebase.child('messages')
-      messages.push json, (error) ->
+      messages = firebase.child('messages').push()
+      messages.setWithPriority json, ircdata.name, (error) ->
         console.log "pushMessage: #{error}"
       return
 
