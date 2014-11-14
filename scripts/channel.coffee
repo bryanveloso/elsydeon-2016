@@ -91,6 +91,19 @@ module.exports = (robot) ->
     # Stop trying to be me, seriously. D:
     msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can end the current episode."
 
+  # The below are all flat commands (simply text, etc).
+  robot.respond /blind$/i, (msg) ->
+    msg.send "This is a blind run! No tips, tricks, or spoilers unless Bryan explicitly asks. Everybody gets one warning and each subsequent violation will earn yourself a purge."
+
+  robot.respond /gems$/i, (msg) ->
+    since = moment([2014, 7, 13, 21]).fromNow()
+    msg.send "Follow Bryan's amazing teammates on the Hidden Gems (http://twitch.tv/team/gems). Bryan was inducted into the Hidden Gems #{since}."
+
+  robot.respond /visitors$/i, (msg) ->
+    count = Object.keys(robot.brain.data.users).length
+    msg.send "#{count} people have visited Avalonstar."
+
+  # The below are all administrative commands of some sort.
   # Listen to joins. If we have a new user, add them to the list.
   if robot.adapter.bot?
     robot.adapter.bot.addListener 'join', (channel, who) ->
@@ -109,15 +122,3 @@ module.exports = (robot) ->
       msg.send "Viewer roles have been manually reset."
       return
     msg.send "I'm sorry #{msg.envelope.user.name}. You're not Bryan, so you can't run this."
-
-  # The below are all flat commands (simply text, etc).
-  robot.respond /blind$/i, (msg) ->
-    msg.send "This is a blind run! No tips, tricks, or spoilers unless Bryan explicitly asks. Everybody gets one warning and each subsequent violation will earn yourself a purge."
-
-  robot.respond /gems$/i, (msg) ->
-    since = moment([2014, 7, 13, 21]).fromNow()
-    msg.send "Follow Bryan's amazing teammates on the Hidden Gems (http://twitch.tv/team/gems). Bryan was inducted into the Hidden Gems #{since}."
-
-  robot.respond /visitors$/i, (msg) ->
-    count = Object.keys(robot.brain.data.users).length
-    msg.send "#{count} people have visited Avalonstar."
