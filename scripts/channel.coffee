@@ -48,6 +48,13 @@ module.exports = (robot) ->
     )
     monitor.start()
 
+  # Return the current episode.
+  robot.respond /episode$/i, (msg) ->
+    robot.http("http://avalonstar.tv/api/broadcasts/")
+      .get() (err, res, body) ->
+        broadcast = JSON.parse(body)[0]
+        msg.send "Hey #{msg.envelope.user.name}, you're watching Avalonstar ##{broadcast.number}."
+
   # Start the specified broadcast.
   robot.respond /start episode ([0-9]*)$/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user, 'admin')
@@ -64,13 +71,6 @@ module.exports = (robot) ->
 
     # You're not me? GTFO. D:
     msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can specify the current episode."
-
-  # Return the current episode.
-  robot.respond /current episode$/i, (msg) ->
-    robot.http("http://avalonstar.tv/api/broadcasts/")
-      .get() (err, res, body) ->
-        broadcast = JSON.parse(body)[0]
-        msg.send "Hey #{msg.envelope.user.name}, you're watching Avalonstar ##{broadcast.number}."
 
   # End a specific broadcast by deleting the key if:
   #   1) The 'currentEpisode' key is not null.
