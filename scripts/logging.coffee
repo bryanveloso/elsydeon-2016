@@ -131,8 +131,9 @@ module.exports = (robot) ->
     messages.endAt(viewer).limit(5).once 'value', (snapshot) ->
       console.log "messages in range", snapshot.val()
       snapshot.forEach (message) ->
-        console.log "message #{message.child('message').val()} by #{message.child('username').val()} has been purged."
-        # message.child('is_purged').set(true)
+        if message.child('username').val() is viewer
+          console.log "message #{message.child('message').val()} by #{message.child('username').val()} has been purged."
+          message.child('is_purged').set(true)
 
   # Override send methods in the Response prototype sp that we can log Hubot's
   # own replies. This is kind of evil, but there doesn't appear to be
