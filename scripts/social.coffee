@@ -2,16 +2,16 @@
 #   Social commands surrounding social things.
 #
 # Commands:
-#   hubot twitter - Reply with twitter link
 #   hubot facebook - Reply with facebook link
+#   hubot twitter - Reply with twitter link
 #   hubot tweet - Reply with click-to-tweet link
 
 module.exports = (robot) ->
-  robot.respond /twitter$/i, (msg) ->
-    msg.send "https://twitter.com/bryanveloso"
-
   robot.respond /facebook$/i, (msg) ->
-    msg.send "https://facebook.com/avalonstar"
+    msg.send "Channel page: https://facebook.com/avalonstar • Personal profile: (It's easy to guess... but I won't accept unless I know you well)."
+
+  robot.respond /twitter$/i, (msg) ->
+    msg.send "Personal (frequent tweets): https://twitter.com/bryanveloso • Blog/Channel (occasional tweets): https://twitter.com/avalonstar"
 
   robot.respond /steam$/i, (msg) ->
     msg.send "http://steamcommunity.com/groups/avalonstartv"
@@ -24,7 +24,7 @@ module.exports = (robot) ->
       .get() (err, res, body) ->
         streamer = JSON.parse(body)
         game = if streamer.game then "play #{streamer.game} " else ""
-        tweet = "Watching @bryanveloso #{game}on http://avalonstar.tv! Come join me and lurk, chat, or just say hi!"
+        tweet = "Watching @bryanveloso #{game}on http://avalonstar.tv! Come join me, sit back, and relax! <3"
         tweet = encodeURIComponent(tweet)
         url = "https://twitter.com/intent/tweet?text=#{tweet}&source=clicktotweet"
 
