@@ -126,7 +126,13 @@ module.exports = (robot) ->
   # Listening to see if a user gets timed out.
   # Expected value is a username.
   robot.hear /CLEARCHAT ([a-zA-Z0-9_]*)/, (msg) ->
-    console.log msg
+    viewer = msg.match[1]
+    messages = firebase.child('messages')
+    messages.startAt(viewer).endAt(viewer).once 'value', (snapshot) ->
+      console.log "messages in range", snapshot.val()
+      for message in snapshot.val() by -1
+        console.log "message #{message} has been purged."
+        # message.child('is_purged').set(true)
 
   # Override send methods in the Response prototype sp that we can log Hubot's
   # own replies. This is kind of evil, but there doesn't appear to be
