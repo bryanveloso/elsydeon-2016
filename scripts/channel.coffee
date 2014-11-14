@@ -61,7 +61,7 @@ module.exports = (robot) ->
   # Listen to joins. If we have a new user, add them to the list.
   if robot.adapter.bot?
     robot.adapter.bot.addListener 'join', (channel, who) ->
-      if user isnt 'jtv' and not robot.brain.data.viewers[who]
+      if who isnt 'jtv' and not robot.brain.data.viewers[who]
         robot.brain.data.viewers[who] =
           'name': who
         robot.brain.save()
