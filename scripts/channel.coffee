@@ -6,13 +6,47 @@
 #  hubot gems - Tell people about the lovely team that is the Hidden Gems.
 #  hubot schedule - Tell the viewers about your schedule.
 
+CronJob = require('cron').CronJob
 moment = require 'moment'
 
 module.exports = (robot) ->
   robot.enter (msg) ->
-    # TODO: Run .mods and process the results.
     # Use TWITCHCLIENT 3 (need to figure out how to read joins/parts).
     robot.adapter.command 'twitchclient', '3'
+
+    # Hit <https://api.twitch.tv/kraken/streams/avalonstar>, looking to see if
+    # we're live every five seconds or so.
+    monitor = new CronJob('*/5 * * * * *', () ->
+      robot.http("https://api.twitch.tv/kraken/channels/avalonstar")
+        .get() (err, res, body) ->
+          key = 'currentEpisode'
+          stream = JSON.parse(body)
+
+          # Are we live?
+          # If we're live, grab the current episode number from the Avalonstar
+          # API. Then set it as the `currentEpisode` key for use later.
+          if stream
+            unless key?
+              robot.http("http://avalonstar.tv/api/broadcasts/")
+                .get() (err, res, body) ->
+                  episode = JSON.parse(body)[0]
+                  robot.brain.set key, episode.number
+
+                  # For debugging purposes.
+                  robot.logger.debug "Episode #{episode.number} is now live."
+                  msg.send "Hey everybody! It's time for episode #{episode.number}!"
+
+          # Not live? Never was live in the first place?
+          # Before we delete the key to signify us being offline, make sure
+          # we post once more in chat reminding people to check out the
+          # episode's highlights! Then delete the key.
+          else
+            number = robot.brain.get key
+            if number
+              msg.send "Episode #{number} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
+              robot.brain.remove key
+    )
+    monitor.start()
 
   # Start the specified broadcast.
   robot.respond /start episode ([0-9]*)$/i, (msg) ->
@@ -75,12 +109,6 @@ module.exports = (robot) ->
       msg.send "Viewer roles have been manually reset."
       return
     msg.send "I'm sorry #{msg.envelope.user.name}. You're not Bryan, so you can't run this."
-
-  # TODO: Create a command that monitors the API for when the channel goes live.
-  # <https://api.twitch.tv/kraken/streams/avalonstar>
-
-  # TODO: Create a command that monitors the API for when the channel signs off.
-  # <https://api.twitch.tv/kraken/streams/avalonstar>
 
   # The below are all flat commands (simply text, etc).
   robot.respond /blind$/i, (msg) ->
