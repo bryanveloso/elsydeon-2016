@@ -128,11 +128,17 @@ module.exports = (robot) ->
   robot.hear /CLEARCHAT ([a-zA-Z0-9_]*)/, (msg) ->
     viewer = msg.match[1]
     messages = firebase.child('messages')
+
+    # Find the last five messages from the user to purge (we don't choose more
+    # because a purge will rarely cover that many lines).
     messages.endAt(viewer).limit(5).once 'value', (snapshot) ->
-      console.log "messages in range", snapshot.val()
       snapshot.forEach (message) ->
-        if message.child('username').val() is viewer
-          console.log "message #{message.child('message').val()} by #{message.child('username').val()} has been purged."
+        # Because of Firebase quirks, if it finds less than 5 results for the
+        # viewer, it will find similarly spelled results. Let's not purge the
+        # wrong viewer please.
+        username = message.child('username').val()
+        if username is viewer
+          robot.logger.debug "\"#{message.child('message').val()}\" by #{username} has been purged."
           message.child('is_purged').set(true)
 
   # Override send methods in the Response prototype sp that we can log Hubot's
