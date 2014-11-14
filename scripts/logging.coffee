@@ -128,10 +128,10 @@ module.exports = (robot) ->
   robot.hear /CLEARCHAT ([a-zA-Z0-9_]*)/, (msg) ->
     viewer = msg.match[1]
     messages = firebase.child('messages')
-    messages.startAt(viewer).endAt(viewer).once 'value', (snapshot) ->
+    messages.endAt(viewer).limit(5).once 'value', (snapshot) ->
       console.log "messages in range", snapshot.val()
       snapshot.forEach (message) ->
-        console.log "message #{message} has been purged."
+        console.log "message #{message.child('message').val()} by #{message.child('username').val()} has been purged."
         # message.child('is_purged').set(true)
 
   # Override send methods in the Response prototype sp that we can log Hubot's
