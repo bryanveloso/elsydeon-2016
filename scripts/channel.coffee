@@ -87,9 +87,6 @@ module.exports = (robot) ->
   robot.respond /blind$/i, (msg) ->
     msg.send "This is a blind run! No tips, tricks, or spoilers unless Bryan explicitly asks. Everybody gets one warning and each subsequent violation will earn yourself a purge."
 
-  robot.respond /schedule$/i, (msg) ->
-    msg.send "Follow Bryan (https://twitter.com/bryanveloso) for exact times!"
-
   robot.respond /gems$/i, (msg) ->
     since = moment([2014, 7, 13, 21]).fromNow()
     msg.send "Follow Bryan's amazing teammates on the Hidden Gems (http://twitch.tv/team/gems). Bryan was inducted into the Hidden Gems #{since}."
