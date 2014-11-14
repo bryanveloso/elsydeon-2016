@@ -14,20 +14,6 @@ module.exports = (robot) ->
     # Use TWITCHCLIENT 3 (need to figure out how to read joins/parts).
     robot.adapter.command 'twitchclient', '3'
 
-  robot.respond /population$/i, (msg) ->
-    count = Object.keys(robot.brain.data.users).length
-    msg.send "#{count} people have visited Avalonstar."
-
-  robot.respond /schedule$/i, (msg) ->
-    msg.send "Follow Bryan (https://twitter.com/bryanveloso) for exact times!"
-
-  robot.respond /gems$/i, (msg) ->
-    since = moment([2014, 7, 13, 21]).fromNow()
-    msg.send "Follow Bryan's amazing teammates on the Hidden Gems (http://twitch.tv/team/gems). Bryan was inducted into the Hidden Gems #{since}."
-
-  robot.respond /blind$/i, (msg) ->
-    msg.send "This is a blind run! No tips, tricks, or spoilers unless Bryan explicitly asks. Everybody gets one warning and each subsequent violation will earn yourself a purge."
-
   # Start the specified broadcast.
   robot.respond /start episode ([0-9]*)$/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user, 'admin')
@@ -96,3 +82,18 @@ module.exports = (robot) ->
 
   # TODO: Create a command that monitors the API for when the channel signs off.
   # <https://api.twitch.tv/kraken/streams/avalonstar>
+
+  # The below are all flat commands (simply text, etc).
+  robot.respond /blind$/i, (msg) ->
+    msg.send "This is a blind run! No tips, tricks, or spoilers unless Bryan explicitly asks. Everybody gets one warning and each subsequent violation will earn yourself a purge."
+
+  robot.respond /schedule$/i, (msg) ->
+    msg.send "Follow Bryan (https://twitter.com/bryanveloso) for exact times!"
+
+  robot.respond /gems$/i, (msg) ->
+    since = moment([2014, 7, 13, 21]).fromNow()
+    msg.send "Follow Bryan's amazing teammates on the Hidden Gems (http://twitch.tv/team/gems). Bryan was inducted into the Hidden Gems #{since}."
+
+  robot.respond /visitors$/i, (msg) ->
+    count = Object.keys(robot.brain.data.users).length
+    msg.send "#{count} people have visited Avalonstar."
