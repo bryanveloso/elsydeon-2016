@@ -36,7 +36,7 @@ module.exports = (robot) ->
     robot.http("http://avalonstar.tv/api/broadcasts/")
       .get() (err, res, body) ->
         broadcast = JSON.parse(body)[0]
-        msg.send "Hey #{msg.envelope.user.name}, you're watching Avalonstar ##{broadcast}."
+        msg.send "Hey #{msg.envelope.user.name}, you're watching Avalonstar ##{broadcast.number}."
 
   # End a specific broadcast by deleting the key if:
   #   1) The 'currentEpisode' key is not null.
