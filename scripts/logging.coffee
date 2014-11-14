@@ -139,7 +139,7 @@ module.exports = (robot) ->
         username = message.child('username').val()
         if username is viewer
           robot.logger.debug "\"#{message.child('message').val()}\" by #{username} has been purged."
-          message.child('is_purged').set(true)
+          message.ref().child('is_purged').set(true)
 
   # Override send methods in the Response prototype sp that we can log Hubot's
   # own replies. This is kind of evil, but there doesn't appear to be
