@@ -129,17 +129,20 @@ module.exports = (robot) ->
     viewer = msg.match[1]
     messages = firebase.child('messages')
 
-    # Find the last five messages from the user to purge (we don't choose more
-    # because a purge will rarely cover that many lines).
-    messages.endAt(viewer).limit(5).once 'value', (snapshot) ->
-      snapshot.forEach (message) ->
-        # Because of Firebase quirks, if it finds less than 5 results for the
-        # viewer, it will find similarly spelled results. Let's not purge the
-        # wrong viewer please.
-        username = message.child('username').val()
-        if username is viewer
-          robot.logger.debug "\"#{message.child('message').val()}\" by #{username} has been purged."
-          message.ref().child('is_purged').set(true)
+    # CLEARCHAT without a name will clear the entire chat on Twitch web. Do not
+    # respect that, lest we purge things that we don't want to purge.
+    if viewer
+      # Find the last five messages from the user to purge (we don't choose
+      # more because a purge will rarely cover that many lines).
+      messages.endAt(viewer).limit(5).once 'value', (snapshot) ->
+        snapshot.forEach (message) ->
+          # Because of Firebase quirks, if it finds less than 5 results for the
+          # viewer, it will find similarly spelled results. Let's not purge the
+          # wrong viewer please.
+          username = message.child('username').val()
+          if username is viewer
+            robot.logger.debug "\"#{message.child('message').val()}\" by #{username} has been purged."
+            message.ref().child('is_purged').set(true)
 
   # Override send methods in the Response prototype sp that we can log Hubot's
   # own replies. This is kind of evil, but there doesn't appear to be
