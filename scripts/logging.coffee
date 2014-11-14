@@ -130,7 +130,7 @@ module.exports = (robot) ->
     messages = firebase.child('messages')
     messages.startAt(viewer).endAt(viewer).once 'value', (snapshot) ->
       console.log "messages in range", snapshot.val()
-      for message in snapshot.val() by -1
+      snapshot.forEach (message) ->
         console.log "message #{message} has been purged."
         # message.child('is_purged').set(true)
 
