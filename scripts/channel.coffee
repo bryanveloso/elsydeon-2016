@@ -19,33 +19,31 @@ module.exports = (robot) ->
     monitor = new CronJob('*/5 * * * * *', () ->
       robot.http("https://api.twitch.tv/kraken/streams/princezzxdiana")
         .get() (err, res, body) ->
-          # Are we live?
-          # If we're live, grab the current episode number from the Avalonstar
-          # API. Then set it as the `currentEpisode` key for use later.
           robot.logger.debug "Checking <streams/avalonstar> to see if we're live."
 
           key = 'currentEpisode'
           response = JSON.parse(body)
-          robot.logger.debug response.stream
+          number = robot.brain.get key
+
+          # Are we live?
+          # If we're live, grab the current episode number from the Avalonstar
+          # API. Then set it as the `currentEpisode` key for use later.
           if response.stream?
-            number = robot.brain.get key
-            robot.logger.debug number
             unless number?
               robot.http("http://avalonstar.tv/api/broadcasts/")
                 .get() (err, res, body) ->
                   robot.logger.debug "We're live, let's check our API for the episode number."
 
                   episode = JSON.parse(body)[0]
-                  msg.send "Hey everybody! It's time for episode #{episode.number}!"
-                  robot.logger.info "Episode #{episode.number} is now live."
                   robot.brain.set key, episode.number
+                  robot.logger.info "Episode #{episode.number} is now live."
+                  msg.send "Hey everybody! It's time for episode #{episode.number}!"
 
           # Not live? Never was live in the first place?
           # Before we delete the key to signify us being offline, make sure
           # we post once more in chat reminding people to check out the
           # episode's highlights! Then delete the key.
           else
-            number = robot.brain.get key
             if number?
               msg.send "Episode #{number} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
               robot.logger.info "Episode #{episode.number} has ended."
