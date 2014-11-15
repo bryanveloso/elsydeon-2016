@@ -7,6 +7,7 @@
 #  hubot schedule - Tell the viewers about your schedule.
 
 CronJob = require('cron').CronJob
+filename = path.basename(module.filename, path.extname(module.filename))
 moment = require 'moment'
 
 module.exports = (robot) ->
@@ -19,7 +20,6 @@ module.exports = (robot) ->
     monitor = new CronJob('*/5 * * * * *', () ->
       robot.http("https://api.twitch.tv/kraken/streams/avalonstar")
         .get() (err, res, body) ->
-          robot.logger.debug "Checking <streams/avalonstar> to see if we're live."
 
           key = 'currentEpisode'
           response = JSON.parse(body)
@@ -29,14 +29,15 @@ module.exports = (robot) ->
           # If we're live, grab the current episode number from the Avalonstar
           # API. Then set it as the `currentEpisode` key for use later.
           if response.stream?
+            robot.logger.debug "#{filename}: Checking <streams/avalonstar>: `stream` exists, we're live."
             unless number?
               robot.http("http://avalonstar.tv/api/broadcasts/")
                 .get() (err, res, body) ->
-                  robot.logger.debug "We're live, let's check our API for the episode number."
+                  robot.logger.debug "#{filename}: We're live, let's check our API for the episode number."
 
                   episode = JSON.parse(body)[0]
                   robot.brain.set key, episode.number
-                  robot.logger.info "Episode #{episode.number} is now live."
+                  robot.logger.info "#{filename}: Episode #{episode.number} is now live."
                   msg.send "Hey everybody! It's time for episode #{episode.number}!"
 
           # Not live? Never was live in the first place?
@@ -44,12 +45,11 @@ module.exports = (robot) ->
           # we post once more in chat reminding people to check out the
           # episode's highlights! Then delete the key.
           else
+            robot.logger.debug "#{filename}: Checking <streams/avalonstar>: `stream` is null, we're offline."
             if number?
               msg.send "Episode #{number} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
-              robot.logger.info "Episode #{episode.number} has ended."
+              robot.logger.info "#{filename}: Episode #{episode.number} has ended."
               robot.brain.remove key
-
-              # For debugging purposes.
     )
     monitor.start()
 
