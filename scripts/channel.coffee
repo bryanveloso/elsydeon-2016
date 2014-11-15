@@ -47,7 +47,7 @@ module.exports = (robot) ->
               msg.send "Episode #{number} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
               robot.brain.remove key
     )
-    monitor.start()
+    # monitor.start()
 
   # Return the current episode.
   robot.respond /episode$/i, (msg) ->
