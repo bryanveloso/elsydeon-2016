@@ -7,8 +7,10 @@
 #  hubot schedule - Tell the viewers about your schedule.
 
 CronJob = require('cron').CronJob
-filename = path.basename(module.filename, path.extname(module.filename))
 moment = require 'moment'
+path = require('path')
+
+filename = path.basename(module.filename, path.extname(module.filename))
 
 module.exports = (robot) ->
   robot.enter (msg) ->
