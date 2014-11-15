@@ -71,20 +71,21 @@ module.exports = (robot) ->
   robot.hear /.*?\s?SPECIALUSER ([a-zA-Z0-9_]*) ([a-z]*)/, (msg) ->
     if msg.envelope.user.name is 'jtv'
       viewer = robot.brain.userForName msg.match[1]
-      userdata = robot.brain.data['viewers'][viewer.name]
-      userdata['roles'] ?= []
+      if viewer?
+        userdata = robot.brain.data['viewers'][viewer.name]
+        userdata['roles'] ?= []
 
-      if msg.match[2] not in userdata['roles']
-        userdata['roles'].push msg.match[2]
-      robot.brain.save()
+        if msg.match[2] not in userdata['roles']
+          userdata['roles'].push msg.match[2]
+        robot.brain.save()
 
-      # Save user list to Firebase.
-      viewers = firebase.child('viewers')
-      viewers.child(viewer.name).child('roles').set userdata['roles'], (error) ->
-        console.log "handleRoles: #{error}" if !error?
+        # Save user list to Firebase.
+        viewers = firebase.child('viewers')
+        viewers.child(viewer.name).child('roles').set userdata['roles'], (error) ->
+          robot.logger.error "Error in `handleRoles`: #{error}" if error
 
-      # For debugging purposes.
-      robot.logger.debug msg.match[1] + " is a " + msg.match[2] + " user."
+        # For debugging purposes.
+        robot.logger.debug msg.match[1] + " is a " + msg.match[2] + " user."
 
   # Listening for emoticon sets.
   # Expected value is a list of integers.
@@ -110,18 +111,19 @@ module.exports = (robot) ->
   robot.hear /USERCOLOR ([a-zA-Z0-9_]*) (#[A-Z0-9]{6})/, (msg) ->
     if msg.envelope.user.name is 'jtv'
       viewer = robot.brain.userForName msg.match[1]
-      color = msg.match[2]
+      if viewer?
+        color = msg.match[2]
 
-      # Save user list to Firebase.
-      viewers = firebase.child('viewers')
-      viewers.child(viewer.name).child('color').set color, (error) ->
-        console.log "handleColor: #{error}" if !error?
+        # Save user list to Firebase.
+        viewers = firebase.child('viewers')
+        viewers.child(viewer.name).child('color').set color, (error) ->
+          robot.logger.error "Error in `handleColor`: #{error}" if error
 
-      robot.brain.data['viewers'][viewer.name]['color'] = color
-      robot.brain.save()
+        robot.brain.data['viewers'][viewer.name]['color'] = color
+        robot.brain.save()
 
-      # For debugging purposes.
-      robot.logger.debug msg.match[1] + " has uses this color: " + msg.match[2]
+        # For debugging purposes.
+        robot.logger.debug msg.match[1] + " has uses this color: " + msg.match[2]
 
   # Listening to see if a user gets timed out.
   # Expected value is a username.
