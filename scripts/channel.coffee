@@ -25,8 +25,8 @@ module.exports = (robot) ->
     since = moment([2014, 7, 13, 21]).fromNow()
     msg.send "Follow Bryan's amazing teammates on the Hidden Gems (http://twitch.tv/team/gems). Bryan was inducted into the Hidden Gems #{since}."
 
-  robot.respond /marathon$/i, (msg) ->
-    msg.send "Bryan is marathoning for Hello! Party 4, a J-pop party that him and Jen are throwing in NYC on October 4th. Support their IndieGogo campaign by heading to http://igg.me/at/helloparty4 and make sure to choose the featured perk! <3"
+  robot.respond /blind$/i, (msg) ->
+    msg.send "This is a blind run! No tips, tricks, or spoilers unless Bryan explicitly asks. Everybody gets one warning and each subsequent violation will earn yourself a purge."
 
   # Start the specified broadcast.
   robot.respond /start episode ([0-9]*)$/i, (msg) ->
