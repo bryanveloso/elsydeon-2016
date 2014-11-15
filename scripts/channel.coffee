@@ -108,17 +108,6 @@ module.exports = (robot) ->
     msg.send "#{count} people have visited Avalonstar."
 
   # The below are all administrative commands of some sort.
-  # Listen to joins. If we have a new user, add them to the list.
-  if robot.adapter.bot?
-    robot.adapter.bot.addListener 'join', (channel, who) ->
-      if who isnt 'jtv' and not robot.brain.data.viewers[who]
-        robot.brain.data.viewers[who] =
-          'name': who
-        robot.brain.save()
-
-        # For debugging purposes.
-        robot.logger.debug "We have new blood: #{who}."
-
   robot.respond /reset roles$/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user, 'admin')
       for viewer in robot.brain.data.viewers
