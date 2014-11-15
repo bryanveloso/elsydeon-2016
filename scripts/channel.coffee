@@ -19,13 +19,14 @@ module.exports = (robot) ->
     monitor = new CronJob('*/5 * * * * *', () ->
       robot.http("https://api.twitch.tv/kraken/streams/avalonstar")
         .get() (err, res, body) ->
+          robot.logger.debug "Running through the monitor things."
           key = 'currentEpisode'
-          stream = JSON.parse(body)
+          response = JSON.parse(body)
 
           # Are we live?
           # If we're live, grab the current episode number from the Avalonstar
           # API. Then set it as the `currentEpisode` key for use later.
-          if stream
+          if response.stream
             unless key?
               robot.http("http://avalonstar.tv/api/broadcasts/")
                 .get() (err, res, body) ->
