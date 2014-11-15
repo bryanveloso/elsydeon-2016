@@ -30,7 +30,7 @@ module.exports = (robot) ->
           if response.stream?
             number = robot.brain.get key
             robot.logger.debug number
-            unless key?
+            unless key
               robot.http("http://avalonstar.tv/api/broadcasts/")
                 .get() (err, res, body) ->
                   robot.logger.debug "We're live, let's check our API for the episode number."
