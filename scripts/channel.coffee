@@ -17,7 +17,7 @@ module.exports = (robot) ->
     # Hit <https://api.twitch.tv/kraken/streams/avalonstar>, looking to see if
     # we're live every five seconds or so.
     monitor = new CronJob('*/5 * * * * *', () ->
-      robot.http("https://api.twitch.tv/kraken/streams/princezzxdiana")
+      robot.http("https://api.twitch.tv/kraken/streams/avalonstar")
         .get() (err, res, body) ->
           robot.logger.debug "Checking <streams/avalonstar> to see if we're live."
 
