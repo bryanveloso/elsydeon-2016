@@ -100,8 +100,8 @@ module.exports = (robot) ->
     msg.send "Follow Bryan's amazing teammates on the Hidden Gems (http://twitch.tv/team/gems). Bryan was inducted into the Hidden Gems #{since}."
 
   robot.respond /(bot|code|oss)$/i, (msg) ->
-    msg.send "Interested in the code that powers this channel? You can find it all on GitHub! Site/Overlays: http://github.com/bryanveloso/avalonstar-tv • Bot: http://github.com/bryanveloso/elsydeon • Chat: http://github.com/bryanveloso/avalonstar-live"
-    msg.send "All designs are -owned- by me. If you steal them and I'm coming after you."
+    msg.send "Interested in the code that powers this channel? You can find it all on GitHub! Overlays: http://github.com/bryanveloso/avalonstar-tv • Bot: http://github.com/bryanveloso/elsydeon • Chat: http://github.com/bryanveloso/avalonstar-live"
+    msg.send "All code is provided for eductional purposes only and all designs are -owned- by Bryan. If you steal them and we're coming after you."
 
   robot.respond /visitors$/i, (msg) ->
     count = Object.keys(robot.brain.data.users).length
