@@ -47,7 +47,6 @@ module.exports = (robot) ->
           # we post once more in chat reminding people to check out the
           # episode's highlights! Then delete the key.
           else
-            robot.logger.debug "#{filename}: Checking <streams/avalonstar>: `stream` is null, we're offline."
             if number?
               msg.send "Episode #{number} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
               robot.logger.info "#{filename}: Episode #{episode.number} has ended."
