@@ -17,27 +17,25 @@ module.exports = (robot) ->
     # Hit <https://api.twitch.tv/kraken/streams/avalonstar>, looking to see if
     # we're live every five seconds or so.
     monitor = new CronJob('*/5 * * * * *', () ->
-      robot.http("https://api.twitch.tv/kraken/streams/avalonstar")
+      robot.http("https://api.twitch.tv/kraken/streams/princezzxdiana")
         .get() (err, res, body) ->
-          key = 'currentEpisode'
-          response = JSON.parse(body)
-          robot.logger.debug "Running through the monitor things."
-          robot.logger.debug response
-          robot.logger.debug response.stream
-
           # Are we live?
           # If we're live, grab the current episode number from the Avalonstar
           # API. Then set it as the `currentEpisode` key for use later.
-          if response.stream
+          robot.logger.debug "Checking <streams/avalonstar> to see if we're live."
+
+          key = 'currentEpisode'
+          response = JSON.parse(body)
+          if response.stream?
             unless key?
               robot.http("http://avalonstar.tv/api/broadcasts/")
                 .get() (err, res, body) ->
-                  episode = JSON.parse(body)[0]
-                  robot.brain.set key, episode.number
+                  robot.logger.debug "We're live, let's check our API for the episode number."
 
-                  # For debugging purposes.
-                  robot.logger.info "Episode #{episode.number} is now live."
+                  episode = JSON.parse(body)[0]
                   msg.send "Hey everybody! It's time for episode #{episode.number}!"
+                  robot.logger.info "Episode #{episode.number} is now live."
+                  robot.brain.set key, episode.number
 
           # Not live? Never was live in the first place?
           # Before we delete the key to signify us being offline, make sure
@@ -47,10 +45,10 @@ module.exports = (robot) ->
             number = robot.brain.get key
             if number?
               msg.send "Episode #{number} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
+              robot.logger.info "Episode #{episode.number} has ended."
               robot.brain.remove key
 
               # For debugging purposes.
-              robot.logger.info "Episode #{episode.number} has ended."
     )
     monitor.start()
 
