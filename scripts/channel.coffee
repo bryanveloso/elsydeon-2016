@@ -26,8 +26,10 @@ module.exports = (robot) ->
 
           key = 'currentEpisode'
           response = JSON.parse(body)
+          robot.logger.debug response.stream
           if response.stream?
             number = robot.brain.get key
+            robot.logger.debug number
             unless key?
               robot.http("http://avalonstar.tv/api/broadcasts/")
                 .get() (err, res, body) ->
