@@ -19,9 +19,11 @@ module.exports = (robot) ->
     monitor = new CronJob('*/5 * * * * *', () ->
       robot.http("https://api.twitch.tv/kraken/streams/avalonstar")
         .get() (err, res, body) ->
-          robot.logger.debug "Running through the monitor things."
           key = 'currentEpisode'
           response = JSON.parse(body)
+          robot.logger.debug "Running through the monitor things."
+          robot.logger.debug response
+          robot.logger.debug response.stream
 
           # Are we live?
           # If we're live, grab the current episode number from the Avalonstar
@@ -34,7 +36,7 @@ module.exports = (robot) ->
                   robot.brain.set key, episode.number
 
                   # For debugging purposes.
-                  robot.logger.debug "Episode #{episode.number} is now live."
+                  robot.logger.info "Episode #{episode.number} is now live."
                   msg.send "Hey everybody! It's time for episode #{episode.number}!"
 
           # Not live? Never was live in the first place?
@@ -43,11 +45,14 @@ module.exports = (robot) ->
           # episode's highlights! Then delete the key.
           else
             number = robot.brain.get key
-            if number
+            if number?
               msg.send "Episode #{number} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
               robot.brain.remove key
+
+              # For debugging purposes.
+              robot.logger.info "Episode #{episode.number} has ended."
     )
-    # monitor.start()
+    monitor.start()
 
   # Return the current episode.
   robot.respond /episode$/i, (msg) ->
