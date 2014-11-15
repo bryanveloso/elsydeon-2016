@@ -16,7 +16,7 @@ module.exports = (robot) ->
       json = {}
       json[episode] = true
       viewers.child(username).child('episodes').update json, (error) ->
-        robot.logger.error "Error in `handleUser`: #{error}" if error
+        console.log "hanldeUser: #{error}" if !error?
 
     robot.http("https://api.twitch.tv/kraken/users/#{username}")
       .get() (err, res, body) ->
@@ -24,7 +24,7 @@ module.exports = (robot) ->
         json =
           'display_name': viewer.display_name
         viewers.child(username).update json, (error) ->
-          robot.logger.error "Error in `handleUser`: #{error}" if error
+          console.log "pushMessage: #{error}"
 
   pushMessage = (message, ircdata, is_emote) ->
     viewers = firebase.child('viewers')
@@ -47,7 +47,7 @@ module.exports = (robot) ->
       # Firebase. Testing this out.
       messages = firebase.child('messages').push()
       messages.setWithPriority json, ircdata.name, (error) ->
-        robot.logger.error "Error in `pushMessage`: #{error}" if error
+        console.log "pushMessage: #{error}"
       return
 
   if robot.adapter.bot?
@@ -81,7 +81,7 @@ module.exports = (robot) ->
       # Save user list to Firebase.
       viewers = firebase.child('viewers')
       viewers.child(viewer.name).child('roles').set userdata['roles'], (error) ->
-        robot.logger.error "Error in `handleRoles`: #{error}" if error
+        console.log "handleRoles: #{error}" if !error?
 
       # For debugging purposes.
       robot.logger.debug msg.match[1] + " is a " + msg.match[2] + " user."
@@ -96,7 +96,7 @@ module.exports = (robot) ->
       # Save emote list to Firebase.
       viewers = firebase.child('viewers')
       viewers.child(viewer.name).child('emotes').set emotes, (error) ->
-        robot.logger.error "Error in `handleEmotes`: #{error}" if error
+        console.log "handleEmotes: #{error}" if !error?
 
       # Try saving the emote list to the robot's brain.
       robot.brain.data['viewers'][viewer.name]['emotes'] = emotes
@@ -115,7 +115,7 @@ module.exports = (robot) ->
       # Save user list to Firebase.
       viewers = firebase.child('viewers')
       viewers.child(viewer.name).child('color').set color, (error) ->
-        robot.logger.error "Error in `handleColor`: #{error}" if error
+        console.log "handleColor: #{error}" if !error?
 
       robot.brain.data['viewers'][viewer.name]['color'] = color
       robot.brain.save()

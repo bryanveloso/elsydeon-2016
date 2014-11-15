@@ -41,7 +41,7 @@ module.exports = (robot) ->
             'username': streamer.name
           targets = firebase.child('targets')
           targets.push json, (error) ->
-            robot.logger.error "Error in `!raid`: #{error}" if error
+            console.log "raid: #{error}"
 
       # Let's get outta here.
       return
@@ -74,7 +74,7 @@ module.exports = (robot) ->
             'username': streamer.name
           raids = firebase.child('raids')
           raids.push json, (error) ->
-            robot.logger.error "Error in `!raider`: #{error}" if error
+            console.log "raider: #{error}"
 
           # Secondly, increment the number of times a user has raided.
           # (This count only counts back to raids since episode 50.)
