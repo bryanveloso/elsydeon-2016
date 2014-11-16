@@ -113,8 +113,13 @@ module.exports = (robot) ->
   # Self explanatory, get how long this episode's been live.
   robot.respond /uptime$/i, (msg) ->
     started = robot.brain.get 'startTime'
-    since = started.fromNow true
-    msg.send "Bryan's been streaming for #{since}."
+    if started?
+      since = started.fromNow true
+      msg.send "Bryan's been streaming for #{since}."
+      return
+
+    # Welp, we need to have started in order to know how long we've been going.
+    msg.send "I'm sorry #{msg.envelope.user.name}, we need to be live in order to know how long we've been going."
 
   # The below are all flat commands (simply text, etc).
   robot.respond /blind$/i, (msg) ->
