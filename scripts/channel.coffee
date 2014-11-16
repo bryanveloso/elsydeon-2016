@@ -27,9 +27,8 @@ module.exports = (robot) ->
       unless casual?
         robot.http("https://api.twitch.tv/kraken/streams/avalonstar")
           .get() (err, res, body) ->
-            key = 'currentEpisode'
             response = JSON.parse(body)
-            number = robot.brain.get key
+            number = robot.brain.get 'currentEpisode'
 
             # Are we live?
             # If we're live, grab the current episode number from the Avalonstar
@@ -42,8 +41,11 @@ module.exports = (robot) ->
                     robot.logger.debug "#{filename}: We're live, let's check our API for the episode number."
 
                     episode = JSON.parse(body)[0]
-                    robot.brain.set key, episode.number
+                    now = moment()
+                    robot.brain.set 'currentEpisode', episode.number
+                    robot.brain.set 'startTime', now
                     robot.logger.info "#{filename}: Episode #{episode.number} is now live."
+                    robot.logger.info "#{filename}: Episode #{episode.number} started at #{now.format()}."
                     msg.send "Hey everybody! It's time for episode #{episode.number}!"
 
             # Not live? Never was live in the first place?
@@ -54,7 +56,8 @@ module.exports = (robot) ->
               if number?
                 msg.send "Episode #{number} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
                 robot.logger.info "#{filename}: Episode #{episode.number} has ended."
-                robot.brain.remove key
+                robot.brain.remove 'currentEpisode'
+                robot.brain.remove 'startTime'
       else
         robot.logger.debug "#{filename}: The stream has been marked as casual. Internal monitoring functions deactivated."
     )
@@ -106,6 +109,12 @@ module.exports = (robot) ->
 
     # You're not me? GTFO. D:
     msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can cleanse the stream of casual filth."
+
+  # Self explanatory, get how long this episode's been live.
+  robot.respond /uptime$/i, (msg) ->
+    started = robot.brain.get 'startTime'
+    since = started.fromNow true
+    msg.send "Bryan's been streaming for #{since}."
 
   # The below are all flat commands (simply text, etc).
   robot.respond /blind$/i, (msg) ->
