@@ -56,46 +56,50 @@ module.exports = (robot) ->
 
   # Return the current episode.
   robot.respond /episode$/i, (msg) ->
-    robot.http("http://avalonstar.tv/api/broadcasts/")
-      .get() (err, res, body) ->
-        broadcast = JSON.parse(body)[0]
-        msg.send "Hey #{msg.envelope.user.name}, you're watching Avalonstar ##{broadcast.number}."
+    casual = robot.brain.get 'casualEpisode'
+    episode = robot.brain.get 'currentEpisode'
+    username = msg.envelope.user.name
+    if casual?
+      msg.send "Hey #{username}, this is a casual episode of Avalonstar. No number!"
+      return
+    else if episode?
+      msg.send "Hey #{username}, you're watching Avalonstar ##{episode}."
+      return
+    else
+      msg.send "Hey #{username}, Avalonstar isn't currently... live... why don't you check out the lovely highlights?"
 
-  # Start the specified broadcast.
-  robot.respond /start episode ([0-9]*)$/i, (msg) ->
+  # Mark the stream as a filthy casual.
+  robot.respond /casual start$/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user, 'admin')
-      key = 'currentEpisode'
-      episode = robot.brain.get(key)
-      unless episode?
-        robot.brain.set(key, msg.match[1])
-        msg.send "Got it Bryan. It's episode #{msg.match[1]} time!"
+      key = 'casualEpisode'
+      casual = robot.brain.get key
+      unless casual?
+        robot.brain.set key, true
+        msg.send "Got it Bryan. The stream has been marked as casual."
         return
 
-      # If there's an active episode, we shouldn't be setting one on top of it.
-      msg.send "Sorry Bryan. Episode #{episode} is the currently active episode. Can't set another one."
+      # If the stream is marked as casual, you can't do it again.
+      msg.send "Sorry Bryan. The stream has already been marked as casual. You filthy casual."
       return
 
     # You're not me? GTFO. D:
-    msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can specify the current episode."
+    msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can mark the stream as casual."
 
-  # End a specific broadcast by deleting the key if:
-  #   1) The 'currentEpisode' key is not null.
-  #   2) The broadcast number entered matches the key's value.
-  robot.respond /end episode ([0-9]*)$/i, (msg) ->
+  # Remove the casual mark. Clean yourself of the filth.
+  robot.respond /casual end$/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user, 'admin')
-      key = 'currentEpisode'
-      episode = robot.brain.get(key)
-      if episode and episode is msg.match[1]
-        robot.brain.remove(key)
-        msg.send "Episode #{msg.match[1]} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
+      key = 'casualEpisode'
+      casual = robot.brain.get key
+      if casual?
+        robot.brain.remove key
+        msg.send "This episode is no longer marked as casual. You should give it an episode number, Bryan."
         return
 
-      # Can't end a broadcast if we've never set one. o_o;
-      msg.send "Sorry Bryan. You can't end a broadcast that's never started. Silly."
-      return
+      # Can't set a broadcast as casual if we never set it. o_o;
+      msg.send "Sorry Bryan. You can't end a casual broadcast if you never set it. Silly."
 
-    # Stop trying to be me, seriously. D:
-    msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can end the current episode."
+    # You're not me? GTFO. D:
+    msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can cleanse the stream of casual filth."
 
   # The below are all flat commands (simply text, etc).
   robot.respond /blind$/i, (msg) ->
