@@ -14,7 +14,7 @@ filename = path.basename(module.filename, path.extname(module.filename))
 
 module.exports = (robot) ->
   robot.enter (msg) ->
-    # Use TWITCHCLIENT 3 (need to figure out how to read joins/parts).
+    # Use TWITCHCLIENT 3.
     robot.adapter.command 'twitchclient', '3'
 
     # Hit <https://api.twitch.tv/kraken/streams/avalonstar>, looking to see if
