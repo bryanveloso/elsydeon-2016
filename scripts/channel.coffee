@@ -20,37 +20,41 @@ module.exports = (robot) ->
     # Hit <https://api.twitch.tv/kraken/streams/avalonstar>, looking to see if
     # we're live every five seconds or so.
     monitor = new CronJob('*/5 * * * * *', () ->
-      robot.http("https://api.twitch.tv/kraken/streams/avalonstar")
-        .get() (err, res, body) ->
+      casual = robot.brain.get 'casualEpisode'
+      unless casual?
+        robot.http("https://api.twitch.tv/kraken/streams/avalonstar")
+          .get() (err, res, body) ->
 
-          key = 'currentEpisode'
-          response = JSON.parse(body)
-          number = robot.brain.get key
+            key = 'currentEpisode'
+            response = JSON.parse(body)
+            number = robot.brain.get key
 
-          # Are we live?
-          # If we're live, grab the current episode number from the Avalonstar
-          # API. Then set it as the `currentEpisode` key for use later.
-          if response.stream?
-            robot.logger.debug "#{filename}: Checking <streams/avalonstar>: `stream` exists, we're live."
-            unless number?
-              robot.http("http://avalonstar.tv/api/broadcasts/")
-                .get() (err, res, body) ->
-                  robot.logger.debug "#{filename}: We're live, let's check our API for the episode number."
+            # Are we live?
+            # If we're live, grab the current episode number from the Avalonstar
+            # API. Then set it as the `currentEpisode` key for use later.
+            if response.stream?
+              robot.logger.debug "#{filename}: Checking <streams/avalonstar>: `stream` exists, we're live."
+              unless number?
+                robot.http("http://avalonstar.tv/api/broadcasts/")
+                  .get() (err, res, body) ->
+                    robot.logger.debug "#{filename}: We're live, let's check our API for the episode number."
 
-                  episode = JSON.parse(body)[0]
-                  robot.brain.set key, episode.number
-                  robot.logger.info "#{filename}: Episode #{episode.number} is now live."
-                  msg.send "Hey everybody! It's time for episode #{episode.number}!"
+                    episode = JSON.parse(body)[0]
+                    robot.brain.set key, episode.number
+                    robot.logger.info "#{filename}: Episode #{episode.number} is now live."
+                    msg.send "Hey everybody! It's time for episode #{episode.number}!"
 
-          # Not live? Never was live in the first place?
-          # Before we delete the key to signify us being offline, make sure
-          # we post once more in chat reminding people to check out the
-          # episode's highlights! Then delete the key.
-          else
-            if number?
-              msg.send "Episode #{number} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
-              robot.logger.info "#{filename}: Episode #{episode.number} has ended."
-              robot.brain.remove key
+            # Not live? Never was live in the first place?
+            # Before we delete the key to signify us being offline, make sure
+            # we post once more in chat reminding people to check out the
+            # episode's highlights! Then delete the key.
+            else
+              if number?
+                msg.send "Episode #{number} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
+                robot.logger.info "#{filename}: Episode #{episode.number} has ended."
+                robot.brain.remove key
+      else
+        robot.logger.debug "#{filename}: The stream has been marked as casual. Internal monitoring functions deactivated."
     )
     monitor.start()
 
