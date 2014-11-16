@@ -19,7 +19,7 @@ module.exports = (robot) ->
 
     # Hit <https://api.twitch.tv/kraken/streams/avalonstar>, looking to see if
     # we're live every five seconds or so.
-    monitor = new CronJob('*/5 * * * * *', () ->
+    monitor = new CronJob('*/10 * * * * *', () ->
       casual = robot.brain.get 'casualEpisode'
       unless casual?
         robot.http("https://api.twitch.tv/kraken/streams/avalonstar")
