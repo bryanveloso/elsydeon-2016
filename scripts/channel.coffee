@@ -54,10 +54,10 @@ module.exports = (robot) ->
             # episode's highlights! Then delete the key.
             else
               if number?
-                msg.send "Episode #{number} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
                 robot.logger.info "#{filename}: Episode #{episode.number} has ended."
                 robot.brain.remove 'currentEpisode'
                 robot.brain.remove 'startTime'
+                msg.send "Episode #{number} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
       else
         robot.logger.debug "#{filename}: The stream has been marked as casual. Internal monitoring functions deactivated."
     )
