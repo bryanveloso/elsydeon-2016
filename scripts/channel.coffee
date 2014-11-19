@@ -54,7 +54,7 @@ module.exports = (robot) ->
             # episode's highlights! Then delete the key.
             else
               if number?
-                robot.logger.info "#{filename}: Episode #{episode.number} has ended."
+                robot.logger.info "#{filename}: Episode #{number} has ended."
                 robot.brain.remove 'currentEpisode'
                 robot.brain.remove 'startTime'
                 msg.send "Episode #{number} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
