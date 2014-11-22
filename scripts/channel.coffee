@@ -19,7 +19,7 @@ module.exports = (robot) ->
 
     # Hit <https://api.twitch.tv/kraken/streams/avalonstar>, looking to see if
     # we're live every five seconds or so.
-    monitor = new CronJob('*/10 * * * * *', () ->
+    monitor = new CronJob('*/15 * * * * *', () ->
       # First off, is this a casual stream?
       # Casual streams don't have an episode number, so there should be no need
       # to go through the normal monitoring process to set things.
