@@ -37,7 +37,6 @@ module.exports = (robot) ->
       json =
         'color': twitchdata?.color or '#ffffff'
         'emotes': emotes
-        'episode': robot.brain.get('currentEpisode')
         'is_emote': is_emote
         'message': message
         'roles': twitchroles.concat ircroles
