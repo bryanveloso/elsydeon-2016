@@ -10,7 +10,10 @@ CronJob = require('cron').CronJob
 moment = require 'moment'
 path = require('path')
 
-filename = path.basename(module.filename, path.extname(module.filename))
+# API Endpoints.
+BROADCAST_API = "http://avalonstar.tv/api/broadcasts/"
+TWITCH_STREAM = "https://api.twitch.tv/kraken/streams/avalonstar"
+TWITCH_CHANNEL = "https://api.twitch.tv/kraken/channels/avalonstar"
 
 module.exports = (robot) ->
   robot.enter (msg) ->
@@ -20,33 +23,32 @@ module.exports = (robot) ->
     # Hit <https://api.twitch.tv/kraken/streams/avalonstar>, looking to see if
     # we're live every five seconds or so.
     monitor = new CronJob('*/15 * * * * *', () ->
-      # First off, is this a casual stream?
+      casual = robot.brain.get 'casualEpisode'
       # Casual streams don't have an episode number, so there should be no need
       # to go through the normal monitoring process to set things.
-      casual = robot.brain.get 'casualEpisode'
+      robot.logger.debug "#{filename}: The stream has been marked as casual. Internal monitoring functions deactivated." if casual?
       unless casual?
-        robot.http("https://api.twitch.tv/kraken/streams/avalonstar")
-          .get() (err, res, body) ->
-            response = JSON.parse(body)
+        robot.http(TWITCH_STREAM).get() (err, res, body) ->
+          robot.logger.error "Whoops, we ran into an error: #{err}" if err?
+          unless err
             number = robot.brain.get 'currentEpisode'
+            response = JSON.parse body
 
-            # Are we live?
             # If we're live, grab the current episode number from the Avalonstar
             # API. Then set it as the `currentEpisode` key for use later.
             if response.stream?
               robot.logger.debug "#{filename}: Checking <streams/avalonstar>: `stream` exists, we're live."
               unless number?
-                robot.http("http://avalonstar.tv/api/broadcasts/")
-                  .get() (err, res, body) ->
-                    robot.logger.debug "#{filename}: We're live, let's check our API for the episode number."
+                robot.http(BROADCAST_API).get() (err, res, body) ->
+                  robot.logger.debug "#{filename}: We're live, let's check our API for the episode number."
 
-                    episode = JSON.parse(body)[0]
-                    now = moment()
-                    robot.brain.set 'currentEpisode', episode.number
-                    robot.brain.set 'startTime', now
-                    robot.logger.info "#{filename}: Episode #{episode.number} is now live."
-                    robot.logger.info "#{filename}: Episode #{episode.number} started at #{now.format()}."
-                    msg.send "Hey everybody! It's time for episode #{episode.number}!"
+                  episode = JSON.parse(body)[0]
+                  now = moment()
+                  robot.brain.set 'currentEpisode', episode.number
+                  robot.brain.set 'startTime', now
+                  robot.logger.info "#{filename}: Episode #{episode.number} is now live."
+                  robot.logger.info "#{filename}: Episode #{episode.number} started at #{now.format()}."
+                  msg.send "Hey everybody! It's time for episode #{episode.number}!"
 
             # Not live? Never was live in the first place?
             # Before we delete the key to signify us being offline, make sure
@@ -58,8 +60,6 @@ module.exports = (robot) ->
                 robot.brain.remove 'currentEpisode'
                 robot.brain.remove 'startTime'
                 msg.send "Episode #{number} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
-      else
-        robot.logger.debug "#{filename}: The stream has been marked as casual. Internal monitoring functions deactivated."
     )
     monitor.start()
 
