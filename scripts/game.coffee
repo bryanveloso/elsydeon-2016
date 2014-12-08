@@ -22,7 +22,7 @@ module.exports = (robot) ->
           robot.logger.debug "The current game is: #{robot.brain.get key}"
         return
   )
-  job.start()
+  # job.start()
 
   robot.respond /game$/i, (msg) ->
     msg.send "Bryan's currently playing #{robot.brain.get 'currentGame'}."
