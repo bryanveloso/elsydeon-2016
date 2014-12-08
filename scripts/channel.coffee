@@ -24,16 +24,16 @@ module.exports = (robot) ->
     # we're live every five seconds or so.
     monitor = new CronJob('*/15 * * * * *', () ->
       casual = robot.brain.get 'casualEpisode'
+      number = robot.brain.get 'currentEpisode'
       # Casual streams don't have an episode number, so there should be no need
       # to go through the normal monitoring process to set things.
       robot.logger.debug "#{filename}: The stream has been marked as casual. Internal monitoring functions deactivated." if casual?
       unless casual?
         robot.http(TWITCH_STREAM).get() (err, res, body) ->
           robot.logger.error "Whoops, we ran into an error: #{err}" if err?
-          unless err
-            number = robot.brain.get 'currentEpisode'
-            response = JSON.parse body
+          response = JSON.parse body
 
+          if !err and response.hasOwnProperty 'stream'  # https://github.com/justintv/Twitch-API/issues/274
             # If we're live, grab the current episode number from the Avalonstar
             # API. Then set it as the `currentEpisode` key for use later.
             if response.stream?
