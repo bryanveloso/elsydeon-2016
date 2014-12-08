@@ -68,8 +68,8 @@ module.exports = (robot) ->
   # Messages can be prefixed by a username (most likely the bot's name).
   # Note: Roles such as moderator do not appear in this method.
   robot.hear /.*?\s?SPECIALUSER ([a-zA-Z0-9_]*) ([a-z]*)/, (msg) ->
-    if msg.envelope.user.name is 'jtv'
-      name = msg.match[1]
+    name = msg.match[1]
+    if msg.envelope.user.name is 'jtv' and name isnt 'elsydeon'
       viewer = robot.brain.userForName name
       if viewer?
         userdata = robot.brain.data['viewers'][name]
