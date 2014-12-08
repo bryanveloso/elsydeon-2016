@@ -138,7 +138,7 @@ module.exports = (robot) ->
     if viewer
       # Find the last five messages from the user to purge (we don't choose
       # more because a purge will rarely cover that many lines).
-      messages.endAt(viewer).limit(5).once 'value', (snapshot) ->
+      messages.endAt(viewer).limit(10).once 'value', (snapshot) ->
         snapshot.forEach (message) ->
           # Because of Firebase quirks, if it finds less than 5 results for the
           # viewer, it will find similarly spelled results. Let's not purge the
