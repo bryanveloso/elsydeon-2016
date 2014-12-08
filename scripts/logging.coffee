@@ -16,7 +16,7 @@ module.exports = (robot) ->
       json = {}
       json[episode] = true
       viewers.child(username).child('episodes').update json, (error) ->
-        console.log "hanldeUser: #{error}" if !error?
+        console.log "hanldeUser: #{error}" if error?
 
     robot.http("https://api.twitch.tv/kraken/users/#{username}")
       .get() (err, res, body) ->
@@ -24,7 +24,7 @@ module.exports = (robot) ->
         json =
           'display_name': viewer.display_name
         viewers.child(username).update json, (error) ->
-          console.log "pushMessage: #{error}"
+          console.log "pushMessage: #{error}" if error?
 
   pushMessage = (message, ircdata, is_emote) ->
     viewers = firebase.child('viewers')
@@ -98,7 +98,7 @@ module.exports = (robot) ->
       # Save emote list to Firebase.
       viewers = firebase.child('viewers')
       viewers.child(name).child('emotes').set emotes, (error) ->
-        console.log "handleEmotes: #{error}" if !error?
+        console.log "handleEmotes: #{error}" if error?
 
       # Try saving the emote list to the robot's brain.
       robot.brain.data['viewers'][name]?['emotes'] = emotes
