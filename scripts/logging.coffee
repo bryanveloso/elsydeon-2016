@@ -69,9 +69,10 @@ module.exports = (robot) ->
   # Note: Roles such as moderator do not appear in this method.
   robot.hear /.*?\s?SPECIALUSER ([a-zA-Z0-9_]*) ([a-z]*)/, (msg) ->
     if msg.envelope.user.name is 'jtv'
-      viewer = robot.brain.userForName msg.match[1]
+      name = msg.match[1]
+      viewer = robot.brain.userForName name
       if viewer?
-        userdata = robot.brain.data['viewers'][viewer.name]
+        userdata = robot.brain.data['viewers'][name]
         userdata['roles'] ?= []
 
         if msg.match[2] not in userdata['roles']
@@ -80,7 +81,7 @@ module.exports = (robot) ->
 
         # Save user list to Firebase.
         viewers = firebase.child('viewers')
-        viewers.child(viewer.name).child('roles').set userdata['roles'], (error) ->
+        viewers.child(name).child('roles').set userdata['roles'], (error) ->
           robot.logger.error "Error in `handleRoles`: #{error}" if error
 
         # For debugging purposes.
@@ -90,16 +91,17 @@ module.exports = (robot) ->
   # Expected value is a list of integers.
   robot.hear /EMOTESET ([a-zA-Z0-9_]*) (.*)/, (msg) ->
     if msg.envelope.user.name is 'jtv'
-      viewer = robot.brain.userForName msg.match[1]
+      name = msg.match[1]
+      viewer = robot.brain.userForName name
       emotes = msg.match[2].substring(1).slice(0, -1).split(',')  # Store EMOTESET as an actual list?
 
       # Save emote list to Firebase.
       viewers = firebase.child('viewers')
-      viewers.child(viewer.name).child('emotes').set emotes, (error) ->
+      viewers.child(name).child('emotes').set emotes, (error) ->
         console.log "handleEmotes: #{error}" if !error?
 
       # Try saving the emote list to the robot's brain.
-      robot.brain.data['viewers'][viewer.name]['emotes'] = emotes
+      robot.brain.data['viewers'][name]['emotes'] = emotes
       robot.brain.save()
 
       # For debugging purposes.
@@ -109,16 +111,17 @@ module.exports = (robot) ->
   # Expected value is a hex code.
   robot.hear /USERCOLOR ([a-zA-Z0-9_]*) (#[A-Z0-9]{6})/, (msg) ->
     if msg.envelope.user.name is 'jtv'
-      viewer = robot.brain.userForName msg.match[1]
+      name = msg.match[1]
+      viewer = robot.brain.userForName name
       if viewer?
         color = msg.match[2]
 
         # Save user list to Firebase.
         viewers = firebase.child('viewers')
-        viewers.child(viewer.name).child('color').set color, (error) ->
+        viewers.child(name).child('color').set color, (error) ->
           robot.logger.error "Error in `handleColor`: #{error}" if error
 
-        robot.brain.data['viewers'][viewer.name]['color'] = color
+        robot.brain.data['viewers'][name]['color'] = color
         robot.brain.save()
 
         # For debugging purposes.
