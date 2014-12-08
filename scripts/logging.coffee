@@ -90,8 +90,8 @@ module.exports = (robot) ->
   # Listening for emoticon sets.
   # Expected value is a list of integers.
   robot.hear /EMOTESET ([a-zA-Z0-9_]*) (.*)/, (msg) ->
-    if msg.envelope.user.name is 'jtv'
-      name = msg.match[1]
+    name = msg.match[1]
+    if msg.envelope.user.name is 'jtv' and name isnt 'elsydeon'
       viewer = robot.brain.userForName name
       emotes = msg.match[2].substring(1).slice(0, -1).split(',')  # Store EMOTESET as an actual list?
 
@@ -110,8 +110,8 @@ module.exports = (robot) ->
   # Listening for a user's color.
   # Expected value is a hex code.
   robot.hear /USERCOLOR ([a-zA-Z0-9_]*) (#[A-Z0-9]{6})/, (msg) ->
-    if msg.envelope.user.name is 'jtv'
-      name = msg.match[1]
+    name = msg.match[1]
+    if msg.envelope.user.name is 'jtv' and name isnt 'elsydeon'
       viewer = robot.brain.userForName name
       if viewer?
         color = msg.match[2]
