@@ -36,6 +36,8 @@ module.exports = (robot) ->
           response = JSON.parse body
 
           if !err and response.hasOwnProperty 'stream'  # https://github.com/justintv/Twitch-API/issues/274
+            console.log '---- WE SHOULD STILL BE ENTERTING THIS LOOP ----'
+
             # If we're live, grab the current episode number from the Avalonstar
             # API. Then set it as the `currentEpisode` key for use later.
             if response.stream?
