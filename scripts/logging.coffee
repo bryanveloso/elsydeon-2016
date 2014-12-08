@@ -69,7 +69,7 @@ module.exports = (robot) ->
   # Note: Roles such as moderator do not appear in this method.
   robot.hear /.*?\s?SPECIALUSER ([a-zA-Z0-9_]*) ([a-z]*)/, (msg) ->
     name = msg.match[1]
-    if msg.envelope.user.name is 'jtv' and name isnt 'elsydeon'
+    if msg.envelope.user.name is 'jtv'
       viewer = robot.brain.userForName name
       if viewer?
         userdata = robot.brain.data['viewers'][name]
