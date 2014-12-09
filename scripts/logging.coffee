@@ -100,10 +100,6 @@ module.exports = (robot) ->
       viewers.child(name).child('emotes').set emotes, (error) ->
         console.log "handleEmotes: #{error}" if error?
 
-      # Try saving the emote list to the robot's brain.
-      robot.brain.data['viewers'][name]?['emotes'] = emotes
-      robot.brain.save()
-
       # For debugging purposes.
       robot.logger.debug msg.match[1] + " has these emotes: " + emotes
 
@@ -120,9 +116,6 @@ module.exports = (robot) ->
         viewers = firebase.child('viewers')
         viewers.child(name).child('color').set color, (error) ->
           robot.logger.error "Error in `handleColor`: #{error}" if error
-
-        robot.brain.data['viewers'][name]?['color'] = color
-        robot.brain.save()
 
         # For debugging purposes.
         robot.logger.debug msg.match[1] + " has uses this color: " + msg.match[2]
