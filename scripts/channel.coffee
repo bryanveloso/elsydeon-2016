@@ -55,7 +55,7 @@ module.exports = (robot) ->
       number = robot.brain.get 'currentEpisode'
       now = moment()
 
-      unless number?
+      if number?
         robot.brain.set 'startTime', now
         robot.logger.info "#{filename}: Episode #{number} started at #{now.format()}."
         return msg.send "Hey everybody! It's time for episode #{number}!"
@@ -68,7 +68,7 @@ module.exports = (robot) ->
       number = robot.brain.get 'currentEpisode'
       now = moment()
 
-      unless number?
+      if number?
         robot.brain.remove 'startTime'
         robot.brain.remove 'currentEpisode' # a.k.a. "number"
         robot.logger.info "#{filename}: Episode #{number} ended at #{now.format()}."
