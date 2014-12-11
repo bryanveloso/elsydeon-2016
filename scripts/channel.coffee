@@ -55,9 +55,12 @@ module.exports = (robot) ->
       number = robot.brain.get 'currentEpisode'
       now = moment()
 
-      robot.brain.set 'startTime', now
-      robot.logger.info "#{filename}: Episode #{episode.number} started at #{now.format()}."
-      return msg.send "Hey everybody! It's time for episode #{episode.number}!" unless number?
+      unless number?
+        robot.brain.set 'startTime', now
+        robot.logger.info "#{filename}: Episode #{episode.number} started at #{now.format()}."
+        return msg.send "Hey everybody! It's time for episode #{episode.number}!"
+      else
+        return msg.send "Can't start an episode without being live, Bryan."
 
   # End the current episode.
   robot.respond /end$/i, (msg) ->
@@ -65,10 +68,13 @@ module.exports = (robot) ->
       number = robot.brain.get 'currentEpisode'
       now = moment()
 
-      robot.brain.remove 'startTime'
-      robot.brain.remove 'currentEpisode' # a.k.a. "number"
-      robot.logger.info "#{filename}: Episode #{episode.number} ended at #{now.format()}."
-      return msg.send "Episode #{number} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!" unless number?
+      unless number?
+        robot.brain.remove 'startTime'
+        robot.brain.remove 'currentEpisode' # a.k.a. "number"
+        robot.logger.info "#{filename}: Episode #{episode.number} ended at #{now.format()}."
+        return msg.send "Episode #{number} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
+      else
+        return msg.send "Can't end an episode that hasn't started, Bryan."
 
   # Return the current episode.
   robot.respond /episode$/i, (msg) ->
