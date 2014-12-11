@@ -24,7 +24,7 @@ module.exports = (robot) ->
 
     # Hit <https://api.twitch.tv/kraken/streams/avalonstar>, looking to see if
     # we're live every five seconds or so.
-    monitor = new CronJob('*/15 * * * * *', () ->
+    monitor = new CronJob('*/30 * * * * *', () ->
       casual = robot.brain.get 'casualEpisode'
       number = robot.brain.get 'currentEpisode'
       # Casual streams don't have an episode number, so there should be no need
@@ -45,25 +45,30 @@ module.exports = (robot) ->
                   robot.logger.debug "#{filename}: We're live, let's check our API for the episode number."
 
                   episode = JSON.parse(body)[0]
-                  now = moment()
                   robot.brain.set 'currentEpisode', episode.number
-                  robot.brain.set 'startTime', now
-                  robot.logger.info "#{filename}: Episode #{episode.number} is now live."
-                  robot.logger.info "#{filename}: Episode #{episode.number} started at #{now.format()}."
-                  msg.send "Hey everybody! It's time for episode #{episode.number}!"
-
-            # Not live? Never was live in the first place?
-            # Before we delete the key to signify us being offline, make sure
-            # we post once more in chat reminding people to check out the
-            # episode's highlights! Then delete the key.
-            else
-              if number?
-                robot.logger.info "#{filename}: Episode #{number} has ended."
-                robot.brain.remove 'currentEpisode'
-                robot.brain.remove 'startTime'
-                msg.send "Episode #{number} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!"
     )
     monitor.start()
+
+  # Start the current episode.
+  robot.respond /start$/i, (msg) ->
+    if robot.auth.hasRole(msg.envelope.user, ['admin'])
+      number = robot.brain.get 'currentEpisode'
+      now = moment()
+
+      robot.brain.set 'startTime', now
+      robot.logger.info "#{filename}: Episode #{episode.number} started at #{now.format()}."
+      return msg.send "Hey everybody! It's time for episode #{episode.number}!" unless number?
+
+  # End the current episode.
+  robot.respond /end$/i, (msg) ->
+    if robot.auth.hasRole(msg.envelope.user, ['admin'])
+      number = robot.brain.get 'currentEpisode'
+      now = moment()
+
+      robot.brain.remove 'startTime'
+      robot.brain.remove 'currentEpisode' # a.k.a. "number"
+      robot.logger.info "#{filename}: Episode #{episode.number} ended at #{now.format()}."
+      return msg.send "Episode #{number} has ended. Hope you enjoyed the cast! Remember to look for the highlights (http://www.twitch.tv/avalonstar/profile)!" unless number?
 
   # Return the current episode.
   robot.respond /episode$/i, (msg) ->
