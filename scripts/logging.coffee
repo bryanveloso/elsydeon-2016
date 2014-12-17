@@ -46,7 +46,7 @@ module.exports = (robot) ->
       # Firebase. Testing this out.
       messages = firebase.child('messages').push()
       messages.setWithPriority json, ircdata.name, (error) ->
-        console.log "pushMessage: #{error}"
+        console.log "pushMessage: #{error}" if error?
       return
 
   if robot.adapter.bot?
