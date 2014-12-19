@@ -26,6 +26,8 @@ module.exports = (robot) ->
           console.log "pushMessage: #{error}" if error?
 
   pushMessage = (message, ircdata, is_emote) ->
+    # The meat of the entire operation. Pushes a payload containing a message,
+    # emotes, roles, and usernames to Firebase.
     viewers = firebase.child('viewers')
     viewers.child(ircdata.name).once 'value', (snapshot) ->
       firedata = snapshot.val() or []
