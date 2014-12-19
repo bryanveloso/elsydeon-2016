@@ -28,7 +28,8 @@
     "hubot-irc": "^0.2.7",
     "hubot-redis-brain": "0.0.2",
     "hubot-scripts": ">=2.5.16",
-    "moment": "^2.8.3"
+    "moment": "^2.8.3",
+    "on-cooldown": "^0.3.0"
   },
   "engines": {
     "node": "0.10.20",
