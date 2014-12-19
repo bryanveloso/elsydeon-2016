@@ -20,26 +20,25 @@ module.exports = (robot) ->
 
     robot.http("https://api.twitch.tv/kraken/users/#{username}")
       .get() (err, res, body) ->
-        viewer = JSON.parse(body)
         json =
-          'display_name': viewer.display_name
+          'display_name': body.display_name
         viewers.child(username).update json, (error) ->
           console.log "pushMessage: #{error}" if error?
 
   pushMessage = (message, ircdata, is_emote) ->
     viewers = firebase.child('viewers')
     viewers.child(ircdata.name).once 'value', (snapshot) ->
-      twitchdata = snapshot.val() or []
+      firedata = snapshot.val() or []
       ircroles = ircdata.roles or []
-      twitchroles = twitchdata?.roles or []
-      emotes = twitchdata?.emotes or []
+      roles = firedata?.roles or []
 
       json =
-        'color': twitchdata?.color or '#ffffff'
-        'emotes': emotes
+        'color': firedata?.color or '#ffffff'
+        'display_name': firedata?.display_name
+        'emotes': firedata?.emotes or []
         'is_emote': is_emote
         'message': message
-        'roles': twitchroles.concat ircroles
+        'roles': roles.concat ircroles
         'timestamp': Firebase.ServerValue.TIMESTAMP
         'username': ircdata.name
 
