@@ -5,6 +5,7 @@
 #   hubot raid <username> - Posts raiding instructions for a specific user.
 #   hubot raider <username> - Searches Twitch for <username> and returns a follow message plus last game played.
 
+cooldown = require 'on-cooldown'
 Firebase = require 'firebase'
 firebase = new Firebase 'https://avalonstar.firebaseio.com/'
 
