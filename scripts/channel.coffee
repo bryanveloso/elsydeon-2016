@@ -33,13 +33,10 @@ module.exports = (robot) ->
       unless casual?
         robot.http(TWITCH_STREAM).get() (err, res, body) ->
           robot.logger.error "Whoops, we ran into an error: #{err}" if err?
-          console.log '------>' + body + '<-----'
-          response = JSON.parse body
-
-          if !err and response.hasOwnProperty 'stream'  # https://github.com/justintv/Twitch-API/issues/274
+          if !err and body.hasOwnProperty 'stream'  # https://github.com/justintv/Twitch-API/issues/274
             # If we're live, grab the current episode number from the Avalonstar
             # API. Then set it as the `currentEpisode` key for use later.
-            if response.stream?
+            if body.stream?
               robot.logger.debug "#{filename}: Checking <streams/avalonstar>: `stream` exists, we're live."
               unless number?
                 robot.http(BROADCAST_API).get() (err, res, body) ->
