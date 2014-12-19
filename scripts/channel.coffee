@@ -33,7 +33,7 @@ module.exports = (robot) ->
       unless casual?
         robot.http(TWITCH_STREAM).get() (err, res, body) ->
           robot.logger.error "Whoops, we ran into an error: #{err}" if err?
-          console.log '------>' + body.stream + '<-----'
+          console.log '------>' + body + '<-----'
           response = JSON.parse body
 
           if !err and response.hasOwnProperty 'stream'  # https://github.com/justintv/Twitch-API/issues/274
