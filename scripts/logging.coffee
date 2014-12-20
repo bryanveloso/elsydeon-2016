@@ -36,7 +36,7 @@ module.exports = (robot) ->
 
       json =
         'color': firedata?.color or '#ffffff'
-        'display_name': firedata?.display_name
+        'display_name': firedata?.display_name or ircdata.name
         'emotes': firedata?.emotes or []
         'is_emote': is_emote
         'message': message
