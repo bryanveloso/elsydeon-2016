@@ -137,10 +137,9 @@ module.exports = (robot) ->
   robot.respond /blind$/i, (msg) ->
     msg.send "This is a blind run! No tips, tricks, or spoilers unless Bryan explicitly asks. Everybody gets one warning and each subsequent violation will earn yourself a purge."
 
-  robot.respond /gems$/i, cooldown(300000, (msg) ->
+  robot.respond /gems$/i, (msg) ->
     since = moment([2014, 7, 13, 21]).fromNow()
     msg.send "Follow Bryan's amazing teammates on the Hidden Gems (http://twitch.tv/team/gems). Bryan was inducted into the Hidden Gems #{since}."
-  )
 
   robot.respond /(bot|code|oss)$/i, (msg) ->
     msg.send "Interested in the code that powers this channel? You can find it all on GitHub! Overlays: http://github.com/bryanveloso/avalonstar-tv • Bot: http://github.com/bryanveloso/elsydeon • Chat: http://github.com/bryanveloso/avalonstar-live"
