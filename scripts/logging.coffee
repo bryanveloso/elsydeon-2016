@@ -86,9 +86,6 @@ module.exports = (robot) ->
         viewers.child(name).child('roles').set userdata['roles'], (error) ->
           robot.logger.error "Error in `handleRoles`: #{error}" if error
 
-        # For debugging purposes.
-        robot.logger.debug msg.match[1] + " is a " + msg.match[2] + " user."
-
   # Listening for emoticon sets.
   # Expected value is a list of integers.
   robot.hear /EMOTESET ([a-zA-Z0-9_]*) (.*)/, (msg) ->
@@ -101,9 +98,6 @@ module.exports = (robot) ->
       viewers = firebase.child('viewers')
       viewers.child(name).child('emotes').set emotes, (error) ->
         console.log "handleEmotes: #{error}" if error?
-
-      # For debugging purposes.
-      robot.logger.debug msg.match[1] + " has these emotes: " + emotes
 
   # Listening for a user's color.
   # Expected value is a hex code.
@@ -118,9 +112,6 @@ module.exports = (robot) ->
         viewers = firebase.child('viewers')
         viewers.child(name).child('color').set color, (error) ->
           robot.logger.error "Error in `handleColor`: #{error}" if error
-
-        # For debugging purposes.
-        robot.logger.debug msg.match[1] + " has uses this color: " + msg.match[2]
 
   # Listening to see if a user gets timed out.
   # Expected value is a username.
