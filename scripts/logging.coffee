@@ -20,10 +20,11 @@ module.exports = (robot) ->
 
     robot.http("https://api.twitch.tv/kraken/users/#{username}")
       .get() (err, res, body) ->
+        viewer = JSON.parse body
         json =
-          'display_name': body.display_name
+          'display_name': viewer.display_name
         viewers.child(username).update json, (error) ->
-          console.log "pushMessage: #{error}" if error?
+          console.log "handleUser: #{error}" if error?
 
   pushMessage = (message, ircdata, is_emote) ->
     # The meat of the entire operation. Pushes a payload containing a message,
