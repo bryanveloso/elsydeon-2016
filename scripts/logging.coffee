@@ -11,7 +11,7 @@ module.exports = (robot) ->
     # `TWITCHCLIENT 1` so it can read joins and parts. Therefore we don't have
     # to get creative in order to add users to Firebase (or Hubot's brain.)
     viewers = firebase.child('viewers')
-    episode = robot.brain.get('currentEpisode')
+    episode = robot.brain.get 'currentEpisode'
     if episode?
       json = {}
       json[episode] = true
@@ -70,48 +70,39 @@ module.exports = (robot) ->
   # Messages can be prefixed by a username (most likely the bot's name).
   # Note: Roles such as moderator do not appear in this method.
   robot.hear /.*?\s?SPECIALUSER ([a-zA-Z0-9_]*) ([a-z]*)/, (msg) ->
-    name = msg.match[1]
     if msg.envelope.user.name is 'jtv'
-      viewer = robot.brain.userForName name
-      if viewer?
-        userdata = robot.brain.data['viewers'][name]
-        userdata['roles'] ?= []
+      name = msg.match[1]
+      userdata = robot.brain.data['viewers'][name]
+      userdata['roles'] ?= []
 
-        if msg.match[2] not in userdata['roles']
-          userdata['roles'].push msg.match[2]
-        robot.brain.save()
+      if msg.match[2] not in userdata['roles']
+        userdata['roles'].push msg.match[2]
+      robot.brain.save()
 
-        # Save user list to Firebase.
-        viewers = firebase.child('viewers')
-        viewers.child(name).child('roles').set userdata['roles'], (error) ->
-          robot.logger.error "Error in `handleRoles`: #{error}" if error
+      # Save user list to Firebase.
+      viewers = firebase.child('viewers')
+      viewers.child(name).child('roles').set userdata['roles'], (error) ->
+        robot.logger.error "Error in `handleRoles`: #{error}" if error
 
   # Listening for emoticon sets.
   # Expected value is a list of integers.
   robot.hear /EMOTESET ([a-zA-Z0-9_]*) (.*)/, (msg) ->
-    name = msg.match[1]
-    if msg.envelope.user.name is 'jtv' and name isnt 'elsydeon'
-      viewer = robot.brain.userForName name
+    if msg.envelope.user.name is 'jtv'
       emotes = msg.match[2].substring(1).slice(0, -1).split(',')  # Store EMOTESET as an actual list?
 
       # Save emote list to Firebase.
       viewers = firebase.child('viewers')
-      viewers.child(name).child('emotes').set emotes, (error) ->
+      viewers.child(msg.match[1]).child('emotes').set emotes, (error) ->
         console.log "handleEmotes: #{error}" if error?
 
   # Listening for a user's color.
   # Expected value is a hex code.
   robot.hear /USERCOLOR ([a-zA-Z0-9_]*) (#[A-Z0-9]{6})/, (msg) ->
-    name = msg.match[1]
-    if msg.envelope.user.name is 'jtv' and name isnt 'elsydeon'
-      viewer = robot.brain.userForName name
-      if viewer?
-        color = msg.match[2]
-
-        # Save user list to Firebase.
-        viewers = firebase.child('viewers')
-        viewers.child(name).child('color').set color, (error) ->
-          robot.logger.error "Error in `handleColor`: #{error}" if error
+    if msg.envelope.user.name is 'jtv'
+      # Save user list to Firebase.
+      viewers = firebase.child('viewers')
+      viewers.child(msg.match[1]).child('color').set msg.match[2], (error) ->
+        robot.logger.error "Error in `handleColor`: #{error}" if error
 
   # Listening to see if a user gets timed out.
   # Expected value is a username.
