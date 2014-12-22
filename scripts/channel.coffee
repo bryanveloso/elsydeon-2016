@@ -118,6 +118,7 @@ module.exports = (robot) ->
 
       # Can't set a broadcast as casual if we never set it. o_o;
       msg.send "Sorry Bryan. You can't end a casual broadcast if you never set it. Silly."
+      return
 
     # You're not me? GTFO. D:
     msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can cleanse the stream of casual filth."
