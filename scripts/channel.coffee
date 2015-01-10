@@ -138,6 +138,13 @@ module.exports = (robot) ->
   robot.respond /blind$/i, (msg) ->
     msg.send "This is a blind run! No tips, tricks, or spoilers unless Bryan explicitly asks. Everybody gets one warning and each subsequent violation will earn yourself a purge."
 
+  robot.respond /teams$/i, (msg) ->
+    msg.send "I am a proud member of 4 teams on Twitch: Main Menu (http://twitch.tv/team/mainmenu/), ComboNATION (http://twitch.tv/team/combonation), the Hidden Gems (http://twitch.tv/team/gems), and of course Twitch Staff (http://twitch.tv/team/staff)."
+
+  robot.respond /mainmenu$/i, (msg) ->
+    since = moment([2015, 0, 9, 9]).fromNow()
+    msg.send "Quality content on Twitch you say? Look no further than Main Menu (http://twitch.tv/team/mainmenu/). Bryan was recruited #{since}."
+
   robot.respond /gems$/i, (msg) ->
     since = moment([2014, 7, 13, 21]).fromNow()
     msg.send "Follow Bryan's amazing teammates on the Hidden Gems (http://twitch.tv/team/gems). Bryan was inducted into the Hidden Gems #{since}."
