@@ -139,7 +139,7 @@ module.exports = (robot) ->
     msg.send "This is a blind run! No tips, tricks, or spoilers unless Bryan explicitly asks. Everybody gets one warning and each subsequent violation will earn yourself a purge."
 
   robot.respond /teams$/i, (msg) ->
-    msg.send "I am a proud member of 4 teams on Twitch: Main Menu (http://twitch.tv/team/mainmenu/), ComboNATION (http://twitch.tv/team/combonation), the Hidden Gems (http://twitch.tv/team/gems), and of course Twitch Staff (http://twitch.tv/team/staff)."
+    msg.send "Bryan is a proud member of 4 teams on Twitch: Main Menu (http://twitch.tv/team/mainmenu/), ComboNATION (http://twitch.tv/team/combonation), the Hidden Gems (http://twitch.tv/team/gems), and of course Twitch Staff (http://twitch.tv/team/staff)."
 
   robot.respond /mainmenu$/i, (msg) ->
     since = moment([2015, 0, 9, 9]).fromNow()
