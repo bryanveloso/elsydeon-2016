@@ -125,4 +125,3 @@ module.exports = (robot) ->
 
     # Welp, we need to have started in order to know how long we've been going.
     msg.send "I'm sorry #{msg.envelope.user.name}, we need to be live in order to know how long we've been going."
-

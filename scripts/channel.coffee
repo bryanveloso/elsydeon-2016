@@ -39,12 +39,3 @@ module.exports = (robot) ->
   robot.respond /visitors$/i, (msg) ->
     count = Object.keys(robot.brain.data.users).length
     msg.send "#{count} people have visited Avalonstar."
-
-  # The below are all administrative commands of some sort.
-  robot.respond /reset roles$/i, (msg) ->
-    if robot.auth.hasRole(msg.envelope.user, 'admin')
-      for viewer in robot.brain.data.viewers
-        delete viewer['roles']
-      msg.send "Viewer roles have been manually reset."
-      return
-    msg.send "I'm sorry #{msg.envelope.user.name}. You're not Bryan, so you can't run this."
