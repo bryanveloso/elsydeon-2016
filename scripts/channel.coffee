@@ -39,3 +39,23 @@ module.exports = (robot) ->
   robot.respond /visitors$/i, (msg) ->
     count = Object.keys(robot.brain.data.users).length
     msg.send "#{count} people have visited Avalonstar."
+
+  # Glorify a caster.
+  robot.respond /caster ([a-zA-Z0-9_]*)/i, (msg) ->
+    if robot.auth.hasRole(msg.envelope.user, ['admin', 'moderator'])
+      query = msg.match[1]
+      robot.http("https://api.twitch.tv/kraken/channels/#{query}")
+        .header('Accept', 'application/vnd.twitchtv.v3+json')
+        .get() (err, res, body) ->
+          streamer = JSON.parse(body)
+
+          if streamer.status == 404
+            return msg.send "Sorry #{msg.message.user.name}, #{query} doesn't seem to exist. Check your spelling."
+
+          message = "Since #{streamer.display_name} is pretty cool, you should give them a follow at #{streamer.url}!"
+          if streamer.game
+            message = "#{message} They've been playing: #{streamer.game}."
+          return msg.send message
+
+    # Do you have a sword? No? Hah.
+    msg.send "Halt #{msg.envelope.user.name}. Only those with a sword may glorify a caster."
