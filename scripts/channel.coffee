@@ -50,12 +50,16 @@ module.exports = (robot) ->
           streamer = JSON.parse(body)
 
           if streamer.status == 404
-            return msg.send "Sorry #{msg.message.user.name}, #{query} doesn't seem to exist. Check your spelling."
+            msg.send "Sorry #{msg.message.user.name}, #{query} doesn't seem to exist. Check your spelling."
+            return
 
           message = "Since #{streamer.display_name} is pretty cool, you should give them a follow at #{streamer.url}!"
           if streamer.game
             message = "#{message} They've been playing: #{streamer.game}."
-          return msg.send message
+          msg.send message
+
+      # Let's get outta here.
+      return
 
     # Do you have a sword? No? Hah.
     msg.send "Halt #{msg.envelope.user.name}. Only those with a sword may glorify a caster."
