@@ -54,7 +54,7 @@ module.exports = (robot) ->
   robot.respond /teams$/i, (msg) ->
     msg.send "Bryan is a proud member of 4 teams on Twitch: Main Menu (http://twitch.tv/team/mainmenu/), ComboNATION (http://twitch.tv/team/combonation), the Hidden Gems (http://twitch.tv/team/gems), and of course Twitch Staff (http://twitch.tv/team/staff)."
 
-  robot.respond /mainmenu$/i, (msg) ->
+  robot.respond /(mm|mainmenu)$/i, (msg) ->
     since = moment([2015, 0, 9, 9]).fromNow()
     msg.send "Quality content on Twitch you say? Look no further than Main Menu (http://twitch.tv/team/mainmenu/). Bryan was recruited #{since}."
 
@@ -62,6 +62,6 @@ module.exports = (robot) ->
     since = moment([2014, 7, 13, 21]).fromNow()
     msg.send "Follow Bryan's amazing teammates on the Hidden Gems (http://twitch.tv/team/gems). Bryan was inducted into the Hidden Gems #{since}."
 
-  robot.respond /cn$/i, (msg) ->
+  robot.respond /(cn|combonation)$/i, (msg) ->
     since = moment([2014, 11, 10, 21]).fromNow()
     msg.send "Bryan's been a part of #ComboNATION (http://twitch.tv/team/combonation) since #{since}."
