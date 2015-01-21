@@ -14,7 +14,7 @@ module.exports = (robot) ->
     robot.adapter.command 'twitchclient', '3'
 
   # The below are all flat commands (simply text, etc).
-  robot.respond /blind$/i, (msg) ->
+  robot.respond /(blind|bsg)$/i, (msg) ->
     msg.send "This is a blind run! No tips, tricks, or spoilers unless Bryan explicitly asks. Everybody gets one warning and each subsequent violation will earn yourself a purge."
 
   robot.respond /(bot|code|oss)$/i, (msg) ->
