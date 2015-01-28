@@ -58,7 +58,7 @@ module.exports = (robot) ->
     since = moment([2015, 0, 9, 9]).fromNow()
     msg.send "Quality content on Twitch you say? Look no further than Main Menu (http://twitch.tv/team/mainmenu/). Bryan was recruited #{since}."
 
-  robot.respond /gems$/i, (msg) ->
+  robot.respond /(hg|gems)$/i, (msg) ->
     since = moment([2014, 7, 13, 21]).fromNow()
     msg.send "Bryan is a proud graduate of the Hidden Gems, and graduated on January 26th! Want to see the best of what's next? Then you should follow the Hidden Gems (http://twitch.tv/team/gems)."
 
