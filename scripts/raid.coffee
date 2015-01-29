@@ -21,13 +21,13 @@ module.exports = (robot) ->
             msg.send "Hey now, can't raid somebody that doesn't exist. Check your spelling."
             return
 
-          message = "THE RAIDS OF AVALON <3 (or any emoticon of your choosing)"
+          message = "THE CRUSADES OF AVALON <3 (or any emoticon of your choosing)"
           if msg.match[2] and msg.match[3]
             message = msg.match[3]
 
           instructions = [
             "Alright everybody, hold on to your butts, it's time to raid #{streamer.display_name}! Here are the instructions:",
-            "The signal: gibeOops/ (don't spoil it)",
+            "The signal: PREPARE TO BE FACED ON. avalonOOPS/ (don't spoil it)",
             "The target: #{streamer.url} (they're currently playing #{streamer.game})",
             "The battlecry: #{message}"
             ]
