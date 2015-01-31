@@ -13,7 +13,7 @@ module.exports = (robot) ->
   robot.respond /steam$/i, (msg) ->
     msg.send "http://steamcommunity.com/groups/avalonstartv"
 
-  robot.respond /tweet$/i, (msg) ->
+  robot.respond /(ctt|tweet)$/i, (msg) ->
     message = "Are you not entertained? If you are, then help us promote the channel:"
 
     # Get the game I'm currently playing.
