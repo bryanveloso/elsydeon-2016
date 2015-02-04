@@ -65,7 +65,3 @@ module.exports = (robot) ->
   robot.respond /(cn|combonation)$/i, (msg) ->
     since = moment([2014, 11, 10, 21]).fromNow()
     msg.send "Bryan's been a part of #ComboNATION (http://twitch.tv/team/combonation) since #{since}."
-
-  # Special event things.
-  robot.respond /dd$/i, (msg) ->
-    msg.send "Main Menu Presents: 100 Hours of Darkest Dungeon! Go check out our press release about the event (https://medium.com/@MainMenuLive/main-menu-presents-100-hours-of-darkest-dungeon-e7a7161ae731) and check out our event page, which includes a nice little easter egg (http://www.mainmenulive.com/event/darkest.php)."
