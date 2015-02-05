@@ -21,8 +21,7 @@ module.exports = (robot) ->
       .get() (err, res, body) ->
         streamer = JSON.parse(body)
         game = if streamer.game then "play #{streamer.game} " else ""
-        # tweet = "Watching @bryanveloso #{game}on http://avalonstar.tv! Come join me, sit back, and relax! <3"
-        tweet = "Watching @bryanveloso #{game}on http://avalonstar.tv for #MMDD100! Keys, giveaways and Bryan dying at things!"
+        tweet = "Watching @bryanveloso #{game}on http://avalonstar.tv! Come join me, sit back, and relax! <3"
         tweet = encodeURIComponent(tweet)
         url = "https://twitter.com/intent/tweet?text=#{tweet}&source=clicktotweet"
 
