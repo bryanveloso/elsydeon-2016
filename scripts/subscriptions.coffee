@@ -15,3 +15,7 @@ module.exports = (robot) ->
       # Take the name and push it on through.
       username = msg.match[1]
       robot.logger.debug "#{username} has just subscribed!"
+
+  # Let's tell everybody about our emotes.
+  robot.respond /emotes$/i, (msg) ->
+    msg.send "We've got 6 emotes! avalonOOPS (OOPS), avalonFOCUS (FOCUS), avalonAWK (AWK), avalonHAI (HAI), avalonSTAR (STAR), and avalonNOPE (NOPE). They are all the creations of the amazing LadyAsher [http://twitter.com/asherartistry]."
