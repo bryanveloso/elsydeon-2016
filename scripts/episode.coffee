@@ -116,12 +116,12 @@ module.exports = (robot) ->
     msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can cleanse the stream of casual filth."
 
   # Self explanatory, get how long this episode's been live.
-  robot.respond /uptime$/i, (msg) ->
-    started = robot.brain.get 'startTime'
-    if started?
-      since = started.fromNow true
-      msg.send "Bryan's been streaming for #{since}."
-      return
+  # robot.respond /uptime$/i, (msg) ->
+  #   started = robot.brain.get 'startTime'
+  #   if started?
+  #     since = started.fromNow true
+  #     msg.send "Bryan's been streaming for #{since}."
+  #     return
 
-    # Welp, we need to have started in order to know how long we've been going.
-    msg.send "I'm sorry #{msg.envelope.user.name}, we need to be live in order to know how long we've been going."
+  #   # Welp, we need to have started in order to know how long we've been going.
+  #   msg.send "I'm sorry #{msg.envelope.user.name}, we need to be live in order to know how long we've been going."
