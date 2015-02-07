@@ -115,6 +115,11 @@ module.exports = (robot) ->
     # You're not me? GTFO. D:
     msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can cleanse the stream of casual filth."
 
+  # Uptime!
+  robot.respond /uptime$/i, (msg) ->
+    robot.http("https://nightdev.com/hosted/uptime.php?channel=avalonstar").get() (err, res, body) ->
+      msg.send "Avalonstar has been live for #{body}."
+
   # Self explanatory, get how long this episode's been live.
   # robot.respond /uptime$/i, (msg) ->
   #   started = robot.brain.get 'startTime'

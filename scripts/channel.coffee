@@ -13,11 +13,6 @@ module.exports = (robot) ->
     # Use TWITCHCLIENT 3.
     robot.adapter.command 'twitchclient', '3'
 
-  # Uptime!
-  robot.respond /uptime$/i, (msg) ->
-    robot.http("https://nightdev.com/hosted/uptime.php?channel=avalonstar").get() (err, res, body) ->
-      msg.send "Avalonstar has been live for #{body}."
-
   # The below are all flat commands (simply text, etc).
   robot.respond /(blind|bsg)$/i, (msg) ->
     msg.send "This is a blind run! No tips, tricks, or spoilers unless Bryan explicitly asks. Everybody gets one warning and each subsequent violation will earn yourself a purge."
