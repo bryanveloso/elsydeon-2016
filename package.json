@@ -21,10 +21,10 @@
     "url": "https://github.com/github/hubot.git"
   },
   "dependencies": {
-    "cron": "^1.0.5",
-    "firebase": "^2.1.0",
+    "cron": "^1.0.6",
+    "firebase": "^2.2.0",
     "hubot": ">=2.11.0",
-    "hubot-auth": "^1.1.2",
+    "hubot-auth": "^1.2.0",
     "hubot-irc": "^0.2.7",
     "hubot-redis-brain": "0.0.2",
     "hubot-scripts": ">=2.5.16",
