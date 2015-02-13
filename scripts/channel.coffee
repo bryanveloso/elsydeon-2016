@@ -68,4 +68,4 @@ module.exports = (robot) ->
 
   # Special responses for events, etc.
   robot.respond /ddr$/i, (msg) ->
-    msg.send "Welcome to DDR night! A couple of notes: 1) Bryan doesn't use the mic while dancing, he doesn't want to pant on it. cirLewd 2) Bryan will address chat after a couple of songs. 3) He has the right to refuse requests. Please don't be PJSalt-y about it. 4) Negative comments about his dancing will be purged."
+    msg.send "Welcome to DDR night! A couple of notes: 1) Bryan doesn't use the mic while dancing, he doesn't want to pant on it. cirLewd 2) Bryan will address chat after a couple of songs. 3) He has the right to refuse requests. Please don't be salty about it."
