@@ -24,7 +24,9 @@ module.exports = (robot) ->
       # to go through the normal monitoring process to set things.
       robot.logger.debug "#{filename}: The stream has been marked as casual. Internal monitoring functions deactivated." if casual?
       unless casual?
-        robot.http(TWITCH_STREAM).get() (err, res, body) ->
+        robot.http(TWITCH_STREAM)
+          .header('Accept', 'application/vnd.twitchtv.v3+json')
+          .get() (err, res, body) ->
           robot.logger.error "Whoops, we ran into an error: #{err}" if err?
           if !err and body.hasOwnProperty 'stream'  # https://github.com/justintv/Twitch-API/issues/274
             # If we're live, grab the current episode number from the Avalonstar
