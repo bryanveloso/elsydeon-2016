@@ -21,22 +21,19 @@ module.exports = (robot) ->
             msg.send "Hey now, can't raid somebody that doesn't exist. Check your spelling."
             return
 
-          message = "THE CRUSADES OF AVALON <3 (or any emoticon of your choosing)"
+          message = "THE CRUSADES OF AVALON <3 (with any emoticon of your choosing)"
           if msg.match[2] and msg.match[3]
             message = msg.match[3]
 
           instructions = [
-            "Alright everybody, hold on to your butts, it's time to raid #{streamer.display_name}! Here are the instructions:",
-            "The signal: PREPARE TO BE FACED ON. avalonOOPS/ (don't spoil it)",
-            "The target: #{streamer.url} (they're currently playing #{streamer.game})",
-            "The battlecry: #{message}"
+            "We're raiding #{streamer.display_name}. (Don't spoil it!) Here are the instructions:",
+            "Go to #{streamer.url} (they're currently playing #{streamer.game}). When Bryan says: PREPARE TO BE FACED ON. \\avalonHAI, Paste: #{message}"
             ]
           for instruction in instructions
             msg.send instruction
 
           # Let's record this target.
           json =
-            'episode': robot.brain.get('currentEpisode')
             'game': streamer.game
             'timestamp': Firebase.ServerValue.TIMESTAMP
             'username': streamer.name
