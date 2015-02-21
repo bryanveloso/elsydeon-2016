@@ -21,7 +21,7 @@ module.exports = (robot) ->
         .header('Accept', 'application/vnd.twitchtv.v3+json')
         .get() (err, res, body) ->
           robot.logger.error "Whoops, we ran into an error: #{err}" if err?
-          response = JSON.parse(body)[0]
+          response = JSON.parse(body)
           robot.logger.info response
           robot.logger.info response.stream
           # Let's use the stream's title to determine if a stream is "casual"
