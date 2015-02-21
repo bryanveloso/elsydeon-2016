@@ -29,6 +29,7 @@ module.exports = (robot) ->
           #
           eregex = /^A\u2606\d{3}/
           stream = JSON.parse(body).stream
+          robot.logger.debug stream.title
           if stream.title.match eregex
             # We have an episode!
             robot.logger.debug "#{filename}: Checking <streams/avalonstar>: `stream` exists, we're live."
