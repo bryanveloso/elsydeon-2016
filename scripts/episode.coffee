@@ -66,7 +66,6 @@ module.exports = (robot) ->
 
   # Return the current episode.
   robot.respond /episode$/i, (msg) ->
-    casual = robot.brain.get 'casualEpisode'
     episode = robot.brain.get 'currentEpisode'
     username = msg.envelope.user.name
     if casual?
@@ -77,40 +76,6 @@ module.exports = (robot) ->
       return
     else
       msg.send "Hey #{username}, Avalonstar isn't currently... live... why don't you check out the lovely highlights?"
-
-  # Mark the stream as a filthy casual.
-  robot.respond /casual start$/i, (msg) ->
-    if robot.auth.hasRole(msg.envelope.user, 'admin')
-      key = 'casualEpisode'
-      casual = robot.brain.get key
-      unless casual?
-        robot.brain.set key, true
-        msg.send "Got it Bryan. The stream has been marked as casual."
-        return
-
-      # If the stream is marked as casual, you can't do it again.
-      msg.send "Sorry Bryan. The stream has already been marked as casual. You filthy casual."
-      return
-
-    # You're not me? GTFO. D:
-    msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can mark the stream as casual."
-
-  # Remove the casual mark. Clean yourself of the filth.
-  robot.respond /casual end$/i, (msg) ->
-    if robot.auth.hasRole(msg.envelope.user, 'admin')
-      key = 'casualEpisode'
-      casual = robot.brain.get key
-      if casual?
-        robot.brain.remove key
-        msg.send "This episode is no longer marked as casual. You should give it an episode number, Bryan."
-        return
-
-      # Can't set a broadcast as casual if we never set it. o_o;
-      msg.send "Sorry Bryan. You can't end a casual broadcast if you never set it. Silly."
-      return
-
-    # You're not me? GTFO. D:
-    msg.send "I'm sorry #{msg.envelope.user.name}. Only Bryan can cleanse the stream of casual filth."
 
   # Uptime!
   robot.respond /uptime$/i, (msg) ->
