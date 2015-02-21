@@ -8,7 +8,7 @@ path = require 'path'
 
 # API Endpoints.
 BROADCAST_API = "http://avalonstar.tv/api/broadcasts/"
-TWITCH_STREAM = "https://api.twitch.tv/kraken/streams/avalonstar"
+TWITCH_STREAM = "https://api.twitch.tv/kraken/streams/brotatoe"
 TWITCH_CHANNEL = "https://api.twitch.tv/kraken/channels/avalonstar"
 
 filename = path.basename(module.filename, path.extname(module.filename))
