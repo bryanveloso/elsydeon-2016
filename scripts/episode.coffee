@@ -42,7 +42,6 @@ module.exports = (robot) ->
             # Looks like it's casusal.
             # TODO: Something with this later.
             robot.brain.remove 'currentEpisode'
-            robot.logger.debug 'Whoops, didn\'t work.'
             return
     )
     monitor.start()
