@@ -21,30 +21,29 @@ module.exports = (robot) ->
         .header('Accept', 'application/vnd.twitchtv.v3+json')
         .get() (err, res, body) ->
           robot.logger.error "Whoops, we ran into an error: #{err}" if err?
-          if !err and body.hasOwnProperty 'stream'  # https://github.com/justintv/Twitch-API/issues/274
-            console.log body.stream
-            # Let's use the stream's title to determine if a stream is "casual"
-            # or not. The current way we determine this is as follows:
-            #
-            #   - A☆###: A numbered episode.
-            #   - A☆1XX (or anything else): A casual episode.
-            #
-            eregex = /^A\u2606\d{3}/
-            stream = body.stream
-            if stream.title.match eregex
-              # We have an episode!
-              robot.logger.debug "#{filename}: Checking <streams/avalonstar>: `stream` exists, we're live."
-              robot.http(BROADCAST_API).get() (err, res, body) ->
-                robot.logger.debug "#{filename}: We're live, let's check our API for the episode number."
+          console.log body.stream
+          # Let's use the stream's title to determine if a stream is "casual"
+          # or not. The current way we determine this is as follows:
+          #
+          #   - A☆###: A numbered episode.
+          #   - A☆1XX (or anything else): A casual episode.
+          #
+          eregex = /^A\u2606\d{3}/
+          stream = body.stream
+          if stream.title.match eregex
+            # We have an episode!
+            robot.logger.debug "#{filename}: Checking <streams/avalonstar>: `stream` exists, we're live."
+            robot.http(BROADCAST_API).get() (err, res, body) ->
+              robot.logger.debug "#{filename}: We're live, let's check our API for the episode number."
 
-                episode = JSON.parse(body)[0]
-                robot.brain.set 'currentEpisode', episode.number
-                return
-            else
-              # Looks like it's casusal.
-              # TODO: Something with this later.
-              robot.brain.remove 'currentEpisode'
+              episode = JSON.parse(body)[0]
+              robot.brain.set 'currentEpisode', episode.number
               return
+          else
+            # Looks like it's casusal.
+            # TODO: Something with this later.
+            robot.brain.remove 'currentEpisode'
+            return
     )
     monitor.start()
 
