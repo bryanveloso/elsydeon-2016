@@ -19,25 +19,21 @@ module.exports = (robot) ->
     # we're live every five seconds or so.
     monitor = new CronJob('00 */2 * * * *', () ->
       number = robot.brain.get 'currentEpisode'
-      # Casual streams don't have an episode number, so there should be no need
-      # to go through the normal monitoring process to set things.
-      robot.logger.debug "#{filename}: The stream has been marked as casual. Internal monitoring functions deactivated." if casual?
-      unless casual?
-        robot.http(TWITCH_STREAM)
-          .header('Accept', 'application/vnd.twitchtv.v3+json')
-          .get() (err, res, body) ->
-          robot.logger.error "Whoops, we ran into an error: #{err}" if err?
-          if !err and body.hasOwnProperty 'stream'  # https://github.com/justintv/Twitch-API/issues/274
-            # If we're live, grab the current episode number from the Avalonstar
-            # API. Then set it as the `currentEpisode` key for use later.
-            if body.stream?
-              robot.logger.debug "#{filename}: Checking <streams/avalonstar>: `stream` exists, we're live."
-              unless number?
-                robot.http(BROADCAST_API).get() (err, res, body) ->
-                  robot.logger.debug "#{filename}: We're live, let's check our API for the episode number."
+      robot.http(TWITCH_STREAM)
+        .header('Accept', 'application/vnd.twitchtv.v3+json')
+        .get() (err, res, body) ->
+        robot.logger.error "Whoops, we ran into an error: #{err}" if err?
+        if !err and body.hasOwnProperty 'stream'  # https://github.com/justintv/Twitch-API/issues/274
+          # If we're live, grab the current episode number from the Avalonstar
+          # API. Then set it as the `currentEpisode` key for use later.
+          if body.stream?
+            robot.logger.debug "#{filename}: Checking <streams/avalonstar>: `stream` exists, we're live."
+            unless number?
+              robot.http(BROADCAST_API).get() (err, res, body) ->
+                robot.logger.debug "#{filename}: We're live, let's check our API for the episode number."
 
-                  episode = JSON.parse(body)[0]
-                  robot.brain.set 'currentEpisode', episode.number
+                episode = JSON.parse(body)[0]
+                robot.brain.set 'currentEpisode', episode.number
     )
     monitor.start()
 
