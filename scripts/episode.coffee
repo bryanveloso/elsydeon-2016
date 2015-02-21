@@ -15,13 +15,13 @@ filename = path.basename(module.filename, path.extname(module.filename))
 
 module.exports = (robot) ->
   robot.enter (msg) ->
-    # Hit <https://api.twitch.tv/kraken/streams/avalonstar>, looking to see if
-    # we're live every five seconds or so.
+    # Hit <https://api.twitch.tv/kraken/streams/avalonstar>.
     monitor = new CronJob('00 */2 * * * *', () ->
       number = robot.brain.get 'currentEpisode'
       robot.http(TWITCH_STREAM)
         .header('Accept', 'application/vnd.twitchtv.v3+json')
         .get() (err, res, body) ->
+          robot.logger.info "This is running, just to make sure..."
           robot.logger.error "Whoops, we ran into an error: #{err}" if err?
           if !err and body.hasOwnProperty 'stream'  # https://github.com/justintv/Twitch-API/issues/274
             # Let's use the stream's title to determine if a stream is "casual"
