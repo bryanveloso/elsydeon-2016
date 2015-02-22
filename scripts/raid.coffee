@@ -74,12 +74,6 @@ module.exports = (robot) ->
           raids.push json, (error) ->
             console.log "raider: #{error}"
 
-          # Secondly, increment the number of times a user has raided.
-          # (This count only counts back to raids since episode 50.)
-          raider = firebase.child("viewers/#{streamer.name}/raids")
-          raider.transaction (raids) ->
-            raids + 1
-
       # Let's get outta here.
       return
 
