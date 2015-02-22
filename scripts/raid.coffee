@@ -26,8 +26,8 @@ module.exports = (robot) ->
             message = msg.match[3]
 
           instructions = [
-            "We're raiding #{streamer.display_name}. (Don't spoil it!) Here are the instructions:",
-            "Go to #{streamer.url} (they're currently playing #{streamer.game}). When Bryan says: PREPARE TO BE FACED ON. \\avalonHAI, Paste: #{message}"
+            "We're raiding #{streamer.display_name}. Go to #{streamer.url} (they're currently playing #{streamer.game}, and don't spoil the raid!).",
+            "When Bryan says: PREPARE TO BE FACED ON. \\avalonHAI; Paste: #{message}"
             ]
           for instruction in instructions
             msg.send instruction
