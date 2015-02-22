@@ -13,14 +13,6 @@ module.exports = (robot) ->
     # Use TWITCHCLIENT 3.
     robot.adapter.command 'twitchclient', '3'
 
-  # The below are all flat commands (simply text, etc).
-  robot.respond /(blind|bsg)$/i, (msg) ->
-    msg.send "This is a blind run! No tips, tricks, or spoilers unless Bryan explicitly asks. Everybody gets one warning and each subsequent violation will earn yourself a purge."
-
-  robot.respond /(bot|code|oss)$/i, (msg) ->
-    msg.send "Interested in the code that powers this channel? You can find it all on GitHub! Overlays: http://github.com/bryanveloso/avalonstar-tv • Bot: http://github.com/bryanveloso/elsydeon • Chat: http://github.com/bryanveloso/avalonstar-live"
-    msg.send "All code is provided for eductional purposes only and all designs are -owned- by Bryan. If you steal them and we're coming after you."
-
   # Glorify a caster.
   robot.respond /caster ([a-zA-Z0-9_]*)/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user, ['admin', 'moderator'])
@@ -60,6 +52,14 @@ module.exports = (robot) ->
   robot.respond /(cn|combonation)$/i, (msg) ->
     since = moment([2014, 11, 10, 21]).fromNow()
     msg.send "Bryan's been a part of #ComboNATION (http://twitch.tv/team/combonation) since #{since}."
+
+  # The below are all flat commands (simply text, etc).
+  robot.respond /(blind|bsg)$/i, (msg) ->
+    msg.send "This is a blind run! No tips, tricks, or spoilers unless Bryan explicitly asks. Everybody gets one warning and each subsequent violation will earn yourself a purge."
+
+  robot.respond /(bot|code|oss)$/i, (msg) ->
+    msg.send "Interested in the code that powers this channel? You can find it all on GitHub! Overlays: http://github.com/bryanveloso/avalonstar-tv • Bot: http://github.com/bryanveloso/elsydeon • Chat: http://github.com/bryanveloso/avalonstar-live"
+    msg.send "All code is provided for eductional purposes only and all designs are -owned- by Bryan. If you steal them and we're coming after you."
 
   # Special responses for events, etc.
   robot.respond /ddr$/i, (msg) ->
