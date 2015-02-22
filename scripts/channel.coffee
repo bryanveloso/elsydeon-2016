@@ -21,11 +21,6 @@ module.exports = (robot) ->
     msg.send "Interested in the code that powers this channel? You can find it all on GitHub! Overlays: http://github.com/bryanveloso/avalonstar-tv • Bot: http://github.com/bryanveloso/elsydeon • Chat: http://github.com/bryanveloso/avalonstar-live"
     msg.send "All code is provided for eductional purposes only and all designs are -owned- by Bryan. If you steal them and we're coming after you."
 
-  # How many people have visited the channel, based on Hubot's brain.
-  robot.respond /visitors$/i, (msg) ->
-    count = Object.keys(robot.brain.data.users).length
-    msg.send "#{count} people have visited Avalonstar."
-
   # Glorify a caster.
   robot.respond /caster ([a-zA-Z0-9_]*)/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user, ['admin', 'moderator'])
