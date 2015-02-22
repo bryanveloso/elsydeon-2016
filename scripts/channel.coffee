@@ -72,3 +72,6 @@ module.exports = (robot) ->
 
   robot.respond /tastethemenu$/i, (msg) ->
     msg.send "Want to have dinner with the entire Main Menu Broadcasting team? Attending PAX East? Perfect. (But if not, we can still make it happen!) Enter our latest event/promotion: Win a Date with Main Menu! http://www.mainmenulive.com/event/tastethemenu.php <3"
+
+  robot.respond /fistbump/i, (msg) ->
+    msg.send "Badaladala."
