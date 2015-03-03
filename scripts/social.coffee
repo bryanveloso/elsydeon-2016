@@ -44,7 +44,3 @@ module.exports = (robot) ->
             response = JSON.parse body
             response = if response.status_code is 200 then response.data.url else response.status_txt
             msg.send "#{message} #{response}."
-
-  # Hidden command. gibeOops.
-  # robot.respond /(DU+)/i, (msg) ->
-  #   msg.send "gibeDu DU DU DU gibeDu"
