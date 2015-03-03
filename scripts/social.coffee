@@ -10,9 +10,6 @@ module.exports = (robot) ->
   robot.respond /social$/i, (msg) ->
     msg.send "Personal Twitter: https://twitter.com/bryanveloso • Blog/Channel Twitter: https://twitter.com/avalonstar • Facebook Page: https://facebook.com/avalonstar • YouTube: http://youtube.com/bryanveloso"
 
-  robot.respond /steam$/i, (msg) ->
-    msg.send "http://steamcommunity.com/groups/avalonstartv"
-
   robot.respond /(ctt|tweet)$/i, (msg) ->
     message = "Are you not entertained? If you are, then help us promote the channel:"
 
