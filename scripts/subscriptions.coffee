@@ -7,14 +7,14 @@ module.exports = (robot) ->
     if msg.envelope.user.name is 'twitchnotify'
       # Take the name and push it on through.
       username = msg.match[1]
-      robot.logger.debug "#{username} has just subscribed!"
+      robot.logger.info "#{username} has just subscribed!"
 
   # Listening for incoming re-subscription notifications.
   robot.hear /^([a-zA-Z0-9_]*) just subscribed! (\d{1,2}) months in a row!$/, (msg) ->
     if msg.envelope.user.name is 'twitchnotify'
       # Take the name and push it on through.
       username = msg.match[1]
-      robot.logger.debug "#{username} has just subscribed!"
+      robot.logger.info "#{username} has just subscribed!"
 
   # Let's tell everybody about our emotes.
   robot.respond /emotes$/i, (msg) ->
