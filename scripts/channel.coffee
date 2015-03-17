@@ -58,7 +58,7 @@ module.exports = (robot) ->
     msg.send "This is a blind run! No tips, tricks, or spoilers unless Bryan explicitly asks. Everybody gets one warning and each subsequent violation will earn yourself a purge."
 
   robot.respond /(bot|code|oss)$/i, (msg) ->
-    msg.send "Interested in the code that powers this channel? You can find it all on GitHub! Overlays: http://github.com/bryanveloso/avalonstar-tv • Bot: http://github.com/bryanveloso/elsydeon • Chat: http://github.com/bryanveloso/avalonstar-live"
+    msg.send "Interested in the code that powers this channel? You can find it all on GitHub! Overlays: http://github.com/bryanveloso/avalonstar-tv • Bots: http://github.com/bryanveloso/elsydeon and http://github.com/bryanveloso/baymax • Chat: http://github.com/bryanveloso/avalonstar-live"
     msg.send "All code is provided for eductional purposes only and all designs are -owned- by Bryan. If you steal them and we're coming after you."
 
   # Special responses for events, etc.
