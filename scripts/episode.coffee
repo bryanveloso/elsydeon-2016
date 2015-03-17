@@ -22,8 +22,7 @@ module.exports = (robot) ->
             robot.brain.remove 'episode'
             robot.logger.debug "#{filename}: `currentEpisode` value removed."
           return
-    )
-    monitor.start()
+    ).start()
 
   # Return the current episode.
   robot.respond /episode$/i, (msg) ->
