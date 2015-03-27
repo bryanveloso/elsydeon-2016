@@ -61,6 +61,9 @@ module.exports = (robot) ->
     msg.send "Interested in the code that powers this channel? You can find it all on GitHub! Overlays: http://github.com/bryanveloso/avalonstar-tv • Bots: http://github.com/bryanveloso/elsydeon and http://github.com/bryanveloso/baymax • Chat: http://github.com/bryanveloso/avalonstar-live"
     msg.send "All code is provided for eductional purposes only and all designs are -owned- by Bryan. If you steal them and we're coming after you."
 
+  robot.respond /birds$/i, (msg) ->
+    msg.send "Bloodborne and Birds, Chapter 1 (http://www.twitch.tv/avalonstar/v/3942012) and Chapter 2 (http://www.twitch.tv/avalonstar/v/3951530)."
+
   # Special responses for events, etc.
   robot.respond /ddr$/i, (msg) ->
     msg.send "Welcome to DDR night! A couple of notes: 1) Bryan doesn't use the mic while dancing, he doesn't want to pant on it. 2) Bryan will address chat after a couple of songs. 3) He has the right to refuse requests. Please don't be salty about it."
