@@ -65,8 +65,5 @@ module.exports = (robot) ->
   robot.respond /ddr$/i, (msg) ->
     msg.send "Welcome to DDR night! A couple of notes: 1) Bryan doesn't use the mic while dancing, he doesn't want to pant on it. 2) Bryan will address chat after a couple of songs. 3) He has the right to refuse requests. Please don't be salty about it."
 
-  robot.respond /tastethemenu$/i, (msg) ->
-    msg.send "Want to have dinner with the entire Main Menu Broadcasting team? Attending PAX East? Perfect. (But if not, we can still make it happen!) Enter our latest event/promotion: Win a Date with Main Menu! http://www.mainmenulive.com/event/tastethemenu.php <3"
-
   robot.respond /fistbump/i, (msg) ->
     msg.send "Badaladala."
