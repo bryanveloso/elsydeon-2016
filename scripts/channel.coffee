@@ -64,6 +64,9 @@ module.exports = (robot) ->
   robot.respond /birds$/i, (msg) ->
     msg.send "Bloodborne and Birds, Chapter 1 (http://www.twitch.tv/avalonstar/v/3942012) and Chapter 2 (http://www.twitch.tv/avalonstar/v/3951530)."
 
+  robot.respond /connect$/i, (msg) ->
+    msg.send "Want to play with avalonSTAR? Steam: Avalonstar, PSN: AvalonstarTV, NNID: Avalonstar."
+
   # Special responses for events, etc.
   robot.respond /ddr$/i, (msg) ->
     msg.send "Welcome to DDR night! A couple of notes: 1) Bryan doesn't use the mic while dancing, he doesn't want to pant on it. 2) Bryan will address chat after a couple of songs. 3) He has the right to refuse requests. Please don't be salty about it."
