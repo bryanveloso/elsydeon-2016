@@ -26,7 +26,7 @@ module.exports = (robot) ->
             json = JSON.stringify
               'broadcast': episode.number
               'game': streamer.game
-              'raider': streamer.name
+              'username': streamer.name
               'timestamp': new Date(Date.now()).toISOString()
             robot.http('http://avalonstar.tv/api/raids/')
               .header('Content-Type', 'application/json')
