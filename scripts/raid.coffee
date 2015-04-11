@@ -48,7 +48,7 @@ module.exports = (robot) ->
     msg.send "Woah there #{msg.envelope.user.name}. Only Bryan can choose a raid target."
 
   robot.respond /raider ([a-zA-Z0-9_]*)/i, (msg) ->
-    if msg.envlope.user.name in ['avalonstar', 'masonest', 'goat_herd', 'naraht', 'gracelberrrypie']
+    if robot.auth.hasRole(msg.envelope.user, ['admin', 'moderator'])
       query = msg.match[1]
       robot.http("https://api.twitch.tv/kraken/channels/#{query}")
         .get() (err, res, body) ->
