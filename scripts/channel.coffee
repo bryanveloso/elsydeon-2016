@@ -77,6 +77,3 @@ module.exports = (robot) ->
 
   robot.respond /shirt$/i, (msg) ->
     msg.send "We've released our first shirt, \"Avalonstar, A History\", a celebration of what makes Avalonstar, Avalonstar: teespring.com/avalonstar."
-
-  robot.respond /mmvsnd$/i, (msg) ->
-    msg.send "Main Menu vs. NecroDancer -- Early Preview of finished game, Game Keys and Dancepad giveaways, and The Death of the NecroDancer! -- Check for info: http://www.mainmenulive.com/event/mmvsnd -- DAY 2 Dance pad it up! https://gleam.io/r6px3/main-menu-vs-necrodancer-dance-pad-giveaway-day-2 :D"
