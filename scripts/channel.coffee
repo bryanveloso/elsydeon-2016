@@ -77,3 +77,6 @@ module.exports = (robot) ->
 
   robot.respond /shirt$/i, (msg) ->
     msg.send "We've released our first shirt, \"Avalonstar, A History\", a celebration of what makes Avalonstar, Avalonstar: [http://teespring.com/avalonstar]."
+
+  robot.respond /racingforchange$/i, (msg) ->
+    msg.send "Main Menu and The Wobblers are hosting a charity event called Racing for Change, as we race games in an attempt to raise over $30,000 for GameChanger! More Information: [http://www.mainmenulive.com/event/racingforchange] Website: [http://racingforchange.org] Schedule: [http://bit.ly/RacingForChange2015]"
