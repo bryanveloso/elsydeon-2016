@@ -84,5 +84,5 @@ module.exports = (robot) ->
   robot.respond /(multi|race)$/i, (msg) ->
     msg.send "Bryan is facing Fufu (aka KungFuFruitCup) in Octodad: Dadliest Catch! Watch them both for the hottest of racing actions: [http://kadgar.net/live/avalonstar/kungfufruitcup]"
 
-  robot.respond /(gamechangers|racingforchange)$/i, (msg) ->
+  robot.respond /(gamechangers|rfc|racingforchange)$/i, (msg) ->
     msg.send "Main Menu and The Wobblers are hosting a charity event called Racing for Change, as we race games in an attempt to raise over $30,000 for GameChanger! More Information: [http://www.mainmenulive.com/event/racingforchange] Website: [http://racingforchange.org] Schedule: [http://bit.ly/RacingForChange2015]"
