@@ -78,5 +78,11 @@ module.exports = (robot) ->
   robot.respond /shirt$/i, (msg) ->
     msg.send "We've released our first shirt, \"Avalonstar, A History\", a celebration of what makes Avalonstar, Avalonstar: [http://teespring.com/avalonstar]."
 
-  robot.respond /racingforchange$/i, (msg) ->
+  robot.respond /donate$/i, (msg) ->
+    msg.send "Make a donation and help pay for sick kids' medical bills: [http://click.donordrive.com/track/click/30041712/gamechangercharity.donordrive.com?p=eyJzIjoicGhFU2ppY3lIZ0ctdkc1dl8zQlYtS01ybEZvIiwidiI6MSwicCI6IntcInVcIjozMDA0MTcxMixcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZ2FtZWNoYW5nZXJjaGFyaXR5LmRvbm9yZHJpdmUuY29tXFxcL2luZGV4LmNmbT9mdXNlYWN0aW9uPWRvbm9yRHJpdmUucGFydGljaXBhbnQmcGFydGljaXBhbnRJRD0xMDE0XCIsXCJpZFwiOlwiYWZhOTMyYmQwNTE1NGY2ZWE1N2YwNDQzMmYzMDdmMTJcIixcInVybF9pZHNcIjpbXCJmMjBlMzkxNjQxZjM0NmE5NTliNzY4ZGEzNjk3ZjIyOWU3NjgzMjcyXCJdfSJ9]"
+
+  robot.respond /race$/i, (msg) ->
+    msg.send "Bryan is facing Fufu (aka KungFuFruitCup) in Octodad: Dadliest Catch! Watch them both for the hottest of racing actions: [http://kadgar.net/live/avalonstar/kungfufruitcup]"
+
+  robot.respond /(gamechangers|racingforchange)$/i, (msg) ->
     msg.send "Main Menu and The Wobblers are hosting a charity event called Racing for Change, as we race games in an attempt to raise over $30,000 for GameChanger! More Information: [http://www.mainmenulive.com/event/racingforchange] Website: [http://racingforchange.org] Schedule: [http://bit.ly/RacingForChange2015]"
