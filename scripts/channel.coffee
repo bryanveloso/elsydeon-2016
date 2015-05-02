@@ -86,3 +86,6 @@ module.exports = (robot) ->
 
   robot.respond /(gamechangers|rfc|racingforchange)$/i, (msg) ->
     msg.send "Main Menu and The Wobblers are hosting a charity event called Racing for Change, as we race games in an attempt to raise over $30,000 for GameChanger! More Information: [http://www.mainmenulive.com/event/racingforchange] Website: [http://racingforchange.org] Schedule: [http://bit.ly/RacingForChange2015]"
+
+  robot.respond /(incentive|incentives)$/i, (msg) ->
+    msg.send "Here are tonight's incentives! [Every $1000 = Avalon and Fufu will sing a duet!] [$2000 = Turn controller upside down (for one level).] [$4000 = Switch to KBM (for one level).] [$6000 = Flip screen (for one level).] [$5 per sub/resub.] [$1 per swear.]"
