@@ -76,7 +76,7 @@ module.exports = (robot) ->
     msg.send "All code is provided for eductional purposes only and all designs are -owned- by Bryan. If you steal them and we're coming after you."
 
   robot.respond /donate$/i, (msg) ->
-    msg.send "Make a donation and help pay for sick kids' medical bills: [http://click.donordrive.com/track/click/30041712/gamechangercharity.donordrive.com?p=eyJzIjoicGhFU2ppY3lIZ0ctdkc1dl8zQlYtS01ybEZvIiwidiI6MSwicCI6IntcInVcIjozMDA0MTcxMixcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZ2FtZWNoYW5nZXJjaGFyaXR5LmRvbm9yZHJpdmUuY29tXFxcL2luZGV4LmNmbT9mdXNlYWN0aW9uPWRvbm9yRHJpdmUucGFydGljaXBhbnQmcGFydGljaXBhbnRJRD0xMDE0XCIsXCJpZFwiOlwiYWZhOTMyYmQwNTE1NGY2ZWE1N2YwNDQzMmYzMDdmMTJcIixcInVybF9pZHNcIjpbXCJmMjBlMzkxNjQxZjM0NmE5NTliNzY4ZGEzNjk3ZjIyOWU3NjgzMjcyXCJdfSJ9]"
+    msg.send "Make a donation and help pay for sick kids' medical bills: [https://gamechangercharity.donordrive.com/index.cfm?fuseaction=donate.participant&participantID=1014]"
 
   robot.respond /(multi|race)$/i, (msg) ->
     msg.send "Bryan is facing Fufu (aka KungFuFruitCup) in Octodad: Dadliest Catch! Watch them both for the hottest of racing actions: [http://kadgar.net/live/avalonstar/kungfufruitcup]"
