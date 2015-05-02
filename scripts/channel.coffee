@@ -75,9 +75,6 @@ module.exports = (robot) ->
     msg.send "Interested in the code that powers this channel? You can find it all on GitHub! Overlays: http://github.com/bryanveloso/avalonstar-tv • Bots: http://github.com/bryanveloso/elsydeon and http://github.com/bryanveloso/baymax • Chat: http://github.com/bryanveloso/avalonstar-tv-chat"
     msg.send "All code is provided for eductional purposes only and all designs are -owned- by Bryan. If you steal them and we're coming after you."
 
-  robot.respond /shirt$/i, (msg) ->
-    msg.send "We've released our first shirt, \"Avalonstar, A History\", a celebration of what makes Avalonstar, Avalonstar: [http://teespring.com/avalonstar]."
-
   robot.respond /donate$/i, (msg) ->
     msg.send "Make a donation and help pay for sick kids' medical bills: [http://click.donordrive.com/track/click/30041712/gamechangercharity.donordrive.com?p=eyJzIjoicGhFU2ppY3lIZ0ctdkc1dl8zQlYtS01ybEZvIiwidiI6MSwicCI6IntcInVcIjozMDA0MTcxMixcInZcIjoxLFwidXJsXCI6XCJodHRwOlxcXC9cXFwvZ2FtZWNoYW5nZXJjaGFyaXR5LmRvbm9yZHJpdmUuY29tXFxcL2luZGV4LmNmbT9mdXNlYWN0aW9uPWRvbm9yRHJpdmUucGFydGljaXBhbnQmcGFydGljaXBhbnRJRD0xMDE0XCIsXCJpZFwiOlwiYWZhOTMyYmQwNTE1NGY2ZWE1N2YwNDQzMmYzMDdmMTJcIixcInVybF9pZHNcIjpbXCJmMjBlMzkxNjQxZjM0NmE5NTliNzY4ZGEzNjk3ZjIyOWU3NjgzMjcyXCJdfSJ9]"
 
@@ -89,3 +86,6 @@ module.exports = (robot) ->
 
   robot.respond /(incentive|incentives)$/i, (msg) ->
     msg.send "Here are tonight's incentives! [Every $1000 = Avalon and Fufu will sing a duet!] [$2000 = Turn controller upside down (for one level).] [$4000 = Switch to KBM (for one level).] [$6000 = Flip screen (for one level).] [$5 per sub/resub.] [$1 per swear.]"
+
+  # robot.respond /shirt$/i, (msg) ->
+  #   msg.send "We've released our first shirt, \"Avalonstar, A History\", a celebration of what makes Avalonstar, Avalonstar: [http://teespring.com/avalonstar]."
