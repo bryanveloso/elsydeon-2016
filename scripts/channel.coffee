@@ -75,17 +75,5 @@ module.exports = (robot) ->
     msg.send "Interested in the code that powers this channel? You can find it all on GitHub! Overlays: http://github.com/bryanveloso/avalonstar-tv • Bots: http://github.com/bryanveloso/elsydeon and http://github.com/bryanveloso/baymax • Chat: http://github.com/bryanveloso/avalonstar-tv-chat"
     msg.send "All code is provided for eductional purposes only and all designs are -owned- by Bryan. If you steal them and we're coming after you."
 
-  robot.respond /donate$/i, (msg) ->
-    msg.send "Make a donation and help pay for sick kids' medical bills: [https://gamechangercharity.donordrive.com/index.cfm?fuseaction=donate.participant&participantID=1014]"
-
-  robot.respond /(multi|race)$/i, (msg) ->
-    msg.send "Bryan is facing Fufu (aka KungFuFruitCup) in Octodad: Dadliest Catch! Watch them both for the hottest of racing actions: [http://kadgar.net/live/avalonstar/kungfufruitcup]"
-
-  robot.respond /(gamechangers|rfc|racingforchange)$/i, (msg) ->
-    msg.send "Main Menu and The Wobblers are hosting a charity event called Racing for Change, as we race games in an attempt to raise over $30,000 for GameChanger! More Information: [http://www.mainmenulive.com/event/racingforchange] Website: [http://racingforchange.org] Schedule: [http://bit.ly/RacingForChange2015]"
-
-  robot.respond /(incentive|incentives)$/i, (msg) ->
-    msg.send "Here are tonight's incentives! [Every $1000 = Avalon and Fufu will sing a duet!] [$2000 = Turn controller upside down (for one level).] [$4000 = Switch to KBM (for one level).] [$6000 = Flip screen (for one level).] [$5 per sub/resub.] [$1 per swear.]"
-
   # robot.respond /shirt$/i, (msg) ->
   #   msg.send "We've released our first shirt, \"Avalonstar, A History\", a celebration of what makes Avalonstar, Avalonstar: [http://teespring.com/avalonstar]."
