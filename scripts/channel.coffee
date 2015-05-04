@@ -39,7 +39,7 @@ module.exports = (robot) ->
 
   # The teams I'm on and stuff like that.
   robot.respond /teams$/i, (msg) ->
-    msg.send "Bryan is a proud member of 3 teams on Twitch: Main Menu [http://twitch.tv/team/mainmenu/], ComboNATION [http://twitch.tv/team/combonation], and of course Twitch Staff [http://twitch.tv/team/staff]."
+    msg.send "Bryan is a proud member of 2 teams on Twitch: Main Menu [http://twitch.tv/team/mainmenu/], and of course Twitch Staff [http://twitch.tv/team/staff]."
 
   robot.respond /(mm|mainmenu)$/i, (msg) ->
     since = moment([2015, 0, 9, 9]).fromNow()
@@ -48,10 +48,6 @@ module.exports = (robot) ->
   robot.respond /(hg|gems)$/i, (msg) ->
     since = moment([2014, 7, 13, 21]).fromNow()
     msg.send "Bryan is a proud graduate of the Hidden Gems, and graduated on January 26th! Want to see the best of what's next? Then you should follow the Hidden Gems [http://twitch.tv/team/gems]."
-
-  robot.respond /(cn|combonation)$/i, (msg) ->
-    since = moment([2014, 11, 10, 21]).fromNow()
-    msg.send "Bryan's been a part of #ComboNATION [http://twitch.tv/team/combonation] since #{since}."
 
   # Special responses for cast-related elements.
   robot.respond /birds$/i, (msg) ->
