@@ -23,7 +23,7 @@ module.exports = (robot) ->
         .post({'username': username}) (err, res, body) ->
           robot.logger.debug "Subscribe action run for #{username}." if not err
 
-  robot.respond /substreak ([a-zA-Z0-9_]*)/i, (msg) ->
+  robot.respond /substreak ([a-zA-Z0-9_]*) (\d{1,2})/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user, ['admin'])
       username = msg.match[1]
       robot.http("http://avalonstar.tv/api/pusher/substreak/")
