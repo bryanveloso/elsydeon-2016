@@ -33,6 +33,11 @@ module.exports = (robot) ->
     # Do you have a sword? No? Hah.
     msg.send "Halt #{msg.envelope.user.name}. Only those with a sword may glorify a caster."
 
+  # Uptime!
+  robot.respond /uptime$/i, (msg) ->
+    robot.http("https://nightdev.com/hosted/uptime.php?channel=avalonstar").get() (err, res, body) ->
+      msg.send "Avalonstar has been live for #{body}."
+
   # The teams I'm on and stuff like that.
   robot.respond /teams$/i, (msg) ->
     msg.send "Bryan is a proud member of 2 teams on Twitch: Main Menu [http://twitch.tv/team/mainmenu/], and of course Twitch Staff [http://twitch.tv/team/staff]."
