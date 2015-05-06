@@ -9,10 +9,6 @@
 moment = require 'moment'
 
 module.exports = (robot) ->
-  robot.enter (msg) ->
-    # Use TWITCHCLIENT 3.
-    robot.adapter.command 'twitchclient', '3'
-
   # Glorify a caster.
   robot.respond /caster ([a-zA-Z0-9_]*)/i, (msg) ->
     if robot.auth.hasRole(msg.envelope.user, ['admin', 'moderator'])
