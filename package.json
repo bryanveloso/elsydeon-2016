@@ -22,13 +22,13 @@
   },
   "dependencies": {
     "cron": "^1.0.9",
-    "firebase": "^2.2.3",
-    "hubot": ">=2.11.4",
+    "firebase": "^2.2.6",
+    "hubot": ">=2.13.0",
     "hubot-auth": "^1.2.0",
     "hubot-irc": "^0.2.7",
-    "hubot-redis-brain": "0.0.2",
-    "hubot-scripts": ">=2.5.16",
-    "moment": "^2.9.0",
+    "hubot-redis-brain": "0.0.3",
+    "hubot-scripts": ">=2.16.1",
+    "moment": "^2.10.3",
     "on-cooldown": "^0.3.0"
   },
   "engines": {
