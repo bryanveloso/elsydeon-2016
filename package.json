@@ -22,8 +22,8 @@
   },
   "dependencies": {
     "cron": "^1.0.9",
-    "firebase": "^2.2.6",
-    "hubot": ">=2.13.0",
+    "firebase": "^2.2.7",
+    "hubot": ">=2.13.2",
     "hubot-auth": "^1.2.0",
     "hubot-irc": "^0.2.7",
     "hubot-redis-brain": "0.0.3",
