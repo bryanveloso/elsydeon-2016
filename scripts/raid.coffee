@@ -32,15 +32,6 @@ module.exports = (robot) ->
           for instruction in instructions
             msg.send instruction
 
-          # Let's record this target.
-          json =
-            'game': streamer.game
-            'timestamp': Firebase.ServerValue.TIMESTAMP
-            'username': streamer.name
-          targets = firebase.child('targets')
-          targets.push json, (error) ->
-            console.log "raid: #{error}"
-
       # Let's get outta here.
       return
 
