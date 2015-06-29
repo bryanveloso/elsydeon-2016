@@ -32,4 +32,30 @@ module.exports = (robot) ->
 
   # Let's tell everybody about our emotes.
   robot.respond /emotes$/i, (msg) ->
-    msg.send "We've got 10 emotes! avalonFOCUS [FOCUS], avalonAWK [AWK], avalonHAI [HAI], avalonSTAR [STAR], avalonNOPE [NOPE], avalonDESK [DESK], avalonEYES [EYES], avalonHUG [HUG], avalonCRY [CRY], and avalonLOVE [LOVE]. They are all the creations of the amazing LadyAsher, [http://twitter.com/asherartistry]."
+    emotes = [
+      'AWK'
+      'BAN'
+      'CRY'
+      'DESK'
+      'EYES'
+      'FOCUS'
+      'HAI'
+      'HUG'
+      'KAWAII'
+      'LEWD'
+      'LOVE'
+      'POWER'
+      'SLEEP'
+      'STAR'
+      'W'
+      'WOAH'
+    ]
+
+    # Compose the emoticon list.
+    for emote in emotes
+      message += "avalon#{emote} [#{emote}],"
+    message += 'they are all the creations of the amazing LadyAsher, [http://twitter.com/asherartistry].'
+
+    # Send the messages out!
+    msg.send "We've got #{emotes.length} emotes!"
+    msg.send message
