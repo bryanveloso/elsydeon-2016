@@ -54,8 +54,8 @@ module.exports = (robot) ->
     # Compose the emoticon list.
     message = ''
     for emote in emotes
-      message += "avalon#{emote} [#{emote}],"
-    message += 'they are all the creations of the amazing LadyAsher, [http://twitter.com/asherartistry].'
+      message += " avalon#{emote} [#{emote}],"
+    message += ' they are all the creations of the amazing LadyAsher, [http://twitter.com/asherartistry].'
 
     # Send the messages out!
     msg.send "We've got #{emotes.length} emotes!"
