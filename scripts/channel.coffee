@@ -72,5 +72,5 @@ module.exports = (robot) ->
     msg.send "Interested in the code that powers this channel? You can find it all on GitHub! Overlays: http://github.com/bryanveloso/avalonstar-tv • Bots: http://github.com/bryanveloso/elsydeon and http://github.com/bryanveloso/baymax • Chat: http://github.com/bryanveloso/avalonstar-tv-chat"
     msg.send "All code is provided for eductional purposes only and all designs are -owned- by Bryan. If you steal them and we're coming after you."
 
-  # robot.respond /shirt$/i, (msg) ->
-  #   msg.send "We've released our first shirt, \"Avalonstar, A History\", a celebration of what makes Avalonstar, Avalonstar: [http://teespring.com/avalonstar]."
+  robot.respond /shirt$/i, (msg) ->
+    msg.send "We've released our second shirt, \"Remember the Semicolon\", a celebration of... uh... ; [http://teespring.com/semicolons]."
