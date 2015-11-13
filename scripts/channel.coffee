@@ -38,18 +38,6 @@ module.exports = (robot) ->
     robot.http("https://nightdev.com/hosted/uptime.php?channel=avalonstar").get() (err, res, body) ->
       msg.send "Avalonstar has been live for #{body}."
 
-  # The teams I'm on and stuff like that.
-  robot.respond /teams$/i, (msg) ->
-    msg.send "Bryan is a proud member of 2 teams on Twitch: Main Menu [http://twitch.tv/team/mainmenu/], and of course Twitch Staff [http://twitch.tv/team/staff]."
-
-  robot.respond /(mm|mainmenu)$/i, (msg) ->
-    since = moment([2015, 0, 9, 9]).fromNow()
-    msg.send "Quality content on Twitch you say? Look no further than Main Menu [http://twitch.tv/team/mainmenu/]. Bryan was recruited #{since}."
-
-  robot.respond /(hg|gems)$/i, (msg) ->
-    since = moment([2014, 7, 13, 21]).fromNow()
-    msg.send "Bryan is a proud graduate of the Hidden Gems, and graduated on January 26th! Want to see the best of what's next? Then you should follow the Hidden Gems [http://twitch.tv/team/gems]."
-
   # Special responses for cast-related elements.
   robot.respond /birds$/i, (msg) ->
     msg.send "Bloodborne and Birds, Chapter 1 [http://www.twitch.tv/avalonstar/v/3942012] and Chapter 2 [http://www.twitch.tv/avalonstar/v/3951530]. Life is Strange, and birds [http://www.twitch.tv/avalonstar/v/23614872]."
