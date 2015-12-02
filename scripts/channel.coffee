@@ -40,7 +40,7 @@ module.exports = (robot) ->
 
   # Special responses for cast-related elements.
   robot.respond /birds$/i, (msg) ->
-    msg.send "Bloodborne and Birds, Chapter 1 [http://www.twitch.tv/avalonstar/v/3942012] and Chapter 2 [http://www.twitch.tv/avalonstar/v/3951530]. Life is Strange, and birds [http://www.twitch.tv/avalonstar/v/23614872]."
+    msg.send "Bloodborne and Birds, Chapter 1 [http://www.twitch.tv/avalonstar/v/3942012], Chapter 2 [http://www.twitch.tv/avalonstar/v/3951530], and Chatper 3 [http://www.twitch.tv/avalonstar/v/27923841]. Life is Strange, and birds [http://www.twitch.tv/avalonstar/v/23614872]."
 
   # Special responses for events, etc.
   robot.respond /ddr$/i, (msg) ->
