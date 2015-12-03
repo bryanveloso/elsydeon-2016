@@ -46,9 +46,6 @@ module.exports = (robot) ->
   robot.respond /ddr$/i, (msg) ->
     msg.send "Welcome to DDR night! A couple of notes: 1) Bryan doesn't use the mic while dancing, he doesn't want to pant on it. 2) Bryan will address chat after a couple of songs. 3) He has the right to refuse requests. Please don't be salty about it."
 
-  robot.respond /(oh|office|officehours)$/i, (msg) ->
-    msg.send "Welcome to Office Hours, a humble attempt at a interview/discussion show. Have questions for Bryan or our guest? Tweet it using the hashtag #ASOH."
-
   robot.respond /fistbump/i, (msg) ->
     msg.send "Badaladala."
 
