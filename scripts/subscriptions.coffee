@@ -33,10 +33,12 @@ module.exports = (robot) ->
   # Let's tell everybody about our emotes.
   robot.respond /emotes$/i, (msg) ->
     emotes = [
+      '7'
       'AWK'
       'BAN'
       'CRY'
       'DESK'
+      'EVIL'
       'EYES'
       'FOCUS'
       'HAI'
@@ -44,7 +46,9 @@ module.exports = (robot) ->
       'KAWAII'
       'LEWD'
       'LOVE'
+      'OMG'
       'POWER'
+      'RAGE'
       'SLEEP'
       'STAR'
       'W'
