@@ -7,12 +7,6 @@
 #   hubot tweet - Reply with click-to-tweet link
 
 module.exports = (robot) ->
-  robot.respond /social$/i, (msg) ->
-    msg.send "Personal Twitter: https://twitter.com/bryanveloso • Blog/Channel Twitter: https://twitter.com/avalonstar • Facebook Page: https://facebook.com/avalonstar • YouTube: http://youtube.com/bryanveloso"
-
-  robot.respond /(platforms|connect)$/i, (msg) ->
-    msg.send "Want to play with avalonSTAR? Steam: Avalonstar • PSN: AvalonstarTV • NNID: Avalonstar."
-
   robot.respond /(ctt|tweet)$/i, (msg) ->
     message = "Are you not entertained? If you are, then help us promote the channel:"
 
