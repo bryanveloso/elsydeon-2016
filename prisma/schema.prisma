@@ -1,0 +1,20 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./elsydeon.db"
+}
+
+model Quote {
+  id        String   @id @default(uuid())
+  quotee    String
+  quoter    String
+  text      String
+  timestamp DateTime @default(now())
+  year      String
+}
