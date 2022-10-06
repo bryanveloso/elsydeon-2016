@@ -1,14 +1,12 @@
 import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
+import * as twitch from './twitch'
 
-async function main() {
-  console.log('main')
-}
+const prisma = new PrismaClient()
 
 ;(async () => {
   try {
-    await main()
+    await twitch.initialize()
     await prisma.$disconnect()
   } catch (error) {
     console.error(error)
