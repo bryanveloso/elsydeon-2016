@@ -2,6 +2,10 @@ import { PrismaClient, Quote } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
+export const addQuote = async (payload: Omit<Quote, 'id'>) => {
+  return await prisma.quote.create({ data: payload })
+}
+
 export const getLatestQuote = async () => {
   return await prisma.quote.findFirst({ orderBy: { timestamp: 'desc' } })
 }
