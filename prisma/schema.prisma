@@ -12,7 +12,7 @@ datasource db {
 
 model Quote {
   id        String @id @default(uuid())
-  timestamp String @default(dbgenerated("strftime('%s', 'now')"))
+  timestamp String @default(dbgenerated("(strftime('%s', 'now'))"))
   quotee    String
   quoter    String
   text      String
