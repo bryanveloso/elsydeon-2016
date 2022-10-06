@@ -36,6 +36,7 @@ export const initialize = async () => {
     if (!text.startsWith(prefix)) return
 
     text = text.substring(prefix.length)
+    user = msg.userInfo.displayName
     const [name, ...args] = text.split(' ')
 
     const command =

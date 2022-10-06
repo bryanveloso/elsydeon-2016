@@ -7,7 +7,7 @@ export default <TwitchCommand>{
     if (args.length > 1) {
       client.say(channel, `/me slaps ${args.join(' ')} around a bit with a large trout.`)
     } else {
-      client.say(channel, `/me slaps ${msg.userInfo.displayName} around a bit with a large trout.`)
+      client.say(channel, `/me slaps ${user} around a bit with a large trout.`)
     }
   },
 }
