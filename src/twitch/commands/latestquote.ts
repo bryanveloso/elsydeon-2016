@@ -6,6 +6,6 @@ export default <TwitchCommand>{
   aliases: ['lastquote'],
   async execute(client, { channel, user, text }) {
     const quote = await getLatestQuote()
-    client.say(channel, `/me grabs the most recent quote: ${quote?.text} ~ ${quote?.quotee}`)
+    client.say(channel, `I found this quote: “${quote?.text}” ~ ${quote?.quotee}, ${quote?.year}`)
   },
 }
