@@ -1,7 +1,10 @@
 import 'dotenv/config'
-import { promises as fs, readFileSync } from 'fs'
+import Enmap from 'enmap'
+import { promises as fs, readFileSync, readdirSync } from 'fs'
 import { RefreshingAuthProvider } from '@twurple/auth'
 import { ChatClient } from '@twurple/chat'
+
+import { TwitchCommand } from './types'
 
 export const initialize = async () => {
   const clientId = process.env.TWITCH_CLIENT_ID as string
@@ -21,9 +24,30 @@ export const initialize = async () => {
   const client = new ChatClient({ authProvider, channels: ['avalonstar'] })
   await client.connect()
 
-  client.onMessage((channel, user, text) => {
-    if (text === '!ping') {
-      client.say(channel, 'Sup.')
+  const prefix = '!'
+  const commands = new Enmap()
+  const commandFiles = readdirSync('./src/twitch/commands').filter((file) => file.endsWith('.ts'))
+  commandFiles.map((file) => {
+    const command: TwitchCommand = require(`./commands/${file}`).default
+    commands.set(command.name, command)
+  })
+
+  client.onMessage((channel, user, text, msg) => {
+    if (!text.startsWith(prefix)) return
+
+    text = text.substring(prefix.length)
+    const [name, ...args] = text.split(' ')
+
+    const command =
+      commands.get(name) || commands.find((cmd) => cmd.aliases && cmd.aliases.includes(name))
+    console.log(command)
+
+    if (!command) return
+
+    try {
+      command.execute(client, { channel, user, text, msg }, args)
+    } catch (error) {
+      console.error(error)
     }
   })
 }
