@@ -18,10 +18,12 @@
     "@twurple/api": "^5.2.5",
     "@twurple/auth": "^5.2.5",
     "@twurple/chat": "^5.2.5",
+    "axios": "^1.1.2",
     "date-fns": "^2.29.3",
     "discord.js": "13.x",
     "dotenv": "^16.0.3",
-    "enmap": "^5.9.2"
+    "enmap": "^5.9.2",
+    "markovify": "^0.1.0"
   },
   "devDependencies": {
     "@types/node": "^18.8.2",
