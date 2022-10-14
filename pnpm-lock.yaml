@@ -6,7 +6,7 @@ specifiers:
   '@twurple/api': ^5.2.5
   '@twurple/auth': ^5.2.5
   '@twurple/chat': ^5.2.5
-  '@types/node': ^18.8.2
+  '@types/node': ^18.8.5
   axios: ^1.1.2
   date-fns: ^2.29.3
   discord.js: 13.x
@@ -32,10 +32,10 @@ dependencies:
   markovify: 0.1.0
 
 devDependencies:
-  '@types/node': 18.8.4
+  '@types/node': 18.8.5
   prisma: 4.4.0
-  ts-node: 10.9.1_xkk4lltwku4cysulzbqoieownu
-  ts-node-dev: 2.0.0_xkk4lltwku4cysulzbqoieownu
+  ts-node: 10.9.1_ptpocrdt7oaz4ni5mlvucph5pa
+  ts-node-dev: 2.0.0_ptpocrdt7oaz4ni5mlvucph5pa
   typescript: 4.8.4
 
 packages:
@@ -393,7 +393,7 @@ packages:
   /@types/node-fetch/2.6.2:
     resolution: {integrity: sha512-DHqhlq5jeESLy19TYhLakJ07kNumXWjcDdxXsLUMJZ6ue8VZJj4kLPQVE/2mdHh3xZziNF1xppu5lwmS53HR+A==}
     dependencies:
-      '@types/node': 18.8.4
+      '@types/node': 18.8.5
       form-data: 3.0.1
     dev: false
 
@@ -409,8 +409,8 @@ packages:
     resolution: {integrity: sha512-Vfz7wGMOr4jbQGiQHVJm8VjeQwM9Ya7mHe9LtQ264/Epf5n1KiZShOFqk++nBzw6a/ubgYdB9Od7P+MH/LjoWw==}
     dev: false
 
-  /@types/node/18.8.4:
-    resolution: {integrity: sha512-WdlVphvfR/GJCLEMbNA8lJ0lhFNBj4SW3O+O5/cEGw9oYrv0al9zTwuQsq+myDUXgNx2jgBynoVgZ2MMJ6pbow==}
+  /@types/node/18.8.5:
+    resolution: {integrity: sha512-Bq7G3AErwe5A/Zki5fdD3O6+0zDChhg671NfPjtIcbtzDNZTv4NPKMRFr7gtYPG7y+B8uTiNK4Ngd9T0FTar6Q==}
 
   /@types/strip-bom/3.0.0:
     resolution: {integrity: sha512-xevGOReSYGM7g/kUBZzPqCrR/KYAo+F0yiPc85WFTJa0MSLtyFTVTU6cJu/aV4mid7IffDIWqo69THF2o4JiEQ==}
@@ -423,7 +423,7 @@ packages:
   /@types/ws/8.5.3:
     resolution: {integrity: sha512-6YOoWjruKj1uLf3INHH7D3qTXwFfEsg1kf3c0uDdSBJwfa/llkwIjrAGV7j7mVgGNbzTQ3HiHKKDXl6bJPD97w==}
     dependencies:
-      '@types/node': 18.8.4
+      '@types/node': 18.8.5
     dev: false
 
   /acorn-walk/8.2.0:
@@ -1421,7 +1421,7 @@ packages:
     resolution: {integrity: sha512-hvE+ZYXuINrx6Ei6D6hz+PTim0Uf++dYbK9FFifLNwQj+RwKquhQpn868yZsCtJYiclZF1u8l6WZxxKi+vv7Rg==}
     dev: false
 
-  /ts-node-dev/2.0.0_xkk4lltwku4cysulzbqoieownu:
+  /ts-node-dev/2.0.0_ptpocrdt7oaz4ni5mlvucph5pa:
     resolution: {integrity: sha512-ywMrhCfH6M75yftYvrvNarLEY+SUXtUvU8/0Z6llrHQVBx12GiFk5sStF8UdfE/yfzk9IAq7O5EEbTQsxlBI8w==}
     engines: {node: '>=0.8.0'}
     hasBin: true
@@ -1440,7 +1440,7 @@ packages:
       rimraf: 2.7.1
       source-map-support: 0.5.21
       tree-kill: 1.2.2
-      ts-node: 10.9.1_xkk4lltwku4cysulzbqoieownu
+      ts-node: 10.9.1_ptpocrdt7oaz4ni5mlvucph5pa
       tsconfig: 7.0.0
       typescript: 4.8.4
     transitivePeerDependencies:
@@ -1449,7 +1449,7 @@ packages:
       - '@types/node'
     dev: true
 
-  /ts-node/10.9.1_xkk4lltwku4cysulzbqoieownu:
+  /ts-node/10.9.1_ptpocrdt7oaz4ni5mlvucph5pa:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -1468,7 +1468,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.3
-      '@types/node': 18.8.4
+      '@types/node': 18.8.5
       acorn: 8.8.0
       acorn-walk: 8.2.0
       arg: 4.1.3
