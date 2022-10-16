@@ -2,6 +2,9 @@ node_modules
 .DS_Store*
 .env
 
+# artifacts
+dist
+
 # data
 tokens.json
 data.json
