@@ -7,7 +7,7 @@ import { TwitchCommand } from '../types'
 const handleAddQuote = (
   client: ChatClient,
   { channel, user, text }: { channel: string; user: string; text: string },
-  args: [string[]]
+  args: string[][]
 ) => {
   const quote = args[0].join(' ')
   const regex = /"([^"]*?)" ~ (@[A-Za-z0-9_]+)/g
