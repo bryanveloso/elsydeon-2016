@@ -32,8 +32,8 @@ export const initialize = async () => {
 
   const prefix = '!'
   const commands = new Enmap()
-  const commandFiles = readdirSync('./src/twitch/commands').filter(file =>
-    file.endsWith('.ts')
+  const commandFiles = readdirSync(`${__dirname}/commands`).filter(
+    file => file.endsWith('.ts') || file.endsWith('.js')
   )
   commandFiles.map(file => {
     const command: TwitchCommand = require(`./commands/${file}`).default
