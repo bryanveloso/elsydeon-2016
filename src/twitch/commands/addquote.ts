@@ -4,28 +4,25 @@ import { ChatClient } from '@twurple/chat'
 import { addQuote } from '../../shared/quoteHandlers'
 import { TwitchCommand } from '../types'
 
-const formatText = (text: string, year: string): string => {
-  const suffix = ` , ${year}`
-  return text + suffix
-}
-
 const handleAddQuote = (
   client: ChatClient,
   { channel, user, text }: { channel: string; user: string; text: string },
-  args: string[],
+  args: [string[]]
 ) => {
-  const quote = args.join(' ')
+  const quote = args[0].join(' ')
   const regex = /"([^"]*?)" ~ (@[A-Za-z0-9_]+)/g
+
   if (regex.test(quote)) {
     const quotee = quote.split(regex)[2]
     const year = format(new Date(), 'yyyy')
-    const text = formatText(quote, year)
+    const text = quote.split(regex)[1]
+    const timestamp = format(new Date(), 't')
     const payload = {
-      text,
+      text: text.trimEnd(),
       year,
       quotee: quotee.replace('@', ''),
       quoter: user,
-      timestamp: new Date().toISOString(),
+      timestamp
     }
 
     const success = `I've added the quote to the database. Blame yourself or God. avalonSMUG`
