@@ -2,7 +2,8 @@ module.exports = {
   apps: [
     {
       name: 'elsydeon',
-      script: './dist/index.js'
+      script: './dist/index.js',
+      ignore_watch: ['prisma']
     }
   ]
 }
