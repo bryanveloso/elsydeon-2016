@@ -19,6 +19,9 @@ export default <TwitchCommand>{
   aliases: ['wtf'],
   async execute(client, { channel, user, text }) {
     const markov = await getMarkov()
-    client.say(channel, markov.response)
+    client.say(
+      channel,
+      `Whipped this up from some old quotes: avalonEUREKA "${markov.response}"`
+    )
   }
 }
