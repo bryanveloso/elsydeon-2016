@@ -7,7 +7,7 @@ const prisma = new PrismaClient()
 
 ;(async () => {
   try {
-    await discord.initialize()
+    // await discord.initialize()
     await twitch.initialize()
     await prisma.$disconnect()
   } catch (error) {
